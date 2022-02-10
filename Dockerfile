@@ -36,6 +36,7 @@ RUN apt-get install -y nodejs npm
 # install node@16 and npm@latest
 RUN npm i -g n@latest && \
     n 16 && \ 
+    PATH="/usr/local/bin/node:$PATH" \
     npm i -g npm@latest && \
     npm i -g nodemon@latest && \
     npm up -g
@@ -47,13 +48,13 @@ RUN chmod -R 770 /root && \
     passwd -d root && \
     groupadd -g 10000 codec && \
     useradd -o \
-    -mk /etc/skel \
-    -d /home/codec \
-    -s /bin/bash \
-    -u 0 \
-    -g 0 \
-    -c "Default codec user" \
-    codec \
+        -mk /etc/skel \
+        -d /home/codec \
+        -s /bin/bash \
+        -u 0 \
+        -g 0 \
+        -c "Default codec user" \
+        codec \
     && \
     usermod -G root codec && \
     usermod -G sudo codec && \
@@ -69,10 +70,9 @@ WORKDIR /home/codec
 USER codec
 
 # add bin folders, set bashinit.sh and set codec as sudo user
-RUN echo "\nPATH=\"/home/codec/ws/.codec/bin:/home/codec/.bin:\$PATH\"" >> /home/codec/.bashrc \
-    echo "\nsource /home/codec/ws/.codec/bashinit.sh" >> /home/codec/.bashrc \
-    echo "\ncodec     ALL=(ALL:ALL) ALL\n" >> /etc/sudoers
-
+RUN echo -n "\nPATH=\"/home/codec/ws/.codec/bin:/home/codec/.bin:\$PATH\"" >> /home/codec/.bashrc && \
+    echo -n "\nsource /home/codec/ws/.codec/bashinit.sh" >> /home/codec/.bashrc && \
+    echo -n "\ncodec     ALL=(ALL:ALL) ALL\n" >> /etc/sudoers
 
 # install code-server
 RUN curl -fsSL https://code-server.dev/install.sh | sh && \
@@ -80,12 +80,6 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh && \
     --force \
     --install-extension \
     pkief.material-icon-theme
-
-# set mount volume
-VOLUME /home/codec/ws
-
-# set export ports
-EXPOSE 8080/tcp
 
 # prepare for startup
 COPY ./scripts/docker-entrypoint.sh /docker-entrypoint.sh
@@ -102,6 +96,12 @@ RUN chmod -R 700 /docker-entrypoint.sh && \
     rm -rf /home/codec/.config/code-server/config.yaml && \
     touch /home/codec/ws/.codec/boot.sh && \
     chmod 700 /home/codec/ws/.codec/boot.sh
+
+# set mount volume
+VOLUME /home/codec/ws
+
+# set export ports
+EXPOSE 8080/tcp
 
 CMD [ "/docker-entrypoint.sh" ]
 

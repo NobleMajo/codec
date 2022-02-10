@@ -7,14 +7,21 @@ if [ -z "$1" ]; then
 fi
 USERNAME=$1
 
+# overwrite the $INTERFACE_PORT environment variable with the second start argument if its a number between 1 and 65535
+if [ ! "$2" -ge 1 ] || [ ! "$2" -le 65535 ]; then
+    echo "The second argument must be the interface port!"
+    exit 1
+fi
+INTERFACE_PORT=$2
+
 # overwrite the $START_PORT environment variable with the second start argument if its a number between 1 and 65535
-if [ "$2" -ge 1 ] && [ "$2" -le 65535 ]; then
-    START_PORT=$2
+if [ "$3" -ge 1 ] && [ "$3" -le 65535 ]; then
+    START_PORT=$3
 fi
 
 # overwrite the $PORT_COUNT environment variable with the third start argument if its a number between 1 and 1000
-if [ "$3" -ge 1 ] && [ "$3" -le 1000 ]; then
-    PORT_COUNT=$3
+if [ "$4" -ge 1 ] && [ "$4" -le 1000 ]; then
+    PORT_COUNT=$4
 fi
 
 # print error and exit with 1 if the environment variable START_PORT is not a number between 1 and 65535
@@ -40,9 +47,10 @@ echo "Run container \"codec_$USERNAME\" with ports \"$START_PORT-$END_PORT\"..."
 docker run -d --privileged \
     --restart unless-stopped \
     --name "codec_$USERNAME" \
-    -p "$START_PORT-$END_PORT:$START_PORT-$END_PORT" \
-    -v "$(pwd)/.store/$USERNAME:/" \
+    -p 0.0.0.0:$INTERFACE_PORT:8080 \
+    -p "0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT" \
+    -v "$(pwd)/.store/$USERNAME/:/home/codec/ws" \
     -e "PORT_RANGE=$START_PORT-$END_PORT" \
-    codec 
+    codec
 
-    
+
