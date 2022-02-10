@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# print error if $1 is empty
+if [ -z "$1" ]; then
+  echo "Error: $1 is not defined!"
+  exit 1
+fi
+
+# print error if $1 is not a file
+if [ ! -f "$1" ]; then
+  echo "Error: $1 is not a file!"
+  exit 1
+fi
+
+chmod +x $1

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ "$(screen-alive 'sbash')" == "false" ] ; then
+    echo "create screen..."
+    screen -S -U sbash sudo -u codec bash
+else
+    echo "enter screen..."
+    screen -x -U sbash
+fi

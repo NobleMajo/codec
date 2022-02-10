@@ -1,0 +1,5 @@
+
+.store/**/*
+
+!.keep
+!.gitkeep

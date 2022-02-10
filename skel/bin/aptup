@@ -1,0 +1,11 @@
+#!/bin/bash
+
+export DEBIAN_FRONTEND=noninteractive
+
+sudo -E apt-get update
+sudo -E pkg::Options::="--force-confnew" full-upgrade -y
+sudo -E apt-get autoremove -y
+sudo -E apt-get clean
+sudo -E rm -rf /tmp/*
+
+ 
