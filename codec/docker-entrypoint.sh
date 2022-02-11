@@ -28,8 +28,6 @@ else
 fi
 echo "#!/bin/bash\n\ncd ..\n" >> "/home/codec/.codec/skel/cd.."
 echo -n "$@" > /home/codec/ws/.codec/arguments.txt
-rm -rf /home/codec/.config/code-server/config.yaml
-ln -s /home/codec/ws/.codec/code-server.yaml /home/codec/.config/code-server/config.yaml
 
 echo "CodecMain: Run boot script..."
 /home/codec/ws/.codec/boot.sh

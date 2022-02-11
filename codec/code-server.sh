@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echo "CodecMain: copy new config..."
+mkdir -p /home/codec/.config/code-server
+rm -rf /home/codec/.config/code-server/config.yaml
+cp /home/codec/ws/.codec/code-server.yaml /home/codec/.config/code-server/config.yaml
+
 echo "CodecMain: Execute code-server..."
 
 code-server \
