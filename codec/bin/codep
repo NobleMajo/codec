@@ -33,4 +33,4 @@ if [ $# -eq 0 ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ ${#1} -lt 7 ]; then
 fi
 
 echo "Generate hash..."
-codepr "$(sha256sum2 "$NEWPASSWORD")"
+codepr "$(sha256sum2 "$1")"
