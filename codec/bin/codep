@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# check if the first argument is a string and the length is greater than 7
+if [ $# -eq 0 ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ ${#1} -lt 7 ]; then
+    echo "Usage: codep <password>"
+    echo "The password needs to be a string with at least 7 characters."
+    exit 1
+fi
+
+echo "Generate hash..."
+codepr "$(sha256sum2 "$1")"

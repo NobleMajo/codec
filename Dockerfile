@@ -63,16 +63,13 @@ RUN chmod -R 770 /root && \
     chown -hR codec:codec /home/codec && \
     passwd -d codec && \
     su codec && \
-    mkdir -p /home/codec/ws/.codec/bin && \
-    mkdir -p /home/codec/.bin
+    mkdir -p /home/codec/.bin && \
+    echo -n "PATH=\"/home/codec/ws/.codec/bin:/home/codec/.codec/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\"" > /etc/environment && \
+    echo "\nsource /home/codec/ws/.codec/bashinit.sh" >> /home/codec/.bashrc && \
+    echo "\ncodec     ALL=(ALL:ALL) ALL\n" >> /etc/sudoers
 
 WORKDIR /home/codec
 USER codec
-
-# add bin folders, set bashinit.sh and set codec as sudo user
-RUN echo -n "\nPATH=\"/home/codec/ws/.codec/bin:/home/codec/.bin:\$PATH\"" >> /home/codec/.bashrc && \
-    echo -n "\nsource /home/codec/ws/.codec/bashinit.sh" >> /home/codec/.bashrc && \
-    echo -n "\ncodec     ALL=(ALL:ALL) ALL\n" >> /etc/sudoers
 
 # install code-server
 RUN curl -fsSL https://code-server.dev/install.sh | sh && \
@@ -82,20 +79,7 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh && \
     pkief.material-icon-theme
 
 # prepare for startup
-COPY ./scripts/docker-entrypoint.sh /docker-entrypoint.sh
-COPY ./scripts/code-server.sh /code-server.sh
-COPY ./skel /home/codec/.codec-skel
-RUN chmod -R 700 /docker-entrypoint.sh && \
-    chown -hR codec:codec /docker-entrypoint.sh && \
-    chmod -R 700 /code-server.sh && \
-    chown -hR codec:codec /code-server.sh && \
-    chmod 770 /usr/lib/code-server/bin/code-server && \
-    mkdir -p /home/code/ws/.codec/userdata && \
-    mkdir -p /home/code/ws/.codec/extensions && \
-    mkdir -p /home/code/ws/.codec/certs && \
-    rm -rf /home/codec/.config/code-server/config.yaml && \
-    touch /home/codec/ws/.codec/boot.sh && \
-    chmod 700 /home/codec/ws/.codec/boot.sh
+COPY ./codec /home/codec/.codec
 
 # set mount volume
 VOLUME /home/codec/ws
@@ -103,7 +87,7 @@ VOLUME /home/codec/ws
 # set export ports
 EXPOSE 8080/tcp
 
-CMD [ "/docker-entrypoint.sh" ]
+CMD [ "/home/codec/.codec/docker-entrypoint.sh" ]
 
 
 

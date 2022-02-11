@@ -1,9 +1,0 @@
-#!/bin/bash
-
-echo -n "Enter your new codec password: "
-read -r -s NEWPASSWORD
-echo
-
-echo "Generate hash..."
-
-codepr "$(sha256sum2 "$NEWPASSWORD")"

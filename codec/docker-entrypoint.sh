@@ -2,7 +2,7 @@
 
 if [ ! -d "/home/codec/ws/.codec" ]; then
     echo "CodecMain: Copying skeleton to \"/home/codec/ws/.codec\"..."
-    cp -r /home/codec/.codec-skel /home/codec/ws/.codec
+    cp -r /home/codec/.codec/skel /home/codec/ws/.codec
 fi
 
 echo "CodecMain: Save ports and link code-server settings..."
@@ -26,6 +26,7 @@ if [ ! -z "$PORT_RANGE" ]; then
 else
     echo -n "This container has no published ports." > /home/codec/ws/.codec/ports.txt
 fi
+echo "#!/bin/bash\n\ncd ..\n" >> "/home/codec/.codec/skel/cd.."
 echo -n "$@" > /home/codec/ws/.codec/arguments.txt
 rm -rf /home/codec/.config/code-server/config.yaml
 ln -s /home/codec/ws/.codec/code-server.yaml /home/codec/.config/code-server/config.yaml
@@ -36,4 +37,4 @@ echo "CodecMain: Run boot script..."
 echo "CodecMain: Run code-server..."
 nodemon \
     -w /home/codec/ws/.codec/code-server.yaml \
-    -x "sudo -u codec /code-server.sh"
+    -x "sudo -u codec /home/codec/.codec/code-server.sh"

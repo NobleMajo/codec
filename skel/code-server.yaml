@@ -1,4 +1,0 @@
-bind-addr: 0.0.0.0:33333
-cert: false
-auth: password
-hashed-password: none
