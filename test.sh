@@ -35,6 +35,7 @@ if ! [[ $END_PORT =~ ^[0-9]+$ ]] || [ $END_PORT -lt $START_PORT ] || [ $END_PORT
     exit 1
 fi
 
+./remove.sh $USERNAME
 docker network create codec
 
 echo "Run container \"codec_$USERNAME\" with ports \"$START_PORT-$END_PORT\"..."
@@ -42,7 +43,6 @@ echo "Run container \"codec_$USERNAME\" with ports \"$START_PORT-$END_PORT\"..."
 docker run -d --privileged \
     --restart unless-stopped \
     --name "codec_$USERNAME" \
-    -p 8888:8080 \
     -p "0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT" \
     -v "$(pwd)/.store/$USERNAME/:/home/codec/ws" \
     -e "PORT_RANGE=$START_PORT-$END_PORT" \

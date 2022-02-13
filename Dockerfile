@@ -65,18 +65,19 @@ RUN chmod -R 770 /root && \
     su codec && \
     mkdir -p /home/codec/.bin && \
     echo -n "PATH=\"/home/codec/ws/.codec/bin:/home/codec/.codec/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\"" > /etc/environment && \
-    echo "\nsource /home/codec/ws/.codec/bashinit.sh" >> /home/codec/.bashrc && \
-    echo "\ncodec     ALL=(ALL:ALL) ALL\n" >> /etc/sudoers
+    echo "\n \
+source /etc/environment \n \
+source /home/codec/ws/.codec/bashinit.sh \n \
+cd \n \
+    " >> /home/codec/.bashrc && \
+    echo "\ncodec     ALL=(ALL:ALL) ALL\n" >> /etc/sudoers && \
+    chmod +x /etc/environment
 
 WORKDIR /home/codec
 USER codec
 
 # install code-server
-RUN curl -fsSL https://code-server.dev/install.sh | sh && \
-    code-server \
-    --force \
-    --install-extension \
-    pkief.material-icon-theme
+RUN curl -fsSL https://code-server.dev/install.sh | sh
 
 # prepare for startup
 COPY ./codec /home/codec/.codec

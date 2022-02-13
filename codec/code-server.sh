@@ -5,6 +5,8 @@ mkdir -p /home/codec/.config/code-server
 rm -rf /home/codec/.config/code-server/config.yaml
 cp /home/codec/ws/.codec/code-server.yaml /home/codec/.config/code-server/config.yaml
 
+export EXTENSIONS_GALLERY='{ "serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery", "cacheUrl": "https://vscode.blob.core.windows.net/gallery/index", "itemUrl": "https://marketplace.visualstudio.com/items", "controlUrl": "", "recommendationsUrl": "" }'
+
 echo "CodecMain: Execute code-server..."
 
 code-server \

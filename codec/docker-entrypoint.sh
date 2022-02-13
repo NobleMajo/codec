@@ -26,9 +26,19 @@ if [ ! -z "$PORT_RANGE" ]; then
 else
     echo -n "This container has no published ports." > /home/codec/ws/.codec/ports.txt
 fi
-echo "#!/bin/bash\n\ncd ..\n" >> "/home/codec/.codec/skel/cd.."
-echo -n "$@" > /home/codec/ws/.codec/arguments.txt
+mkdir -p /home/codec/ws/.codec/bin
+echo "#!/bin/bash\n\ncd ..\n" >> "/home/codec/.codec/bin/cd."
+echo "#!/bin/bash\n\ncd ../..\n" >> "/home/codec/.codec/bin/cd.."
+echo "#!/bin/bash\n\ncd ../../..\n" >> "/home/codec/.codec/bin/cd..."
+echo "#!/bin/bash\n\ncd ../../../..\n" >> "/home/codec/.codec/bin/cd...."
+chmod -R +x /home/codec/.codec/bin
+chmod -R +x /home/codec/ws/.codec/bin
 
+rm -rf /home/codec/.local/share/code-server
+mkdir -p /home/codec/.local/share
+mkdir -p /home/codec/ws/.codec/vscode
+ln -s /home/codec/ws/.codec/vscode /home/codec/.local/share/code-server
+echo -n "$@" > /home/codec/ws/.codec/arguments.txt
 echo "CodecMain: Run boot script..."
 /home/codec/ws/.codec/boot.sh
 

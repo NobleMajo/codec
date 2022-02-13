@@ -4,7 +4,4 @@
     --verbose \
     --disable-update-check \
     --disable-telemetry \
-    --user-data-dir /home/codec/ws/.codec/userdata \
     $@
-
-#    --extensions-dir /home/codec/ws/.codec/extensions \
