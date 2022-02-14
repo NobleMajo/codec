@@ -128,6 +128,6 @@
 	"electronRepository": "Microsoft/vscode-electron-prebuilt",
 	"settingsSearchUrl": "https://bingsettingssearch.trafficmanager.net/api/Search",
     "showTelemetryOptOut": false,
-    "enableTelemetry": false,
+    "enableTelemetry": false
 }
 

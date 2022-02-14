@@ -2,7 +2,12 @@
 
 source /home/codec/ws/.codec/codecmd.sh
 
+if [ -z "$1" ]; then
+    set "$1" "/home/codec/ws/.codec/default.code-workspace"
+fi
+
 /usr/lib/code-server/bin/code-server \
+    --reuse-window \
     --verbose \
     --disable-update-check \
     --disable-telemetry \
