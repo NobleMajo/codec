@@ -11,6 +11,12 @@ eval "$(ssh-agent -s)" >/dev/null 2>&1
 ### add the default linux ssh-key
 ssh-add ~/.ssh/id_rsa >/dev/null 2>&1
 
+### create workspace folder
+mkdir -p /home/codec/ws/test
+mkdir -p /home/codec/ws/old
+mkdir -p /home/codec/ws/main
+
+
 ### Starts the docker daemon in the background
 # dockerd &
 

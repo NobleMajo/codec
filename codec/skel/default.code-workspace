@@ -5,8 +5,16 @@
                         "path": "/home/codec/ws/.codec"
                 },
                 {
-                        "name": "# WORKSPACE",
-                        "path": "/home/codec/ws"
+                        "name": "# TEST",
+                        "path": "/home/codec/ws/test"
+                },
+                {
+                        "name": "# OLD",
+                        "path": "/home/codec/ws/old"
+                },
+                {
+                        "name": "# MAIN",
+                        "path": "/home/codec/ws/main"
                 },
         ],
         "settings": {}
