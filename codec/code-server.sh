@@ -14,3 +14,5 @@ code \
     --port 8080 \
     --host 0.0.0.0 \
     /home/codec/ws/.codec/default.code-workspace
+
+touch /home/codec/ws/.codec/code-server.yaml

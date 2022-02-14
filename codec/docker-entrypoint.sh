@@ -42,18 +42,18 @@ echo -n "#!/bin/bash\n\ncd ../../../..\n" >> "/home/codec/.codec/bin/cd...."
 chmod -R +x /home/codec/.codec/bin
 chmod -R +x /home/codec/ws/.codec/bin
 
-rm -rf /home/codec/.local/share/code-server
 mkdir -p /home/codec/.local/share
-mkdir -p /home/codec/ws/.codec/vscode
+rm -rf /home/codec/.local/share/code-server
 ln -s /home/codec/ws/.codec/vscode /home/codec/.local/share/code-server
-echo -n "$@" > /home/codec/ws/.codec/arguments.txt
-
-echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf
-sysctl -p
 
 mkdir -p /usr/lib/code-server/vendor/modules/code-oss-dev
 rm -rf /usr/lib/code-server/vendor/modules/code-oss-dev/product.json
 ln -s /home/codec/ws/.codec/code-product.json /usr/lib/code-server/vendor/modules/code-oss-dev/product.json
+
+echo -n "$@" > /home/codec/ws/.codec/arguments.txt
+
+echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf
+sysctl -p
 
 echo "CodecMain: Run boot script..."
 source /etc/environment
