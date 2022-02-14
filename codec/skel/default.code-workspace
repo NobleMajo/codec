@@ -4,6 +4,10 @@
                         "name": "# CODEC",
                         "path": "/home/codec/ws/.codec"
                 },
+                {
+                        "name": "# WORKSPACE",
+                        "path": "/home/codec/ws"
+                },
         ],
         "settings": {}
 }

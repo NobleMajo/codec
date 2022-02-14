@@ -1,22 +1,19 @@
 #!/bin/bash
 
-# if first argument is -h or --help, print usage and exit
-if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-    echo "Usage: $0 [OPTION]"
-    echo "Options:"
-    echo "  -h,  --help: print this help and exit"
-    echo "  -i,  --interactive: start interactive mode"
-    echo "  -rh, --rawhash: saves a raw password hash"
-    echo "  -w,  --welcome: print welcome message and exit"
-    echo "  -r,  --restart: restart the code-server process"
-    echo "  -rc, --restart-container: restart the codec container"
-    exit 0
-fi
-
 # if first argument is -rc or --restart-container, stop the main process
 if [[ "$1" == "-rc" || "$1" == "--restart-container" ]]; then
     echo "Restarting codec container..."
-    kill -s SIGKILL 1
+    # get all linux users in a string array
+    USERS=$(cut -d: -f1 < /etc/passwd)
+    # for each user in the array
+    for USER2 in $USERS; do
+        # if the user is not root
+        if [ "$USER2" != "$USER" ]; then
+            # kill all processes of the user
+            pkill -9 -u $USER2
+        fi
+    done
+    pkill -9 -u $USER
     exit 0
 fi
 
@@ -56,6 +53,11 @@ if [[ "$1" == "-rh" || "$1" == "--rawhash" ]]; then
         echo "No hash as second argument!"
         exit
     fi
+    # print error if hash is shorter than 32 characters
+    if [ ${#2} -lt 32 ]; then
+        echo "Hash is too short!"
+        exit
+    fi
 
     HASH=$2
     HASH=${HASH:0:64}
@@ -69,6 +71,7 @@ if [[ "$1" == "-rh" || "$1" == "--rawhash" ]]; then
     exit 0
 fi
 
+PASSWORD="$2"
 # if the first argument is -i then ask for a password in a prompt and save it in the first argument
 if [[ "$1" == "-i" || "$1" == "--interactive" ]]; then
     echo -n "Enter password: "
@@ -81,16 +84,34 @@ if [[ "$1" == "-i" || "$1" == "--interactive" ]]; then
         echo "Passwords do not match"
         exit 1
     fi
-    $1="$PASSWORD"
+fi
+
+# if first argument is -p, --password, -i or --interactive, set the password
+if [[ "$1" == "-p" || "$1" == "--password" || "$1" == "-i" || "$1" == "--interactive" ]]; then
+    # print error if no $PASSWORD
+    if [ -z "$PASSWORD" ]; then
+        echo "No password given!"
+        exit 1
+    fi
+    # print error if password is shorter than 8 characters
+    if [ ${#PASSWORD} -lt 8 ]; then
+        echo "Password is too short!"
+        exit 1
+    fi
+    
+    echo "Set new password..."
+    codec -rh "$(sha256sum2 "$PASSWORD")"
+    echo "New password set!"
+    exit 0
 fi
 
 
-# check if the first argument is a string and the length is greater than 7
-if [ $# -eq 0 ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ ${#1} -lt 7 ]; then
-    echo "Usage: codep <password>"
-    echo "The password needs to be a string with at least 7 characters."
-    exit 1
-fi
-
-echo "Generate hash..."
-codec -rh "$(sha256sum2 "$1")"
+echo "Usage: $0 [OPTION]"
+echo "Options:"
+echo "  -h,  --help: print this help and exit"
+echo "  -i,  --interactive: start interactive password prompt"
+echo "  -p,  --password <password>: set password "
+echo "  -rh, --rawhash <passhash>: saves a raw password hash"
+echo "  -w,  --welcome: print welcome message and exit"
+echo "  -r,  --restart: restart the code-server process"
+echo "  -rc, --restart-container: restart the codec container"

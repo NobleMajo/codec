@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /home/codec/ws/.codec/codecmd.sh
+
 /usr/lib/code-server/bin/code-server \
     --verbose \
     --disable-update-check \

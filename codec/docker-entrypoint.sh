@@ -1,14 +1,14 @@
 #!/bin/bash
 
+echo "CodecMain: Refresh, repair and renew default .codec if not exist..."
 mkdir -p /home/codec/ws/.codec
-
 # get all file and folder names in the /home/codec/.codec/skel dir as array
-FILES=($(ls /home/codec/ws/.codec))
-
+FILES=($(ls /home/codec/.codec/skel))
 # check if one of that files is missing in the /home/codec/ws/.codec dir and copy it
 for FILE in "${FILES[@]}"; do
-    if [ ! -e "/home/codec/ws/.codec/$FILE" ]; then
-        cp /home/codec/ws/.codec/skel/$FILE /home/codec/ws/.codec/$FILE
+    if [ ! -d "/home/codec/ws/.codec/$FILE" ] && [ ! -f "/home/codec/ws/.codec/$FILE" ]; then
+        echo "copy..."
+        cp -r /home/codec/.codec/skel/$FILE /home/codec/ws/.codec/$FILE
     fi
 done
 
@@ -33,6 +33,7 @@ if [ ! -z "$PORT_RANGE" ]; then
 else
     echo -n "This container has no published ports." > /home/codec/ws/.codec/ports.txt
 fi
+
 mkdir -p /home/codec/ws/.codec/bin
 echo "#!/bin/bash\n\ncd ..\n" >> "/home/codec/.codec/bin/cd."
 echo "#!/bin/bash\n\ncd ../..\n" >> "/home/codec/.codec/bin/cd.."
@@ -46,11 +47,14 @@ mkdir -p /home/codec/.local/share
 mkdir -p /home/codec/ws/.codec/vscode
 ln -s /home/codec/ws/.codec/vscode /home/codec/.local/share/code-server
 echo -n "$@" > /home/codec/ws/.codec/arguments.txt
+
 echo "CodecMain: Run boot script..."
-/home/codec/ws/.codec/boot.sh
+source /etc/environment
+source /home/codec/ws/.codec/boot.sh
 
 echo "CodecMain: Run code-server..."
 
 nodemon \
+    --delay 500ms \
     -w /home/codec/ws/.codec/code-server.yaml \
     -x "sudo -u codec /home/codec/.codec/code-server.sh"
