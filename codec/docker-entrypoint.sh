@@ -48,6 +48,9 @@ mkdir -p /home/codec/ws/.codec/vscode
 ln -s /home/codec/ws/.codec/vscode /home/codec/.local/share/code-server
 echo -n "$@" > /home/codec/ws/.codec/arguments.txt
 
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+
 echo "CodecMain: Run boot script..."
 source /etc/environment
 source /home/codec/ws/.codec/boot.sh

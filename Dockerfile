@@ -73,7 +73,7 @@ WORKDIR /home/codec
 USER codec
 
 # install code-server
-RUN curl -fsSL https://code-server.dev/install.sh | sh
+RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=3.12.0
 
 # prepare for startup
 COPY ./codec /home/codec/.codec
