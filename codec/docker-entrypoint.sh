@@ -35,10 +35,10 @@ else
 fi
 
 mkdir -p /home/codec/ws/.codec/bin
-echo "#!/bin/bash\n\ncd ..\n" >> "/home/codec/.codec/bin/cd."
-echo "#!/bin/bash\n\ncd ../..\n" >> "/home/codec/.codec/bin/cd.."
-echo "#!/bin/bash\n\ncd ../../..\n" >> "/home/codec/.codec/bin/cd..."
-echo "#!/bin/bash\n\ncd ../../../..\n" >> "/home/codec/.codec/bin/cd...."
+echo -n "#!/bin/bash\n\ncd ..\n" >> "/home/codec/.codec/bin/cd."
+echo -n "#!/bin/bash\n\ncd ../..\n" >> "/home/codec/.codec/bin/cd.."
+echo -n "#!/bin/bash\n\ncd ../../..\n" >> "/home/codec/.codec/bin/cd..."
+echo -n "#!/bin/bash\n\ncd ../../../..\n" >> "/home/codec/.codec/bin/cd...."
 chmod -R +x /home/codec/.codec/bin
 chmod -R +x /home/codec/ws/.codec/bin
 
@@ -48,8 +48,12 @@ mkdir -p /home/codec/ws/.codec/vscode
 ln -s /home/codec/ws/.codec/vscode /home/codec/.local/share/code-server
 echo -n "$@" > /home/codec/ws/.codec/arguments.txt
 
-echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
-sudo sysctl -p
+echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf
+sysctl -p
+
+mkdir -p /usr/lib/code-server/vendor/modules/code-oss-dev
+rm -rf /usr/lib/code-server/vendor/modules/code-oss-dev/product.json
+ln -s /home/codec/ws/.codec/code-product.json /usr/lib/code-server/vendor/modules/code-oss-dev/product.json
 
 echo "CodecMain: Run boot script..."
 source /etc/environment
