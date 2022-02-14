@@ -7,4 +7,4 @@
 # It need to be a interactive (login) bash session.
 #
 
-codec
+codec -w

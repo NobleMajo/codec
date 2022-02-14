@@ -1,9 +1,16 @@
 #!/bin/bash
 
-if [ ! -d "/home/codec/ws/.codec" ]; then
-    echo "CodecMain: Copying skeleton to \"/home/codec/ws/.codec\"..."
-    cp -r /home/codec/.codec/skel /home/codec/ws/.codec
-fi
+mkdir -p /home/codec/ws/.codec
+
+# get all file and folder names in the /home/codec/.codec/skel dir as array
+FILES=($(ls /home/codec/ws/.codec))
+
+# check if one of that files is missing in the /home/codec/ws/.codec dir and copy it
+for FILE in "${FILES[@]}"; do
+    if [ ! -e "/home/codec/ws/.codec/$FILE" ]; then
+        cp /home/codec/ws/.codec/skel/$FILE /home/codec/ws/.codec/$FILE
+    fi
+done
 
 echo "CodecMain: Save ports and link code-server settings..."
 # if $PORT_RANGE is set
