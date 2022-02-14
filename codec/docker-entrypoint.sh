@@ -43,6 +43,7 @@ echo "CodecMain: Run boot script..."
 /home/codec/ws/.codec/boot.sh
 
 echo "CodecMain: Run code-server..."
+
 nodemon \
     -w /home/codec/ws/.codec/code-server.yaml \
     -x "sudo -u codec /home/codec/.codec/code-server.sh"

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# execute the "code --install-extension $1" for eacht argument
+for i in "$@"
+do
+  code --install-extension $i
+done
+
+

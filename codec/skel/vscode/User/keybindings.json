@@ -1,0 +1,323 @@
+[
+    //MAJOs KEYMAP FOR ECLIPSE KEYMAP
+    //system settings > keyboard > select your keyboard > switch command with controll
+    //On mac:
+    // - replace "cmd" with "ctrl"
+    //On windows & linux:
+    // - replace "ctrl" with "cmd"
+    {
+        "key": "cmd+f",
+        "command": "actions.find",
+        "when": "actionsFind"
+    },
+    {
+        "key": "cmd+y",
+        "command": "redo",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+numpad_divide",
+        "command": "editor.fold",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+numpad_multiply",
+        "command": "editor.unfold",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+shift+numpad_divide",
+        "command": "editor.foldAll",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+shift+numpad_multiply",
+        "command": "editor.unfoldAll",
+        "when": "editorFocus"
+    },
+    //ECLIPSE KEYMAP
+    {
+        "key": "cmd+3",
+        "command": "workbench.action.showCommands"
+    },
+    {
+        "key": "cmd+shift+r",
+        "command": "workbench.action.quickOpen"
+    },
+    {
+        "key": "cmd+h",
+        "command": "workbench.view.search"
+    },
+    {
+        "key": "cmd+shift+t",
+        "command": "workbench.action.showAllSymbols"
+    },
+    {
+        "key": "cmd+l",
+        "command": "workbench.action.gotoLine"
+    },
+    {
+        "key": "cmd+w",
+        "command": "workbench.action.closeActiveEditor"
+    },
+    {
+        "key": "cmd+shift+s",
+        "command": "workbench.action.files.saveAll"
+    },
+    {
+        "key": "cmd+alt+s",
+        "command": "workbench.action.files.saveAs"
+    },
+    {
+        "key": "cmd+alt+t",
+        "command": "workbench.action.terminal.toggleTerminal"
+    },
+    {
+        "key": "cmd+m",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "cmd+e",
+        "command": "workbench.action.openPreviousRecentlyUsedEditorInGroup"
+    },
+    {
+        "key": "cmd+shift+w",
+        "command": "workbench.action.closeAllEditors"
+    },
+    {
+        "key": "cmd+shift+f4",
+        "command": "workbench.action.closeAllEditors"
+    },
+    {
+        "key": "cmd+f12",
+        "command": "workbench.action.focusActiveEditorGroup"
+    },
+    {
+        "key": "cmd+shift+c",
+        "command": "editor.action.commentLine",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+shift+/",
+        "command": "editor.action.blockComment",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+alt+y",
+        "command": "editor.action.toggleWordWrap",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+alt+j",
+        "command": "editor.action.joinLines",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+o",
+        "command": "workbench.action.gotoSymbol",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+shift+f",
+        "command": "editor.action.formatSelection",
+        "when": "editorTextFocus && editorHasSelection"
+    },
+    {
+        "key": "cmd+shift+f",
+        "command": "editor.action.formatDocument",
+        "when": "editorTextFocus && !editorHasSelection"
+    },
+    {
+        "key": "cmd+shift+d",
+        "command": "editor.action.sourceAction",
+        "args": {
+            "kind": "source.addMissingImports",
+            "apply": "ifSingle",
+        },
+        "when": "editorTextFocus && !editorHasSelection"
+    },
+    {
+        "key": "cmd+alt+down",
+        "command": "editor.action.copyLinesDownAction",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+alt+up",
+        "command": "editor.action.copyLinesUpAction",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+down",
+        "command": "editor.action.moveLinesDownAction",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+up",
+        "command": "editor.action.moveLinesUpAction",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+d",
+        "command": "editor.action.deleteLines",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+shift+delete",
+        "command": "deleteAllRight",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+alt+r",
+        "command": "editor.action.rename",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+space",
+        "command": "editor.action.triggerSuggest",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+.",
+        "command": "editor.action.marker.next",
+        "when": "editorFocus && !editorReadonly"
+    },
+    {
+        "key": "f3",
+        "command": "editor.action.goToDeclaration",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+1",
+        "command": "editor.action.quickFix",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+shift+g",
+        "command": "editor.action.referenceSearch.trigger",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+shift+b",
+        "command": "editor.debug.action.toggleBreakpoint",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+shift+x",
+        "command": "editor.action.transformToUppercase",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+shift+y",
+        "command": "editor.action.transformToLowercase",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+k",
+        "command": "editor.action.nextSelectionMatchFindAction",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+shift+k",
+        "command": "editor.action.previousSelectionMatchFindAction",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+left",
+        "command": "cursorWordPartLeft",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "alt+right",
+        "command": "cursorWordPartRight",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "alt+shift+left",
+        "command": "cursorWordPartLeftSelect",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "alt+shift+right",
+        "command": "cursorWordPartRightSelect",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "cmd+alt+left",
+        "command": "workbench.action.navigateBack"
+    },
+    {
+        "key": "cmd+alt+right",
+        "command": "workbench.action.navigateForward"
+    },
+    {
+        "key": "f8",
+        "command": "workbench.action.debug.continue",
+        "when": "inDebugMode"
+    },
+    {
+        "key": "cmd+shift+f11",
+        "command": "workbench.action.debug.start",
+        "when": "!inDebugMode"
+    },
+    {
+        "key": "f5",
+        "command": "workbench.action.debug.stepInto",
+        "when": "inDebugMode"
+    },
+    {
+        "key": "f7",
+        "command": "workbench.action.debug.stepOut",
+        "when": "inDebugMode"
+    },
+    {
+        "key": "f6",
+        "command": "workbench.action.debug.stepOver",
+        "when": "inDebugMode"
+    },
+    {
+        "key": "cmd+f2",
+        "command": "workbench.action.debug.stop",
+        "when": "inDebugMode"
+    },
+    {
+        "key": "cmd+shift+C",
+        "command": "-editor.action.commentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+shift+C",
+        "command": "-toggleExplainMode",
+        "when": "suggestWidgetVisible"
+    },
+    {
+        "key": "cmd+shift+z",
+        "command": "-redo",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "shift+alt+z",
+        "command": "workbench.action.files.saveLocalFile",
+        "when": "remoteFileDialogVisible"
+    },
+    {
+        "key": "shift+alt+z",
+        "command": "-workbench.action.files.saveAs"
+    },
+    {
+        "key": "shift+cmd+s",
+        "command": "-workbench.action.files.saveAs"
+    },
+    {
+        "key": "shift+cmd+s",
+        "command": "-workbench.action.files.saveLocalFile",
+        "when": "remoteFileDialogVisible"
+    },
+    {
+        "key": "shift+alt+q",
+        "command": "workbench.action.closeWindow"
+    },
+    {
+        "key": "shift+cmd+w",
+        "command": "-workbench.action.closeWindow"
+    }
+]

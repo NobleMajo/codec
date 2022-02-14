@@ -1,17 +1,96 @@
 #!/bin/bash
 
-echo "                                                 "
-echo "                           ▄▄                    "
-echo "  ▄▄█▀▀▀█▄█              ▀███           ▄▄█▀▀▀█▄█"
-echo "▄██▀     ▀█                ██         ▄██▀     ▀█"
-echo "██▀       ▀ ▄██▀██▄   ▄█▀▀███   ▄▄█▀████▀       ▀"
-echo "██         ██▀   ▀██▄██    ██  ▄█▀   ███         "
-echo "█▓▄        ██     ███▓█    █▓  ▓█▀▀▀▀▀▀▓▄        "
-echo "▀▓█▄     ▄▀██     ▓█▀▓█    █▓  ▓█▄    ▄▓█▄     ▄▀"
-echo "▓▓▓        ▓█     ▓▓▓▓▓    ▓▓  ▓▓▀▀▀▀▀▀▓▓        "
-echo "▒▓▓▒     ▓▀▓▓▓   ▓▓▓▀▒▓    ▓▒  ▒▓▓    ▒▓▓▒     ▓▀"
-echo "  ▒ ▒ ▒ ▒▓  ▒ ▒ ▒ ▓  ▒ ▒ ▒ ▓ ▒  ▒ ▒ ▒▒  ▓ ▒ ▒ ▒▓ "
-echo "  ▒ ▒   ▒▒  ▒     ▒        ▓    ▒    ▒  ▒ ▒    ▒ "
-echo "  ▒      ▒        ▒        ▒    ▒       ▒        "
-echo "                  ▒        ▒     by HalsMaulMajo "
-echo " Welcome to CodeC          ▒      & CoreUnit.NET "
+# if first argument is -h or --help, print usage and exit
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    echo "Usage: $0 [OPTION]"
+    echo "Options:"
+    echo "  -h,  --help: print this help and exit"
+    echo "  -i,  --interactive: start interactive mode"
+    echo "  -rh, --rawhash: saves a raw password hash"
+    echo "  -w,  --welcome: print welcome message and exit"
+    echo "  -r,  --restart: restart the code-server process"
+    echo "  -rc, --restart-container: restart the codec container"
+    exit 0
+fi
+
+# if first argument is -rc or --restart-container, stop the main process
+if [[ "$1" == "-rc" || "$1" == "--restart-container" ]]; then
+    echo "Restarting codec container..."
+    kill -s SIGKILL 1
+    exit 0
+fi
+
+
+# if first argument is -r or --restart, restart the code-server process
+if [[ "$1" == "-r" || "$1" == "--restart" ]]; then
+    echo "Restarting codeccode-server..."
+    touch /home/codec/ws/.codec/code-server.yaml
+    exit 0
+fi
+
+# if first argument is -w or --welcome, print welcome message and exit
+if [[ "$1" == "-w" || "$1" == "--welcome" ]]; then
+    echo "                                                 "
+    echo "                           ▄▄                    "
+    echo "  ▄▄█▀▀▀█▄█              ▀███           ▄▄█▀▀▀█▄█"
+    echo "▄██▀     ▀█                ██         ▄██▀     ▀█"
+    echo "██▀       ▀ ▄██▀██▄   ▄█▀▀███   ▄▄█▀████▀       ▀"
+    echo "██         ██▀   ▀██▄██    ██  ▄█▀   ███         "
+    echo "█▓▄        ██     ███▓█    █▓  ▓█▀▀▀▀▀▀▓▄        "
+    echo "▀▓█▄     ▄▀██     ▓█▀▓█    █▓  ▓█▄    ▄▓█▄     ▄▀"
+    echo "▓▓▓        ▓█     ▓▓▓▓▓    ▓▓  ▓▓▀▀▀▀▀▀▓▓        "
+    echo "▒▓▓▒     ▓▀▓▓▓   ▓▓▓▀▒▓    ▓▒  ▒▓▓    ▒▓▓▒     ▓▀"
+    echo "  ▒ ▒ ▒ ▒▓  ▒ ▒ ▒ ▓  ▒ ▒ ▒ ▓ ▒  ▒ ▒ ▒▒  ▓ ▒ ▒ ▒▓ "
+    echo "  ▒ ▒   ▒▒  ▒     ▒        ▓    ▒    ▒  ▒ ▒    ▒ "
+    echo "  ▒      ▒        ▒        ▒    ▒       ▒        "
+    echo "                  ▒        ▒     by HalsMaulMajo "
+    echo " Welcome to CodeC          ▒      & CoreUnit.NET "
+    echo "                                                 "
+    exit 0
+fi
+
+# if first argument is -rh or --rawhash
+if [[ "$1" == "-rh" || "$1" == "--rawhash" ]]; then
+    # print error if no second argument
+    if [ -z "$2" ]; then
+        echo "No hash as second argument!"
+        exit
+    fi
+
+    HASH=$2
+    HASH=${HASH:0:64}
+
+    printf "Set new hash: \"%s\"\n" "$HASH"
+
+    sed -i '/^hashed-password:/d' /home/codec/ws/.codec/code-server.yaml
+    echo -n "hashed-password: $HASH" >> /home/codec/ws/.codec/code-server.yaml
+
+    echo "Hash set!"
+    exit 0
+fi
+
+# if the first argument is -i then ask for a password in a prompt and save it in the first argument
+if [[ "$1" == "-i" || "$1" == "--interactive" ]]; then
+    echo -n "Enter password: "
+    read -s PASSWORD
+    echo
+    echo -n "Enter password again: "
+    read -s RE_PASSWORD
+    echo
+    if [ "$PASSWORD" != "$RE_PASSWORD" ]; then
+        echo "Passwords do not match"
+        exit 1
+    fi
+    $1="$PASSWORD"
+fi
+
+
+# check if the first argument is a string and the length is greater than 7
+if [ $# -eq 0 ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ ${#1} -lt 7 ]; then
+    echo "Usage: codep <password>"
+    echo "The password needs to be a string with at least 7 characters."
+    exit 1
+fi
+
+echo "Generate hash..."
+codec -rh "$(sha256sum2 "$1")"
