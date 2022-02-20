@@ -12,8 +12,8 @@ mkdir -p /home/codec/ws/old
 mkdir -p /home/codec/ws/main
 
 ### setup credentails
-#GIT_USERNAME="majo418"
-#GIT_EMAIL="majo@coreunit.net"
+#GIT_USERNAME="replaceme"
+#GIT_EMAIL="replaceme@example.com"
 #git config --global user.name "$GIT_USERNAME"
 #git config --global user.email "$GIT_EMAIL"
 
