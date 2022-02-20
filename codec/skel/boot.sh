@@ -6,19 +6,31 @@
 ### Its before a inteactive bash session or the code-server is started.
 ###
 
-### start the ssh-agent if not active
-eval "$(ssh-agent -s)" >/dev/null 2>&1
-### add the default linux ssh-key
-ssh-add ~/.ssh/id_rsa >/dev/null 2>&1
-
 ### create workspace folder
 mkdir -p /home/codec/ws/test
 mkdir -p /home/codec/ws/old
 mkdir -p /home/codec/ws/main
 
+### setup credentails
+#GIT_USERNAME="majo418"
+#GIT_EMAIL="majo@coreunit.net"
+#git config --global user.name "$GIT_USERNAME"
+#git config --global user.email "$GIT_EMAIL"
+
+### setup rsa key
+#rm -rf /home/codec/.ssh
+#ln -s /home/codec/ws/.codec/id /home/codec/.ssh
+#if [ ! -f ~/.ssh/id_rsa ]; then
+#    rm -rf ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
+#    ssh-keygen -t rsa -b 4096 -C "$GIT_EMAIL" -f "/home/codec/.ssh/id_rsa" -N ""
+#fi
 
 ### Starts the docker daemon in the background
-# dockerd &
+#screen -dm \
+#    -S dockerd \
+#    -L -Logfile "/home/codec/ws/.codec/logs/dockerd_$(date +"%m_%H_%d_%m_%Y").log" \
+#    -s bash \
+#    bash -c dockerd
 
 ### VS Code Extensions (recommended)
 
@@ -126,3 +138,4 @@ codei vscode-icons-team.vscode-icons
 
 ### ### C_SHARP
 #codei ms-dotnettools.csharp
+
