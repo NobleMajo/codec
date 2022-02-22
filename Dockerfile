@@ -67,13 +67,21 @@ RUN chmod -R 770 /root && \
     echo -n "PATH=\"/home/codec/ws/.codec/bin:/home/codec/.codec/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\"" > /etc/environment && \
     echo "\nsource /home/codec/.codec/bashinit.sh\ncd\n" >> /home/codec/.bashrc && \
     echo "\ncodec     ALL=(ALL:ALL) ALL\n" >> /etc/sudoers && \
-    chmod +x /etc/environment
+    chmod +x /etc/environment && \
+    mkdir -p /home/codec/ws
 
 WORKDIR /home/codec
 USER codec
 
 # install code-server
 RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=3.12.0
+#    timeout -s 9 --preserve-status 2s \
+#        /usr/lib/code-server/bin/code-server -r --disable-telemetry --disable-update-check \
+#            --auth none \
+#            --bind-addr 127.0.0.1 \
+#            /home/codec/ws \
+#            || \
+#            echo -n "Killed!"
 
 # prepare for startup
 COPY ./codec /home/codec/.codec
@@ -84,7 +92,7 @@ VOLUME /home/codec/ws
 # set export ports
 EXPOSE 8080/tcp
 
-CMD [ "/home/codec/.codec/docker-entrypoint.sh" ]
+CMD [ "su", "codec", "-c", "/home/codec/.codec/docker-entrypoint.sh" ]
 
 
 

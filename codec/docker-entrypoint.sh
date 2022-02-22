@@ -50,6 +50,13 @@ mkdir -p /usr/lib/code-server/vendor/modules/code-oss-dev
 rm -rf /usr/lib/code-server/vendor/modules/code-oss-dev/product.json
 ln -s /home/codec/ws/.codec/code-product.json /usr/lib/code-server/vendor/modules/code-oss-dev/product.json
 
+rm -rf /home/codec/ws/.codec/logs
+rm -rf /home/codec/ws/.codec/vscode/logs
+rm -rf /home/codec/ws/.codec/vscode/coder-logs
+rm -rf /home/codec/ws/.codec/vscode/User/Backups
+rm -rf /home/codec/ws/.codec/vscode/User/workspaceStorage
+mkdir -p /home/codec/ws/.codec/logs
+
 echo -n "$@" > /home/codec/ws/.codec/arguments.txt
 
 echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf
@@ -57,7 +64,7 @@ sysctl -p
 
 echo "CodecMain: Run boot script..."
 source /etc/environment
-source /home/codec/ws/.codec/boot.sh
+source /home/codec/ws/.codec/boot.sh > /home/codec/ws/.codec/logs/boot_$(date +"%m_%H_%d_%m_%Y").log
 
 echo "CodecMain: Run code-server..."
 

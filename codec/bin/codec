@@ -25,6 +25,17 @@ if [[ "$1" == "-r" || "$1" == "--restart" ]]; then
     exit 0
 fi
 
+# if first argument is -l or --log, print a logfile
+if [[ "$1" == "-l" || "$1" == "--log" ]]; then
+    LOGNAME=$2
+    if [ -z "$2" ]; then
+        LOGNAME="boot"
+    fi
+    echo "Logs of '/home/codec/ws/.codec/logs/$LOGNAME_*.log' ..."
+    cat /home/codec/ws/.codec/logs/$LOGNAME_*.log
+    exit 0
+fi
+
 # if first argument is -w or --welcome, print welcome message and exit
 if [[ "$1" == "-w" || "$1" == "--welcome" ]]; then
     echo "                                                 "
@@ -98,7 +109,6 @@ if [[ "$1" == "-p" || "$1" == "--password" || "$1" == "-i" || "$1" == "--interac
         echo "Password is too short!"
         exit 1
     fi
-    
     echo "Set new password..."
     codec -rh "$(sha256sum2 "$PASSWORD")"
     echo "New password set!"
@@ -106,6 +116,9 @@ if [[ "$1" == "-p" || "$1" == "--password" || "$1" == "-i" || "$1" == "--interac
 fi
 
 
+echo "     / / / / /   "
+echo "    C O D E C    "
+echo "   / / / / /     "
 echo "Usage: $0 [OPTION]"
 echo "Options:"
 echo "  -h,  --help: print this help and exit"
@@ -115,3 +128,7 @@ echo "  -rh, --rawhash <passhash>: saves a raw password hash"
 echo "  -w,  --welcome: print welcome message and exit"
 echo "  -r,  --restart: restart the code-server process"
 echo "  -rc, --restart-container: restart the codec container"
+echo "  -l, --log: print a logfile (example: boot, dockerd)"
+echo ""
+echo "   by majo418"
+echo "      & CoreUnit.NET"
