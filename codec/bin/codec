@@ -40,7 +40,7 @@ if [[ "$1" == "-w" || "$1" == "--welcome" ]]; then
     echo "  ▒ ▒ ▒ ▒▓  ▒ ▒ ▒ ▓  ▒ ▒ ▒ ▓ ▒  ▒ ▒ ▒▒  ▓ ▒ ▒ ▒▓ "
     echo "  ▒ ▒   ▒▒  ▒     ▒        ▓    ▒    ▒  ▒ ▒    ▒ "
     echo "  ▒      ▒        ▒        ▒    ▒       ▒        "
-    echo "                  ▒        ▒     by HalsMaulMajo "
+    echo "                  ▒        ▒        by majo418   "
     echo " Welcome to CodeC          ▒      & CoreUnit.NET "
     echo "                                                 "
     exit 0
