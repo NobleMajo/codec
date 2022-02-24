@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "CodecMain: clear /tmp"
+rm -rf /tmp/*
+rm -rf /var/run/docker.pid
+
 echo "CodecMain: Refresh, repair and renew default .codec if not exist..."
 mkdir -p /home/codec/ws/.codec
 # get all file and folder names in the /home/codec/.codec/skel dir as array
@@ -58,9 +62,6 @@ rm -rf /home/codec/ws/.codec/vscode/User/workspaceStorage
 mkdir -p /home/codec/ws/.codec/logs
 
 echo -n "$@" > /home/codec/ws/.codec/arguments.txt
-
-echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf
-sysctl -p
 
 echo "CodecMain: Run boot script..."
 source /etc/environment

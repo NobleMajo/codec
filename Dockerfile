@@ -68,8 +68,9 @@ RUN chmod -R 770 /root && \
     echo "\nsource /home/codec/.codec/bashinit.sh\ncd\n" >> /home/codec/.bashrc && \
     echo "\ncodec     ALL=(ALL:ALL) ALL\n" >> /etc/sudoers && \
     chmod +x /etc/environment && \
-    mkdir -p /home/codec/ws
-
+    mkdir -p /home/codec/ws && \
+    echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && \
+    sysctl -p
 WORKDIR /home/codec
 USER codec
 
@@ -93,10 +94,4 @@ VOLUME /home/codec/ws
 EXPOSE 8080/tcp
 
 CMD [ "su", "codec", "-c", "/home/codec/.codec/docker-entrypoint.sh" ]
-
-
-
-
-
-
 

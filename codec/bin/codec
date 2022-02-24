@@ -3,17 +3,8 @@
 # if first argument is -rc or --restart-container, stop the main process
 if [[ "$1" == "-rc" || "$1" == "--restart-container" ]]; then
     echo "Restarting codec container..."
-    # get all linux users in a string array
-    USERS=$(cut -d: -f1 < /etc/passwd)
-    # for each user in the array
-    for USER2 in $USERS; do
-        # if the user is not root
-        if [ "$USER2" != "$USER" ]; then
-            # kill all processes of the user
-            pkill -9 -u $USER2
-        fi
-    done
-    pkill -9 -u $USER
+    rm -rf /tmp/*
+    sudo pkill -f nodemon -9
     exit 0
 fi
 
@@ -116,9 +107,9 @@ if [[ "$1" == "-p" || "$1" == "--password" || "$1" == "-i" || "$1" == "--interac
 fi
 
 
-echo "     / / / / /   "
-echo "    C O D E C    "
-echo "   / / / / /     "
+echo "          / / / / /        "
+echo "         C O D E C         "
+echo "        / / / / /          "
 echo "Usage: $0 [OPTION]"
 echo "Options:"
 echo "  -h,  --help: print this help and exit"
