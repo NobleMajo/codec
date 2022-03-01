@@ -40,6 +40,13 @@ fi
 echo "Run container \"codec_$USERNAME\" with ports \"$START_PORT-$END_PORT\"..."
 # run codec docker container and publish all ports from START_PORT to END_PORT
 docker run -d --privileged \
+    --cpus 6 \
+    --cpu-period=100000 \
+    --cpu-quota=95000 \
+    --memory 8G \
+    --memory-reservation 6G \
+    --memory-swap 6G \
+    --memory-swappiness 50 \
     --restart unless-stopped \
     --name "codec_$USERNAME" \
     -p "0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT" \
@@ -48,4 +55,4 @@ docker run -d --privileged \
     --network ff_cunet \
     codec
 
-
+# if out of memeory dont kill the container: --oom-kill-disable
