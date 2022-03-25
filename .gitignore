@@ -1,6 +1,6 @@
 
+.store
 example.sh
-.store/**/*
 
 !.keep
 !.gitkeep
