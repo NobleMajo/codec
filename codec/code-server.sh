@@ -10,6 +10,7 @@ source /home/codec/ws/.codec/codeinit.sh
 
 echo "CodecMain: Execute code-server..."
 
+rm -rf /tmp/*
 code \
     --port 8080 \
     --host 0.0.0.0 \
