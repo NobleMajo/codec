@@ -1,0 +1,211 @@
+#!/bin/bash
+
+# if first argument is -rc or --restart-container, stop the main process
+if [[ "$1" == "-r" || "$1" == "--restart" ]]; then
+    echo "///CODEC///: Restarting codec container..."
+    (
+        rm -rf /tmp/*;
+        docker stop $(docker container ls -q);
+        pkill screen;
+        screen -wipe;
+        sudo pkill -f nodemon -9;
+    ) >/dev/null 2>&1
+    sleep 5
+    exit 0
+fi
+
+
+# if first argument is -r or --restart, restart the code-server process
+if [[ "$1" == "-fr" || "$1" == "--fast-restart" ]]; then
+    echo "///CODEC///: Restarting codeccode-server..."
+    touch /home/codec/ws/.codec/code-server.yaml
+    sleep 5
+    exit 0
+fi
+
+# if first argument is -fd or --free-disk, free some disk space
+if [[ "$1" == "-fd" || "$1" == "--free-disk" ]]; then
+    echo "///CODEC///: Clear all codec logs..."
+    rm -rf /home/codec/ws/.codec/logs/*
+
+    echo "///CODEC///: Clear tmp folder..."
+    rm -rf /tmp/*
+
+    echo "///CODEC///: Clear codeserver cache files..."
+    rm -rf /home/codec/ws/.codec/vscode/CachedExtensionVSIXs/*
+    rm -rf /home/codec/ws/.codec/vscode/User/Backups/*
+    rm -rf /home/codec/ws/.codec/vscode/User/workspaceStorage/*
+    rm -rf /home/codec/ws/.codec/vscode/User/customBuiltinExtensionsCache.json
+
+    echo "///CODEC///: node_modules folder..."
+    find /home/codec/ws/main -name "node_modules" -type d -prune -print | xargs du -chs
+    find /home/codec/ws/old -name "node_modules" -type d -prune -print | xargs du -chs
+    find /home/codec/ws/test -name "node_modules" -type d -prune -print | xargs du -chs
+
+    echo "///CODEC///: Wipe docker..."
+    codecdd start
+    codecdd swipe
+    codecdd stop
+
+    echo "///CODEC///: Clear apt cache files..."
+    aptup
+    sudo apt-get autoremove -y
+    sudo apt-get clean
+    sudo apt-get autoclean
+
+    echo "///CODEC///: Wipe unused screens..."
+    screen -wipe > /dev/null 2>&1
+
+    echo "///CODEC///: Clear system logs..."
+    sudo journalctl --rotate > /dev/null 2>&1
+    sudo journalctl --vacuum-time=3s
+
+    echo "///CODEC///: Finished!"
+    exit 0
+fi
+
+# if first argument is -cc or --clear-cache, clear some cache
+if [[ "$1" == "-cc" || "$1" == "--clear-cache" ]]; then
+    echo "///CODEC///: Clear all codec logs..."
+    rm -rf /home/codec/ws/.codec/logs/*
+
+    echo "///CODEC///: Clear tmp folder..."
+    rm -rf /tmp/*
+
+    echo "///CODEC///: Clear codeserver cache files..."
+    rm -rf /home/codec/ws/.codec/vscode/CachedExtensionVSIXs/*
+    rm -rf /home/codec/ws/.codec/vscode/User/Backups/*
+    rm -rf /home/codec/ws/.codec/vscode/User/workspaceStorage/*
+    rm -rf /home/codec/ws/.codec/vscode/User/customBuiltinExtensionsCache.json
+
+    echo "///CODEC///: Wipe docker..."
+    codecdd clean
+
+    echo "///CODEC///: Clear apt cache files..."
+    sudo apt-get autoremove -y
+    sudo apt-get clean
+    sudo apt-get autoclean
+
+    echo "///CODEC///: Wipe unused screens..."
+    screen -wipe > /dev/null 2>&1
+
+    echo "///CODEC///: Clear system logs..."
+    sudo journalctl --rotate > /dev/null 2>&1
+    sudo journalctl --vacuum-time=3s
+
+    echo "///CODEC///: Finished!"
+    exit 0
+fi
+
+# if first argument is -l or --log, print a logfile
+if [[ "$1" == "-l" || "$1" == "--log" ]]; then
+    LOGNAME=$2
+    if [ -z "$2" ]; then
+        LOGNAME="boot"
+    fi
+    echo "///CODEC///: Logs of '/home/codec/ws/.codec/logs/$LOGNAME_*.log' ..."
+    cat /home/codec/ws/.codec/logs/$LOGNAME_*.log
+
+    echo "///CODEC///: Finished!"
+    exit 0
+fi
+
+# if first argument is -w or --welcome, print welcome message and exit
+if [[ "$1" == "-w" || "$1" == "--welcome" ]]; then
+    echo "                                                 "
+    echo "                           ▄▄                    "
+    echo "  ▄▄█▀▀▀█▄█              ▀███           ▄▄█▀▀▀█▄█"
+    echo "▄██▀     ▀█                ██         ▄██▀     ▀█"
+    echo "██▀       ▀ ▄██▀██▄   ▄█▀▀███   ▄▄█▀████▀       ▀"
+    echo "██         ██▀   ▀██▄██    ██  ▄█▀   ███         "
+    echo "█▓▄        ██     ███▓█    █▓  ▓█▀▀▀▀▀▀▓▄        "
+    echo "▀▓█▄     ▄▀██     ▓█▀▓█    █▓  ▓█▄    ▄▓█▄     ▄▀"
+    echo "▓▓▓        ▓█     ▓▓▓▓▓    ▓▓  ▓▓▀▀▀▀▀▀▓▓        "
+    echo "▒▓▓▒     ▓▀▓▓▓   ▓▓▓▀▒▓    ▓▒  ▒▓▓    ▒▓▓▒     ▓▀"
+    echo "  ▒ ▒ ▒ ▒▓  ▒ ▒ ▒ ▓  ▒ ▒ ▒ ▓ ▒  ▒ ▒ ▒▒  ▓ ▒ ▒ ▒▓ "
+    echo "  ▒ ▒   ▒▒  ▒     ▒        ▓    ▒    ▒  ▒ ▒    ▒ "
+    echo "  ▒      ▒        ▒        ▒    ▒       ▒        "
+    echo "                  ▒        ▒        by majo418   "
+    echo " Welcome to CodeC          ▒      & CoreUnit.NET "
+    echo "                                                 "
+    exit 0
+fi
+
+# if first argument is -rh or --rawhash
+if [[ "$1" == "-rh" || "$1" == "--rawhash" ]]; then
+    # print error if no second argument
+    if [ -z "$2" ]; then
+        echo "///CODEC///: No hash as second argument!"
+        exit 1
+    fi
+    # print error if hash is shorter than 32 characters
+    if [ ${#2} -lt 32 ]; then
+        echo "///CODEC///: Hash is too short!"
+        exit 1
+    fi
+
+    HASH=$2
+    HASH=${HASH:0:64}
+
+    printf "///CODEC///: Set new hash: \"%s\"\n" "$HASH"
+
+    sed -i '/^hashed-password:/d' /home/codec/ws/.codec/code-server.yaml
+    echo -n "hashed-password: $HASH" >> /home/codec/ws/.codec/code-server.yaml
+
+    echo "///CODEC///: Hash set!"
+    exit 0
+fi
+
+PASSWORD="$2"
+# if the first argument is -i then ask for a password in a prompt and save it in the first argument
+if [[ "$1" == "-i" || "$1" == "--interactive" ]]; then
+    echo -n "///CODEC///: Enter password: "
+    read -s PASSWORD
+    echo
+    echo -n "///CODEC///: Enter password again: "
+    read -s RE_PASSWORD
+    echo
+    if [ "$PASSWORD" != "$RE_PASSWORD" ]; then
+        echo "///CODEC///: Passwords do not match"
+        exit 1
+    fi
+fi
+
+# if first argument is -p, --password, -i or --interactive, set the password
+if [[ "$1" == "-p" || "$1" == "--password" || "$1" == "-i" || "$1" == "--interactive" ]]; then
+    # print error if no $PASSWORD
+    if [ -z "$PASSWORD" ]; then
+        echo "///CODEC///: No password given!"
+        exit 1
+    fi
+    # print error if password is shorter than 8 characters
+    if [ ${#PASSWORD} -lt 8 ]; then
+        echo "///CODEC///: Password is too short!"
+        exit 1
+    fi
+    echo "///CODEC///: Set new password..."
+    codec -rh "$(sha256sum2 "$PASSWORD")"
+
+    echo "///CODEC///: New password set!"
+    exit 0
+fi
+
+
+echo "          / / / / /        "
+echo "         C O D E C         "
+echo "        / / / / /          "
+echo "Usage: $0 [OPTION]"
+echo "Options:"
+echo "  -h,  --help: print this help and exit"
+echo "  -i,  --interactive: start interactive password prompt"
+echo "  -p,  --password <password>: set password "
+echo "  -rh, --rawhash <passhash>: saves a raw password hash"
+echo "  -w,  --welcome: print welcome message and exit"
+echo "  -fr, --fast-restart: restart the code-server process"
+echo "  -r,  --restart: restart the codec container"
+echo "  -fd, --free-disk: free some disk space"
+echo "  -cc, --clear-cache: clear codec cache"
+echo "  -l,  --log: print a logfile (example: boot, dockerd)"
+echo ""
+echo "   by majo418"
+echo "      & CoreUnit.NET"
