@@ -1,6 +1,7 @@
 
 .store
 example.sh
+reset.sh
 
 !.keep
 !.gitkeep

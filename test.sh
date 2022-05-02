@@ -35,7 +35,7 @@ if ! [[ $END_PORT =~ ^[0-9]+$ ]] || [ $END_PORT -lt $START_PORT ] || [ $END_PORT
     exit 1
 fi
 
-./remove.sh $USERNAME
+./quit.sh $USERNAME
 
 echo "Run container \"codec_$USERNAME\" with ports \"$START_PORT-$END_PORT\"..."
 # run codec docker container and publish all ports from START_PORT to END_PORT

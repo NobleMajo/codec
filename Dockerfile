@@ -76,6 +76,9 @@ USER codec
 
 # install code-server
 RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=3.12.0
+#    cd /usr/lib/code-server && \
+#    npm up -f && \
+#    npm rebuild
 #    timeout -s 9 --preserve-status 2s \
 #        /usr/lib/code-server/bin/code-server -r --disable-telemetry --disable-update-check \
 #            --auth none \

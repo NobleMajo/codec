@@ -7,4 +7,4 @@ if [ -z "$1" ]; then
 fi
 USERNAME=$1
 
-docker rm -f "codec_$USERNAME"
+docker rm -fv "codec_$USERNAME"
