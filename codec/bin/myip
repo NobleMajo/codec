@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "### External IP Address ###"
+echo -n "CURL: IPINFO.IO: "
+curl https://ipinfo.io/ip
+echo ""
+echo -n "WGET: IFCONFIG.ME: "
+wget -qO- ifconfig.me/ip 
+echo ""
