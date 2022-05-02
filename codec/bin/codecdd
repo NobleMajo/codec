@@ -1,0 +1,93 @@
+#!/bin/bash
+
+#!/bin/bash
+
+# if this bash script has zero arguments thorw an error
+if [ $# -eq 0 ]; then
+    echo "#codecDD#: Error: No arguments supplied"
+    echo "#codecDD#: Usage: codecdd [start|stop|help]"
+    exit 1
+fi
+
+LOG_PATH="/home/codec/ws/.codec/logs/codecdd"
+CLEAN_LOG_PATH="$LOG_PATH/clean_$(date +"%m_%H_%d_%m_%Y").log"
+WIPE_LOG_PATH="$LOG_PATH/wipe_$(date +"%m_%H_%d_%m_%Y").log"
+CONTAINERD_LOG_PATH="$LOG_PATH/containerd_$(date +"%m_%H_%d_%m_%Y").log"
+DOCKERD_LOG_PATH="$LOG_PATH/dockerd_$(date +"%m_%H_%d_%m_%Y").log"
+mkdir -p $LOG_PATH
+
+# if first agument is "stop" print "stopping..." to the console
+if [ $1 == "stop" ] || [ $1 == "start" ]; then
+    echo "#codecDD#: Stopping docker deamon..."
+    screen -XxS dockerd quit > /dev/null 2>&1
+    screen -XxS containerd quit > /dev/null 2>&1
+    sleep 1
+    screen -wipe > /dev/null 2>&1
+
+    # if first agument is "start" print "starting..." to the console
+    if [ $1 == "start" ]; then
+        
+        echo "#codecDD#: Starting docker deamon..."
+        screen -dm \
+            -S containerd \
+            -L -Logfile "$CONTAINERD_LOG_PATH" \
+            -s bash \
+            bash -c containerd
+        sleep 1
+        screen -dm \
+            -S dockerd \
+            -L -Logfile "$DOCKERD_LOG_PATH" \
+            -s bash \
+            bash -c dockerd
+    fi
+    exit 0
+fi
+
+# if first argument is "sclean" clean unused docker objects
+if [ $1 == "sclean" ]; then
+    echo "#codecDD#: Remove unused images..."
+    docker image prune -f
+    echo "#codecDD#: Remove unused volumes..."
+    docker volume prune -f
+    echo "#codecDD#: Finished!"
+    exit 0
+fi
+
+# if first argument is "clean" clean unused docker objects
+if [ $1 == "clean" ]; then
+    echo "#codecDD#: Clear all unused docker objects..."
+    codecdd sclean > $CLEAN_LOG_PATH
+    exit 0
+fi
+
+# if first argument is "swipe" wipe all docker objects
+if [ $1 == "swipe" ]; then
+    echo "#codecDD#: Remove stopped container..."
+    docker container rm -f $(docker container ls -q --all)
+    echo "#codecDD#: Remove unused images..."
+    docker image prune -f --all
+    echo "#codecDD#: Remove unused volumes..."
+    docker volume prune -f
+    echo "#codecDD#: Docker system prune..."
+    docker system prune --all -f --volumes
+    echo "#codecDD#: Finished!"
+    exit 0
+fi
+
+# if first argument is "wipe" wipe all docker objects
+if [ $1 == "wipe" ]; then
+    echo "#codecDD#: Wipe all docker files..."
+    codecdd swipe > $WIPE_LOG_PATH
+    exit 0
+fi
+
+# if first argument is "help" print help dialog
+if [ $1 == "help" ]; then
+    echo "#codecDD#: Usage: codecdd [start|stop|clean|help]"
+    exit 0
+fi
+
+# if first argument is is not "start", "stop" or "help" throw an error
+echo "#codecDD#: Error: Invalid argument $1"
+exit 1
+
