@@ -20,7 +20,7 @@ RUN apt-get update && \
         nano vim git wget curl screen iptables supervisor \
         ca-certificates openssh-client apt-transport-https \
         gnupg software-properties-common && \
-    suto apt-get autoremove -y
+    sudo apt-get autoremove -y
 
 # install docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
