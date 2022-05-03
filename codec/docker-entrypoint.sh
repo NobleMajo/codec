@@ -65,7 +65,7 @@ echo -n "$@" > /home/codec/ws/.codec/arguments.txt
 
 echo "CodecMain: Run boot script..."
 source /etc/environment
-source /home/codec/ws/.codec/boot.sh > /home/codec/ws/.codec/logs/boot_$(date +"%m_%H_%d_%m_%Y").log
+source /home/codec/.codec/boot.sh > /home/codec/ws/.codec/logs/boot_$(date +"%m_%H_%d_%m_%Y").log
 
 echo "CodecMain: Run code-server..."
 

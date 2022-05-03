@@ -1,28 +1,26 @@
 FROM majo418/ubuntudind:latest
 
-LABEL version="0.3" maintainer="Majo Richter <majo@coreunit.net>"
+LABEL version="1.0" maintainer="Majo Richter <majo418@coreunit.net>"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /root
 USER root
 
-# unminimize
+# upgrade and unminimize
 RUN apt-get update && \
     apt-get install -yq apt-utils && \
     yes | unminimize - && \
-    sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list
-
-# unluck full ubuntu and upgrade it
-RUN apt-get update && \
-    apt-get full-upgrade -y
-
-# install ubuntu basics
-RUN apt-get install -y \
-    sudo bash adduser \
-    nano vim git wget curl screen iptables supervisor \
-    ca-certificates openssh-client apt-transport-https \
-    gnupg software-properties-common
+    sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get upgrade -y && \
+    apt-get full-upgrade -y && \
+    apt-get install -y \
+        sudo bash adduser \
+        nano vim git wget curl screen iptables supervisor \
+        ca-certificates openssh-client apt-transport-https \
+        gnupg software-properties-common && \
+    suto apt-get autoremove -y
 
 # install docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
@@ -31,16 +29,13 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
     apt-get install -y docker-ce
 
 # install node and npm
-RUN apt-get install -y nodejs npm
-
-# install node@16 and npm@latest
-RUN npm i -g n@latest && \
+RUN apt-get install -y nodejs npm && \
+    npm i -g n@latest && \
     n 16 && \ 
-    PATH="/usr/local/bin/node:$PATH" \
+    export PATH="/usr/local/bin/node:$PATH" && \
     npm i -g npm@latest && \
     npm i -g nodemon@latest && \
     npm up -g
-# export PATH="$PATH" && \
 
 # setup "codec" user
 RUN chmod -R 770 /root && \
@@ -48,13 +43,13 @@ RUN chmod -R 770 /root && \
     passwd -d root && \
     groupadd -g 10000 codec && \
     useradd -o \
-        -mk /etc/skel \
-        -d /home/codec \
-        -s /bin/bash \
-        -u 0 \
-        -g 0 \
-        -c "Default codec user" \
-        codec \
+    -mk /etc/skel \
+    -d /home/codec \
+    -s /bin/bash \
+    -u 0 \
+    -g 0 \
+    -c "Default codec user" \
+    codec \
     && \
     usermod -G root codec && \
     usermod -G sudo codec && \
@@ -76,24 +71,11 @@ USER codec
 
 # install code-server
 RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=3.12.0
-#    cd /usr/lib/code-server && \
-#    npm up -f && \
-#    npm rebuild
-#    timeout -s 9 --preserve-status 2s \
-#        /usr/lib/code-server/bin/code-server -r --disable-telemetry --disable-update-check \
-#            --auth none \
-#            --bind-addr 127.0.0.1 \
-#            /home/codec/ws \
-#            || \
-#            echo -n "Killed!"
 
-# prepare for startup
+# copy start files
 COPY ./codec /home/codec/.codec
 
-# set mount volume
 VOLUME /home/codec/ws
-
-# set export ports
 EXPOSE 8080/tcp
 
 CMD [ "su", "codec", "-c", "/home/codec/.codec/docker-entrypoint.sh" ]
