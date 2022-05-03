@@ -99,12 +99,20 @@ fi
 
 # if first argument is -l or --log, print a logfile
 if [[ "$1" == "-l" || "$1" == "--log" || "$1" == "log" ]]; then
-    LOGNAME=$2
+    LINES=$2
     if [ -z "$2" ]; then
+        LINES="20"
+    fi
+    LOGNAME=$3
+    if [ -z "$3" ]; then
         LOGNAME="boot"
     fi
     echo "///CODEC///: Logs of '/home/codec/ws/.codec/logs/$LOGNAME_*.log' ..."
-    cat /home/codec/ws/.codec/logs/$LOGNAME_*.log
+    if [[ "$LINES" == "all" ]]; then
+        tail /home/codec/ws/.codec/logs/$LOGNAME_*.log | cat -n
+    else
+        tail -n $LINES /home/codec/ws/.codec/logs/$LOGNAME_*.log | cat -n
+    fi
 
     echo "///CODEC///: Finished!"
     exit 0
@@ -205,12 +213,13 @@ if [[
     exit 0
 fi
 
+echo "              / / / / /"
+echo "             C O D E C"
+echo "            / / / / /"
+echo ""
+echo "CodeC Ubuntu 20.04 based vs-code server container."
+
 if [[ "$1" == "-h" || "$1" == "help" ]]; then
-    echo "              / / / / /"
-    echo "             C O D E C"
-    echo "            / / / / /"
-    echo ""
-    echo "CodeC Ubuntu 20.04 based vs-code server container."
     echo ""
     echo "Usage: 'codec [OPTION]'"
     echo "It is not possible to use multiple options."
@@ -224,19 +233,11 @@ if [[ "$1" == "-h" || "$1" == "help" ]]; then
     echo "  -r,  restart:      restart the codec container"
     echo "  -fd, free-disk:    free some disk space"
     echo "  -cc, clear-cache:  clear codec cache"
-    echo "  -l,  log:          print a logfile (example: boot, dockerd)"
-    echo ""
-    echo "   by majo418"
-    echo "      & CoreUnit.NET"
-    exit 0
+    echo "  -l,  log <n> <ln>: print a logfile (example: boot, dockerd)"
+else
+    echo "Use 'codec -h' to get more informations about this command."
 fi
 
-echo "              / / / / /"
-echo "             C O D E C"
-echo "            / / / / /"
-echo ""
-echo "CodeC Ubuntu 20.04 based vs-code server container."
-echo "Use 'codec -h' to get more informations about this command."
 echo ""
 echo "   by majo418"
 echo "      & CoreUnit.NET"
