@@ -39,10 +39,10 @@ else
 fi
 
 mkdir -p /home/codec/ws/.codec/bin
-echo -n "#!/bin/bash\n\ncd ..\n" >> "/home/codec/.codec/bin/cd."
-echo -n "#!/bin/bash\n\ncd ../..\n" >> "/home/codec/.codec/bin/cd.."
-echo -n "#!/bin/bash\n\ncd ../../..\n" >> "/home/codec/.codec/bin/cd..."
-echo -n "#!/bin/bash\n\ncd ../../../..\n" >> "/home/codec/.codec/bin/cd...."
+printf "\ncd ..\n" > "/home/codec/.codec/bin/cd."
+printf "\ncd ../..\n" > "/home/codec/.codec/bin/cd.."
+printf "\ncd ../../..\n" > "/home/codec/.codec/bin/cd..."
+printf "\ncd ../../../..\n" > "/home/codec/.codec/bin/cd...."
 chmod -R +x /home/codec/.codec/bin
 chmod -R +x /home/codec/ws/.codec/bin
 

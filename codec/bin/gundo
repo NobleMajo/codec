@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "Reset last commit..."
+git log -1 --pretty=%B
+git reset --soft HEAD~1
+gin
