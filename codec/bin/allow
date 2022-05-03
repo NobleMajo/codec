@@ -8,7 +8,7 @@ fi
 
 # print error if $1 is not a file
 if [ ! -f "$1" ]; then
-  echo "Error: $1 is not a file!"
+  echo "Error: $1 is a folder!"
   exit 1
 fi
 

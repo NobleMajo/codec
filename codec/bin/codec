@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# if first argument is -rc or --restart-container, stop the main process
-if [[ "$1" == "-r" || "$1" == "--restart" ]]; then
+# if first argument is -rc or --restart, stop the main process
+if [[ "$1" == "-r" || "$1" == "--restart" || "$1" == "restart" ]]; then
     echo "///CODEC///: Restarting codec container..."
     (
         rm -rf /tmp/*;
@@ -15,8 +15,8 @@ if [[ "$1" == "-r" || "$1" == "--restart" ]]; then
 fi
 
 
-# if first argument is -r or --restart, restart the code-server process
-if [[ "$1" == "-fr" || "$1" == "--fast-restart" ]]; then
+# if first argument is -r or --fast-restart, restart the code-server process
+if [[ "$1" == "-fr" || "$1" == "--fast-restart" || "$1" == "fast-restart" ]]; then
     echo "///CODEC///: Restarting codeccode-server..."
     touch /home/codec/ws/.codec/code-server.yaml
     sleep 5
@@ -24,7 +24,7 @@ if [[ "$1" == "-fr" || "$1" == "--fast-restart" ]]; then
 fi
 
 # if first argument is -fd or --free-disk, free some disk space
-if [[ "$1" == "-fd" || "$1" == "--free-disk" ]]; then
+if [[ "$1" == "-fd" || "$1" == "--free-disk" || "$1" == "free-disk" ]]; then
     echo "///CODEC///: Clear all codec logs..."
     rm -rf /home/codec/ws/.codec/logs/*
 
@@ -65,7 +65,7 @@ if [[ "$1" == "-fd" || "$1" == "--free-disk" ]]; then
 fi
 
 # if first argument is -cc or --clear-cache, clear some cache
-if [[ "$1" == "-cc" || "$1" == "--clear-cache" ]]; then
+if [[ "$1" == "-cc" || "$1" == "--clear-cache" || "$1" == "clear-cache" ]]; then
     echo "///CODEC///: Clear all codec logs..."
     rm -rf /home/codec/ws/.codec/logs/*
 
@@ -98,7 +98,7 @@ if [[ "$1" == "-cc" || "$1" == "--clear-cache" ]]; then
 fi
 
 # if first argument is -l or --log, print a logfile
-if [[ "$1" == "-l" || "$1" == "--log" ]]; then
+if [[ "$1" == "-l" || "$1" == "--log" || "$1" == "log" ]]; then
     LOGNAME=$2
     if [ -z "$2" ]; then
         LOGNAME="boot"
@@ -111,7 +111,7 @@ if [[ "$1" == "-l" || "$1" == "--log" ]]; then
 fi
 
 # if first argument is -w or --welcome, print welcome message and exit
-if [[ "$1" == "-w" || "$1" == "--welcome" ]]; then
+if [[ "$1" == "-w" || "$1" == "welcome" ]]; then
     echo "                                                 "
     echo "                           ▄▄                    "
     echo "  ▄▄█▀▀▀█▄█              ▀███           ▄▄█▀▀▀█▄█"
@@ -131,8 +131,8 @@ if [[ "$1" == "-w" || "$1" == "--welcome" ]]; then
     exit 0
 fi
 
-# if first argument is -rh or --rawhash
-if [[ "$1" == "-rh" || "$1" == "--rawhash" ]]; then
+# if first argument is -rh or --hash
+if [[ "$1" == "-rh" || "$1" == "---hash" || "$1" == "hash" ]]; then
     # print error if no second argument
     if [ -z "$2" ]; then
         echo "///CODEC///: No hash as second argument!"
@@ -158,7 +158,13 @@ fi
 
 PASSWORD="$2"
 # if the first argument is -i then ask for a password in a prompt and save it in the first argument
-if [[ "$1" == "-i" || "$1" == "--interactive" ]]; then
+if [[
+    "$1" == "-ip" ||
+    "$1" == "--interactive" ||
+    "$1" == "interactive" ||
+    "$1" == "setpw" ||
+    "$1" == "prompt"
+]]; then
     echo -n "///CODEC///: Enter password: "
     read -s PASSWORD
     echo
@@ -172,7 +178,16 @@ if [[ "$1" == "-i" || "$1" == "--interactive" ]]; then
 fi
 
 # if first argument is -p, --password, -i or --interactive, set the password
-if [[ "$1" == "-p" || "$1" == "--password" || "$1" == "-i" || "$1" == "--interactive" ]]; then
+if [[ 
+    "$1" == "-p" || 
+    "$1" == "--pass" || 
+    "$1" == "pass" || 
+    "$1" == "-ip" || 
+    "$1" == "--interactive" || 
+    "$1" == "interactive" || 
+    "$1" == "setpw" ||
+    "$1" == "prompt" 
+]]; then
     # print error if no $PASSWORD
     if [ -z "$PASSWORD" ]; then
         echo "///CODEC///: No password given!"
@@ -190,22 +205,39 @@ if [[ "$1" == "-p" || "$1" == "--password" || "$1" == "-i" || "$1" == "--interac
     exit 0
 fi
 
+if [[ "$1" == "-h" || "$1" == "help" ]]; then
+    echo "              / / / / /"
+    echo "             C O D E C"
+    echo "            / / / / /"
+    echo ""
+    echo "CodeC Ubuntu 20.04 based vs-code server container."
+    echo ""
+    echo "Usage: 'codec [OPTION]'"
+    echo "It is not possible to use multiple options."
+    echo "Options:"
+    echo "  -h,  help:         print this help and exit"
+    echo "  -i,  interactive:  start interactive password prompt"
+    echo "  -p,  pass <text>:  set password "
+    echo "  -rh, hash <hash>:  saves a raw password hash"
+    echo "  -w,  welcome:      print welcome message and exit"
+    echo "  -fr, fast-restart: restart the code-server process"
+    echo "  -r,  restart:      restart the codec container"
+    echo "  -fd, free-disk:    free some disk space"
+    echo "  -cc, clear-cache:  clear codec cache"
+    echo "  -l,  log:          print a logfile (example: boot, dockerd)"
+    echo ""
+    echo "   by majo418"
+    echo "      & CoreUnit.NET"
+    exit 0
+fi
 
-echo "          / / / / /        "
-echo "         C O D E C         "
-echo "        / / / / /          "
-echo "Usage: $0 [OPTION]"
-echo "Options:"
-echo "  -h,  --help: print this help and exit"
-echo "  -i,  --interactive: start interactive password prompt"
-echo "  -p,  --password <password>: set password "
-echo "  -rh, --rawhash <passhash>: saves a raw password hash"
-echo "  -w,  --welcome: print welcome message and exit"
-echo "  -fr, --fast-restart: restart the code-server process"
-echo "  -r,  --restart: restart the codec container"
-echo "  -fd, --free-disk: free some disk space"
-echo "  -cc, --clear-cache: clear codec cache"
-echo "  -l,  --log: print a logfile (example: boot, dockerd)"
+echo "              / / / / /"
+echo "             C O D E C"
+echo "            / / / / /"
+echo ""
+echo "CodeC Ubuntu 20.04 based vs-code server container."
+echo "Use 'codec -h' to get more informations about this command."
 echo ""
 echo "   by majo418"
 echo "      & CoreUnit.NET"
+
