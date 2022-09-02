@@ -12,7 +12,7 @@ if [ -z "$CODEC_USER_DATA" ]; then
 fi
 
 if [ "$2" != "-f" ] && [ "$2" != "--force" ]; then
-    echo "Type `y` to delete the codec user `$1`"
+    echo "Type 'y' to delete the codec user '$1'"
     echo "Userdata at:'$CODEC_USER_DATA/$1/.codec'"
     read INPUT_VALUE
     if [ "$INPUT_VALUE" != "y" ]; then

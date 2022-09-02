@@ -2,6 +2,15 @@
 
 CURRENT_DIR=$(dirname $(realpath $0))
 
+if [ -z "$1" ]; then
+    echo "No codec user defined!"
+    exit 1
+fi
+
+if [ -z "$CODEC_USER_DATA" ]; then
+    CODEC_USER_DATA="/var/lib/codec"
+fi
+
 CODEC_USERS="$(
 docker run -it --rm \
     -v "$CODEC_USER_DATA:/app" \
@@ -10,6 +19,10 @@ docker run -it --rm \
         ls -AQ
 )"
 
-echo "$CODEC_USERS"
+if [[ $CODEC_USERS != *"\"$1\""* ]]; then
+    echo "false"
+    exit 1
+fi
 
-#if echo "adla skdöal dk södl kadsö lkc" | grep -q "test" ; then echo "ok"; fi
+echo "true"
+exit 0
