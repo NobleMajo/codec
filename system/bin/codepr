@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "No hash set!"
+    exit
+fi
+
+HASH=$1
+HASH=${HASH:0:64}
+
+printf "Set new hash: \"%s\"\n" "$HASH"
+
+sed -i '/^hashed-password:/d' ~/.config/code-server/config.yaml
+echo -n "hashed-password: $HASH" >> ~/.config/code-server/config.yaml
+systemctl restart code-server@root
+
+echo "Hash set!"

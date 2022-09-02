@@ -1,0 +1,29 @@
+#!/bin/bash
+
+export DEBIAN_FRONTEND=noninteractive
+
+apt-get autoclean
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+rm -rf /tmp/*
+rm -rf /root/.cache
+rm -rf /home/*/.cache
+
+apt-get update
+apt-get --purge remove "$(dpkg --list | grep -E -i 'linux-image|linux-headers' | awk '/ii/{ print $2}' | grep -E -v "$i")"
+
+docker ps -q | xargs docker stop
+docker ps -q | xargs docker kill
+docker ps -q -a | xargs docker rm
+docker image prune -a -f
+rm -rf /var/lib/docker
+
+apt-get update
+apt-get full-upgrade -yq
+apt-get autoremove ––purge -yq
+apt-get autoclean
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+rm -rf /tmp/*
+rm -rf /root/.cache
+rm -rf /home/*/.cache

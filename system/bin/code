@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    set "$1" "/codec/.codec/default.code-workspace"
+fi
+
+# node /usr/lib/code-server
+/usr/lib/code-server/bin/code-server \
+    --reuse-window \
+    --verbose \
+    --disable-telemetry \
+    $@

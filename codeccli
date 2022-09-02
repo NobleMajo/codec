@@ -1,0 +1,70 @@
+#!/bin/bash
+
+CURRENT_DIR=$(dirname $(realpath $0))
+
+echo "[CODECCLI]"
+echo "'codeccli help' for more infos!"
+echo ""
+
+if [ -z $1 ]; then
+    echo "Error:"
+    echo "You need to define one subcommand!"
+    exit 1
+fi
+CMD="$1"
+
+if [[ "$CMD" = i* ]]; then
+    CMD="install"
+fi
+if [[ "$CMD" = u* ]]; then
+    CMD="uninstall"
+fi
+
+if [[ "$CMD" = a* ]]; then
+    CMD="attach"
+fi
+if [[ "$CMD" = n* ]]; then
+    CMD="build"
+fi
+if [[ "$CMD" = c* ]]; then
+    CMD="close"
+fi
+if [[ "$CMD" = dev* ]]; then
+    CMD="dev"
+elif [[ "$CMD" = d* ]]; then
+    CMD="delete"
+fi
+if [[ "$CMD" = e* ]]; then
+    CMD="exist"
+fi
+if [[ "$CMD" = h* ]]; then
+    CMD="help"
+fi
+if [[ "$CMD" = lo* ]]; then
+    CMD="logs"
+elif [[ "$CMD" = l* ]]; then
+    CMD="list"
+fi
+if [[ "$CMD" = p* ]]; then
+    CMD="pass"
+fi
+if [[ "$CMD" = r* ]]; then
+    CMD="reset"
+fi
+if [[ "$CMD" = s* ]]; then
+    CMD="start"
+fi
+
+if [ "$CMD" == "install" ]; then
+    echo "Install codeccli..."
+    rm -rf /usr/bin/codeccli
+    ln -s $CURRENT_DIR/codeccli /usr/bin/codeccli
+    exit 1
+fi 
+if [ "$CMD" == "uninstall" ]; then
+    echo "Uninstall codeccli..."
+    rm -rf /usr/bin/codeccli
+    exit 1
+fi 
+
+$CURRENT_DIR/scripts/$CMD.sh ${@:2}

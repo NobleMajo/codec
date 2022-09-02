@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Reset last commit:"
+git log -1 --pretty=%B
+echo "Press enter to undo this commit and CTRL+C to abort!"
+read
+git reset --soft HEAD~1
+gin

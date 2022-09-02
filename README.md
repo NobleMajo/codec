@@ -1,3 +1,4 @@
+
 # codec
 ![Docker](https://img.shields.io/docker/image-size/majo418/codec)
 ![CI/CD](https://github.com/majo418/codec/workflows/Image/badge.svg)
@@ -13,13 +14,11 @@
 - [codec](#codec)
 - [table of contents](#table-of-contents)
 - [about](#about)
-- [example commands](#example-commands)
-  - [pull image](#pull-image)
-  - [start container](#start-container)
-  - [exec command](#exec-command)
-  - [remove container](#remove-container)
-  - [run container persistently](#run-container-persistently)
-- [control scripts](#control-scripts)
+- [cli tool](#cli-tool)
+  - [install](#install)
+  - [use](#use)
+  - [debug](#debug)
+  - [stop](#stop)
 - [contribution](#contribution)
 
 # about
@@ -30,43 +29,31 @@
 |  
 The main focus of this project is to provide a ubuntu visual studio code workspace in a docker container accessible from the browser.
 
-# example commands
-## pull image
+# cli tool
+## install
 ```sh
-docker push majo418/codec:latest
+./codeccli i
 ```
-## start container
+all-in-one:
 ```sh
-docker run -d --privileged \
-    --restart unless-stopped \
-    --name codec \
-    --network host \
-    codec:latest
+git clone https://github.com/majo418/codec codec; cd codec; ./codeccli i
 ```
-## exec command
+## use
 ```sh
-docker exec -it codec \
-    docker ps
+codeccli start <NAME> <START_PORT> <PORT_COUNT> # starts a new container
+codeccli pass <NAME> # change the password of a container
 ```
-## remove container
+## debug
 ```sh
-docker rm -f codec
+codeccli list # show list of container volumes
+codeccli logs <NAME> # show systemd and codec service logs of a container
 ```
-## run container persistently
+## stop
 ```sh
-docker run -d --privileged \
-    --restart unless-stopped \
-    --name codec \
-    --network host \
-    -v $(pwd)/.store:/var/lib/docker \
-    codec:latest
+codeccli close <NAME> # stop and remove the container
+codeccli reset <NAME> # reset all files in /codec/mounts and /codec/.codec
+codeccli delete <NAME> # delete all persistent container files
 ```
-
-# control scripts
-This control scripts should help you to understand how to use the image and container.
- - build.sh - build docker image
- - start.sh USERNAME [START_PORT] [PORT_COUNT] - run docker container with network, volume and backup/cache mount to "./.store"
- - remove.sh USERNAME - remove docker container
 
 # contribution
  - 1. fork the project

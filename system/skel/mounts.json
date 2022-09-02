@@ -1,0 +1,7 @@
+{
+    "logs/codec": "/etc/codec/logs",
+    "systemd": "/usr/lib/systemd/system/codec.service.d",
+    "systemd.etc": "/etc/systemd/system",
+    "ssh": "/root/.ssh",
+    "vscode": "/root/.local/share/code-server"
+}

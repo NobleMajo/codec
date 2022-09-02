@@ -1,82 +1,96 @@
-FROM majo418/ubuntudind:latest
+FROM docker:dind-rootless as dind
+
+FROM ubuntu:22.04
 
 LABEL version="1.0" maintainer="Majo Richter <majo418@coreunit.net>"
 
+ARG NODE_VERSION=16
+ARG NPM_VERSION=8
+ARG VSCODE_VERSION=4.6.1
 ENV DEBIAN_FRONTEND=noninteractive
 
-WORKDIR /root
-USER root
+RUN apt-get update \
+    && apt-get install -yq --no-install-recommends apt-utils \
+    && apt-get full-upgrade -y \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && apt-get autoclean \
+    && rm -rf \
+    /var/lib/apt/lists/* \
+    /var/cache/apk/* \
+    /tmp/*
 
-# upgrade and unminimize
-RUN apt-get update && \
-    apt-get install -yq apt-utils && \
-    yes | unminimize - && \
-    sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list && \
-    apt-get update && \
-    apt-get upgrade -y && \
-    apt-get full-upgrade -y && \
-    apt-get install -y \
-        sudo bash adduser \
-        nano vim git wget curl screen iptables supervisor \
-        ca-certificates openssh-client apt-transport-https \
-        gnupg software-properties-common && \
-    sudo apt-get autoremove -y
+RUN apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+    sudo bash adduser systemctl git curl nano \
+    \
+    && apt-get install -y --no-install-recommends \
+    systemd systemd-cron screen rsyslog \
+    && cd /lib/systemd/system/sysinit.target.wants/ \
+    && ls | grep -v systemd-tmpfiles-setup | xargs rm -f $1 \
+    && rm -f \
+    /lib/systemd/system/multi-user.target.wants/* \
+    /etc/systemd/system/*.wants/* \
+    /lib/systemd/system/local-fs.target.wants/* \
+    /lib/systemd/system/sockets.target.wants/*udev* \
+    /lib/systemd/system/sockets.target.wants/*initctl* \
+    /lib/systemd/system/basic.target.wants/* \
+    /lib/systemd/system/anaconda.target.wants/* \
+    /lib/systemd/system/plymouth* \
+    /lib/systemd/system/systemd-update-utmp* \
+    /lib/systemd/system/systemd*udev* \
+    /lib/systemd/system/getty.target \
+    \
+    && apt-get install -y nodejs npm \
+    && npm i -g n@latest \
+    && n $NODE_VERSION \ 
+    && export PATH="/usr/local/bin/node:$PATH" \
+    && npm i -g npm@$NPM_VERSION \
+    && npm i -g nodemon@latest \
+    && npm up -g \ 
+    \
+    && apt-get install -y --no-install-recommends \
+    gnupg lxc apt-transport-https ca-certificates \
+    openssh-client software-properties-common \
+    && curl -fsSL https://get.docker.com | sh -s -- \
+    \
+    && curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=$VSCODE_VERSION \
+    \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && apt-get autoclean \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/cache/apk/* \
+    && rm -rf /root/.cache \
+    && rm -rf /root/.npm \
+    && rm -rf /tmp/*
 
-# install docker
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
-    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
-    apt-get update && \
-    apt-get install -y docker-ce
+COPY --from=dind /usr/local/bin/ /usr/local/bin/
+COPY system /etc/codec
 
-# install node and npm
-RUN apt-get install -y nodejs npm && \
-    npm i -g n@latest && \
-    n 16 && \ 
-    export PATH="/usr/local/bin/node:$PATH" && \
-    npm i -g npm@latest && \
-    npm i -g nodemon@latest && \
-    npm up -g
+RUN echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf \
+    && sysctl -p \
+    && echo -n "PATH=\"/codec/.codec/bin:/usr/local/bin/node:$PATH\"" > /etc/environment \
+    && chmod +x /etc/environment \
+    && echo "source /etc/codec/bash.sh" >> /root/.bashrc \
+    && cp /etc/codec/bin/* /usr/local/bin/ \
+    && mkdir -p /etc/docker \
+    && cp /etc/codec/deamon.json /etc/docker/daemon.json \
+    && mkdir -p /usr/lib/systemd/system/ \
+    && cp /etc/codec/codec.service /usr/lib/systemd/system/ \
+    && cp /etc/codec/vscode.service /usr/lib/systemd/system/ \
+    && usermod --shell /bin/bash root \
+    && /etc/codec/extensions.sh \
+    && systemctl disable lxc-net.service \
+    && systemctl disable lxc-monitord.service \
+    && systemctl disable lxc.service \
+    && systemctl disable containerd.service \
+    && systemctl disable docker.socket \
+    && systemctl disable docker.service \
+    && systemctl disable code-server@root \
+    && systemctl enable codec.service
 
-# setup "codec" user
-RUN chmod -R 770 /root && \
-    chown -hR root:sudo /root && \
-    passwd -d root && \
-    groupadd -g 10000 codec && \
-    useradd -o \
-    -mk /etc/skel \
-    -d /home/codec \
-    -s /bin/bash \
-    -u 0 \
-    -g 0 \
-    -c "Default codec user" \
-    codec \
-    && \
-    usermod -G root codec && \
-    usermod -G sudo codec && \
-    usermod -G codec codec && \
-    chmod -R 770 /home/codec && \
-    chown -hR codec:codec /home/codec && \
-    passwd -d codec && \
-    su codec && \
-    mkdir -p /home/codec/.bin && \
-    echo -n "PATH=\"/home/codec/ws/.codec/bin:/home/codec/.codec/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\"" > /etc/environment && \
-    echo "\nsource /home/codec/.codec/bashinit.sh\ncd\n" >> /home/codec/.bashrc && \
-    echo "\ncodec     ALL=(ALL:ALL) ALL\n" >> /etc/sudoers && \
-    chmod +x /etc/environment && \
-    mkdir -p /home/codec/ws && \
-    echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && \
-    sysctl -p
-WORKDIR /home/codec
-USER codec
-
-# install code-server
-RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=3.12.0
-
-# copy start files
-COPY ./codec /home/codec/.codec
-
-VOLUME /home/codec/ws
 EXPOSE 8080/tcp
 
-CMD [ "su", "codec", "-c", "/home/codec/.codec/docker-entrypoint.sh" ]
-
+CMD ["/lib/systemd/systemd"]
