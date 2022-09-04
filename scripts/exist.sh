@@ -24,5 +24,19 @@ if [[ $CODEC_USERS != *"\"$1\""* ]]; then
     exit 1
 fi
 
+if [ "$2" == "CODECDIR" ]; then
+    CODEC_DIR="$(
+        docker run -it --rm \
+            -v "$CODEC_USER_DATA/$1:/app" \
+            -w /app \
+            ubuntu:22.04 \
+                ls -AQ
+    )"
+    if [[ $CODEC_DIR != *"\".codec\""* ]]; then
+        echo "false"
+        exit 1
+    fi
+fi
+
 echo "true"
 exit 0

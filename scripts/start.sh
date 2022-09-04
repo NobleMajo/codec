@@ -84,8 +84,8 @@ echo "Image ready!"
 
 $CURRENT_DIR/close.sh $1
 
-ALREADY_EXIST=$($CURRENT_DIR/exist.sh "$1")
- 
+ALREADY_EXIST=$($CURRENT_DIR/exist.sh "$1" "CODECDIR")
+
 echo "Start '$1'..."
 docker run -d --privileged \
     --name "codec_$1" \
