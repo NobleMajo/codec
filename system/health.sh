@@ -39,5 +39,10 @@ rm -rf /usr/lib/code-server/lib/vscode/product.json
 ln -s /codec/.codec/product.json /usr/lib/code-server/lib/vscode/product.json
 echo "Linked: '/usr/lib/code-server/lib/vscode/product.json'"
 
+echo "[CODEC][HEALTH]: Linking..."
+rm -rf /usr/lib/code-server/src/browser/pages
+ln -s /etc/codec/login /usr/lib/code-server/src/browser/pages
+echo "Linked: '/usr/lib/code-server/src/browser'"
+
 echo "[CODEC][HEALTH]: Disable telemetry..."
 /etc/codec/vscode_telemetry.js

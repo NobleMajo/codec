@@ -1,9 +1,5 @@
 #!/bin/bash
 
-apt-get update
-apt-get full-upgrade -y
-apt-get autoremove -y
-
 source /etc/environment
 
 # clear cache files
@@ -11,7 +7,10 @@ source /etc/environment
 
 # health check
 /etc/codec/health.sh
-echo "$CODEC_PORTS" > /codec/.codec/ports.txt
+
+apt-get update
+apt-get full-upgrade -y
+apt-get autoremove -y
 
 # default vscode extensions
 /etc/codec/extensions.sh
