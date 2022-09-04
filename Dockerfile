@@ -68,31 +68,32 @@ RUN apt-get update \
     && rm -rf /root/.npm \
     && rm -rf /tmp/*
 
-COPY --from=dind /usr/local/bin/ /usr/local/bin/
-COPY system /etc/codec
-
 RUN echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf \
     && sysctl -p \
     && echo -n "PATH=\"/codec/.codec/bin:/usr/local/bin/node:$PATH\"" > /etc/environment \
     && chmod +x /etc/environment \
     && echo "source /etc/codec/bash.sh" >> /root/.bashrc \
-    && cp /etc/codec/bin/* /usr/local/bin/ \
-    && mkdir -p /etc/docker \
-    && cp /etc/codec/deamon.json /etc/docker/daemon.json \
-    && mkdir -p /usr/lib/systemd/system/ \
-    && cp /etc/codec/codec.service /usr/lib/systemd/system/ \
-    && cp /etc/codec/vscode.service /usr/lib/systemd/system/ \
     && usermod --shell /bin/bash root \
-    && /etc/codec/extensions.sh \
     && systemctl disable lxc-net.service \
     && systemctl disable lxc-monitord.service \
     && systemctl disable lxc.service \
     && systemctl disable containerd.service \
     && systemctl disable docker.socket \
     && systemctl disable docker.service \
-    && systemctl disable code-server@root \
-    && systemctl enable codec.service
+    && systemctl disable code-server@root
 
 EXPOSE 8080/tcp
+
+COPY --from=dind /usr/local/bin/ /usr/local/bin/
+COPY system /etc/codec
+
+RUN cp /etc/codec/bin/* /usr/local/bin/ \
+    && mkdir -p /etc/docker \
+    && cp /etc/codec/deamon.json /etc/docker/daemon.json \
+    && mkdir -p /usr/lib/systemd/system/ \
+    && cp /etc/codec/codec.service /usr/lib/systemd/system/ \
+    && cp /etc/codec/vscode.service /usr/lib/systemd/system/ \
+    && /etc/codec/extensions.sh \
+    && systemctl enable codec.service
 
 CMD ["/lib/systemd/systemd"]
