@@ -1,0 +1,4 @@
+bind-addr: 0.0.0.0:8080
+cert: false
+auth: password
+hashed-password: none

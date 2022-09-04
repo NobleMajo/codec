@@ -1,4 +1,12 @@
 #!/bin/bash
 
+echo "Map keys:"
+echo " - 'q' = Quit/Exit"
+echo " - 'a' = Zoom in"
+echo " - 'y' = Zoom out"
+echo " - Arrows = Navigate"
+echo " - Mouse = Navigate & Zoom"
+
 telnet mapscii.me
+
 clear

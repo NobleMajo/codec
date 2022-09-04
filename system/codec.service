@@ -4,7 +4,7 @@ Description=Codec Service
 [Service]
 Type=simple
 PIDFile=/etc/codec/codec.pid
-ExecStart=/etc/codec/boot.sh
+ExecStart=/bin/bash -c /etc/codec/boot.sh
 
 [Install]
 WantedBy=multi-user.target

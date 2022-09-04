@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "Docker container stats:"
+docker stats --no-trunc --no-stream --format "table {{.Name}}  |  {{.CPUPerc}}  |  {{.MemUsage}}"

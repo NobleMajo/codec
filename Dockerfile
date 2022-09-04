@@ -9,7 +9,8 @@ ARG NPM_VERSION=8
 ARG VSCODE_VERSION=4.6.1
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update \
+RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
+    && apt-get update \
     && apt-get install -yq --no-install-recommends apt-utils \
     && apt-get full-upgrade -y \
     && apt-get autoremove -y \
@@ -23,7 +24,8 @@ RUN apt-get update \
 RUN apt-get update \
     \
     && apt-get install -y --no-install-recommends \
-    sudo bash adduser systemctl git curl nano \
+    sudo bash adduser systemctl git curl nano locales \
+    && locale-gen "en_IN.UTF-8" \
     \
     && apt-get install -y --no-install-recommends \
     systemd systemd-cron screen rsyslog \

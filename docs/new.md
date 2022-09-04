@@ -17,43 +17,41 @@ The new codec file structure, software and features.
     - health.sh
     - skel
       - .codec
-        - 
+        - ...skel...
       - mounts
         - vscode
     - ports.info.txt
 - root  
   - ws -> /codec
 - usr
-  - bin <- codec bins moved
-- /codec/
+  - bin <- codec bins moved to here
+- /codec/             <- synced/mounted
   - .codec/
     - bin <- custom bins moved
-    - scripts/
-      - enabled/
-        - mount.boot.sh
-        - env.bash.sh
-        - ssh.bash.sh
-        - git.async.sh
-        - npm.async.sh
-        - vscode.async.sh
-        - apt.boot.sh
-      - disabled/
-        - dockerd.async.sh
-        - btop.async.sh
-        - marketplace.boot.sh
-    - logs/
+    - modules/
+    - optional/
+      - env.bash.sh
+      - ssh.bash.sh
+      - git.async.sh
+      - npm.async.sh
+      - vscode.async.sh
+      - apt.boot.sh
+      - dockerd.async.sh
+      - btop.async.sh
+      - marketplace.boot.sh
+      - zapt.boot.sh
     - mounts.json
   - mounts/
-    - systemd -> /etc/systemd/system
-    - ssh -> /root/.ssh
-    - vscode -> /root/.local/share/code-server
+    - systemd <- /etc/systemd/system
+    - ssh <- /root/.ssh
+    - vscode <- /root/.local/share/code-server
   - main/
   - todo/
   - archieved/
 ```
 
 # software
- - \- unminimize container
+ - \- unminimize docker image
  - \- ubuntu v20.04
  - \+ ubuntu v22.04 (UPDATE LTS)
  - \- vscode server v3

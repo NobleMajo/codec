@@ -114,35 +114,34 @@ if [[ "$1" == "-em" || "$1" == "--modon" || "$1" == "modon" ]]; then
         exit 1
     fi
     echo "///CODEC///: Enable module '$MODULE_NAME'..."
-    ls -al $MODULES_PATH
-    cp $OPTIONAL_PATH/$MODULE_NAME.*.sh $MODULES_PATH/
-    ls -al $MODULES_PATH
+    rm -rf $MODULES_PATH/$MODULE_NAME.*.sh
+    if [ -f $OPTIONAL_PATH/$MODULE_NAME.env.sh ]; then
+        ln -s \
+            $OPTIONAL_PATH/$MODULE_NAME.env.sh \
+            $MODULES_PATH/$MODULE_NAME.env.sh
+    fi
+    if [ -f $OPTIONAL_PATH/$MODULE_NAME.boot.sh ]; then
+        ln -s \
+            $OPTIONAL_PATH/$MODULE_NAME.boot.sh \
+            $MODULES_PATH/$MODULE_NAME.boot.sh
+    fi
+    if [ -f $OPTIONAL_PATH/$MODULE_NAME.async.sh ]; then
+        ln -s \
+            $OPTIONAL_PATH/$MODULE_NAME.async.sh \
+            $MODULES_PATH/$MODULE_NAME.async.sh
+    fi
+    if [ -f $OPTIONAL_PATH/$MODULE_NAME.bash.sh ]; then
+        ln -s \
+            $OPTIONAL_PATH/$MODULE_NAME.bash.sh \
+            $MODULES_PATH/$MODULE_NAME.bash.sh
+    fi
 
-    BOOT_MODULE_PATH="$MODULES_PATH/$MODULE_NAME.boot.sh"
-    ASYNC_MODULE_PATH="$MODULES_PATH/$MODULE_NAME.async.sh"
-    BASH_MODULE_PATH="$MODULES_PATH/$MODULE_NAME.bash.sh"
-    if [ -f $BOOT_MODULE_PATH ]; then
-        BOOT_MODULE_NAME=$(basename "$BOOT_MODULE_PATH")
-        BOOT_MODULE_LOGS_PATH=$LOGS_PATH/module.$BOOT_MODULE_NAME.boot.log
-        echo "[CODEC][MODULE][ENABLE-BOOT]: Start '$BOOT_MODULE_NAME'..."
-        echo "Logs: 'cat $BOOT_MODULE_LOGS_PATH'"
-        echo "Exec: $BOOT_MODULE_PATH"
-        touch $BOOT_MODULE_LOGS_PATH
-        $BOOT_MODULE_PATH > $BOOT_MODULE_LOGS_PATH
-        echo "[CODEC][MODULE][ENABLE-BOOT]: '$BOOT_MODULE_NAME' done!"
+    echo "Restart codec to apply changes? (y/n)"
+    read INPUT_VALUE
+    if [ "$INPUT_VALUE" == "y" ]; then
+        codec -r
     fi
-    if [ -f $ASYNC_MODULE_PATH ]; then
-        ASYNC_MODULE_NAME=$(basename "$ASYNC_MODULE_PATH")
-        ASYNC_MODULE_LOGS_PATH=$LOGS_PATH/module.$ASYNC_MODULE_NAME.async.log
-        echo "[CODEC][MODULE][ENABLE-ASYNC]: Start '$ASYNC_MODULE_NAME' async..."
-        echo "Logs: 'cat $ASYNC_MODULE_LOGS_PATH'"
-        touch $ASYNC_MODULE_LOGS_PATH
-        bash -c "$ASYNC_MODULE_PATH" > $ASYNC_MODULE_LOGS_PATH & echo
-    fi
-    if [ -f $BASH_MODULE_PATH ]; then
-        source $BASH_MODULE_PATH
-    fi
-    echo "DONE!"
+    echo "Apply changes on next codec restart!"
     exit 0
 fi
 
@@ -152,32 +151,15 @@ if [[ "$1" == "-dm" || "$1" == "--modoff" || "$1" == "modoff" ]]; then
         echo "You need to define a module"
         exit 1
     fi
-    echo "///CODEC///: Disable module '$MODULE'..."
-    cp -n $MODULES_PATH/$MODULE_NAME.*.sh $OPTIONAL_PATH/
+    echo "///CODEC///: Disable module '$MODULE_NAME'..."
     rm -rf $MODULES_PATH/$MODULE_NAME.*.sh
 
-    BOOT_MODULE_PATH="$OPTIONAL_PATH/$MODULE_NAME.boot.sh"
-    ASYNC_MODULE_PATH="$OPTIONAL_PATH/$MODULE_NAME.async.sh"
-    BASH_MODULE_PATH="$OPTIONAL_PATH/$MODULE_NAME.bash.sh"
-    if [ -f $BOOT_MODULE_PATH ]; then
-        BOOT_MODULE_NAME=$(basename "$BOOT_MODULE_PATH")
-        BOOT_MODULE_LOGS_PATH=$LOGS_PATH/module.$BOOT_MODULE_NAME.boot.log
-        echo "[CODEC][MODULE][DISABLE-BOOT]: Run '$BOOT_MODULE_NAME'..."
-        touch $BOOT_MODULE_LOGS_PATH
-        $BOOT_MODULE_PATH | tee $BOOT_MODULE_LOGS_PATH
-        echo "[CODEC][MODULE][DISABLE-BOOT]: '$BOOT_MODULE_NAME' done!"
+    echo "Restart codec to apply changes? (y/n)"
+    read INPUT_VALUE
+    if [ "$INPUT_VALUE" == "y" ]; then
+        codec -r
     fi
-    if [ -f $ASYNC_MODULE_PATH ]; then
-        ASYNC_MODULE_NAME=$(basename "$ASYNC_MODULE_PATH")
-        ASYNC_MODULE_LOGS_PATH=$LOGS_PATH/module.$ASYNC_MODULE_NAME.async.log
-        echo "[CODEC][MODULE][DISABLE-ASYNC]: Start '$ASYNC_MODULE_NAME' async..."
-        touch $ASYNC_MODULE_LOGS_PATH
-        bash -c "$ASYNC_MODULE_PATH" > $ASYNC_MODULE_LOGS_PATH & echo
-    fi
-    if [ -f $BASH_MODULE_PATH ]; then
-        source $BASH_MODULE_PATH
-    fi
-    echo "DONE!"
+    echo "Apply changes on next codec restart!"
     exit 0
 fi
 
@@ -258,9 +240,12 @@ if [[
     "$1" == "setpw" ||
     "$1" == "prompt"
 ]]; then
-    echo -n "///CODEC///: Enter password: "
-    read -s PASSWORD
-    echo
+    PASSWORD=""
+    while [ ${#PASSWORD} -lt 8 ]; do 
+        echo "///CODEC///: Enter a password with min 8 letters:"
+        read -s PASSWORD
+    done
+
     echo -n "///CODEC///: Enter password again: "
     read -s RE_PASSWORD
     echo

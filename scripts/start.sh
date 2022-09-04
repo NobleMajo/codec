@@ -19,12 +19,23 @@ if [ -z "$CODEC_NET" ]; then
 fi
 
 if [ -z "$MAX_ALLOED_CODEC_PORTS" ]; then
-    MAX_ALLOED_CODEC_PORTS=15
+    MAX_ALLOED_CODEC_PORTS=30
+fi
+
+if [ -z "$DEFAULT_CODEC_PORT_COUNT" ]; then
+    DEFAULT_CODEC_PORT_COUNT="10"
 fi
 
 START_PORT="$2" # 20
 PORT_COUNT="$3" # 5
-END_PORT=$(($START_PORT+$PORT_COUNT-1)) # 24 
+
+if [ -z $2 ]; then
+    echo "Start port not defined!"
+    exit 1
+fi
+if [ -z $3 ]; then
+    PORT_COUNT="$DEFAULT_CODEC_PORT_COUNT"
+fi
 
 if (( START_PORT > 65535 )); then
     echo "The start port '$START_PORT' is not in the port range (1-65535)!"
@@ -34,15 +45,6 @@ if (( START_PORT < 1 )); then
     echo "The start port '$START_PORT' is not in the port range (1-65535)!"
     exit 1
 fi
-if (( END_PORT > 65535 )); then
-    echo "The end port '$END_PORT' is not in the port range (1-65535)!"
-    exit 1
-fi
-if (( END_PORT < 1 )); then
-    echo "The end port '$END_PORT' is not in the port range (1-65535)!"
-    exit 1
-fi
-
 if (( PORT_COUNT > $MAX_ALLOED_CODEC_PORTS )); then
     echo "The port count '$PORT_COUNT' is greater then the maximum allowed count of ports '$MAX_ALLOED_CODEC_PORTS'!"
     exit 1
@@ -52,6 +54,16 @@ if (( PORT_COUNT < 1 )); then
     exit 1
 fi
 
+END_PORT=$(($START_PORT+$PORT_COUNT-1)) # 24 
+
+if (( END_PORT > 65535 )); then
+    echo "The end port '$END_PORT' is not in the port range (1-65535)!"
+    exit 1
+fi
+if (( END_PORT < 1 )); then
+    echo "The end port '$END_PORT' is not in the port range (1-65535)!"
+    exit 1
+fi
 
 if [ "$4" != "-f" ] && [ "$4" != "--force" ]; then
     echo "Type 'y' to create the codec user '$1'"

@@ -15,9 +15,15 @@ The old codec file structure, software and features.
     - .codec
       - bin
       - skel
-    - ws
+      - docker-entrypoint.sh
+    - ws                    <- synced/mounted
       - .codec
         - bin
+        - boot.sh
+        - bash.sh
+        - default.code-workspace
+        - ports.txt
+        - ...etc...
       - main
       - todo
       - test
@@ -30,7 +36,7 @@ The old codec file structure, software and features.
  - git
  - node v16
  - npm v8
- - unminimize container
+ - unminimize docke image
   
 # codec components
  - codec bins
