@@ -2,6 +2,8 @@
 - [CodeC](#codec)
 - [About](#about)
 - [Warning](#warning)
+  - [Warning for Compute/Software/Hosting](#warning-for-computesoftwarehosting)
+  - [Warning for Storage/Cloud/Database](#warning-for-storageclouddatabase)
 - [Ecosystem](#ecosystem)
   - [Container](#container)
   - [Breakout](#breakout)
@@ -21,12 +23,23 @@
 Codec is a `visual studio code` docker container designed for development from anywhere `from any web browser` with some additional development features.
 
 # Warning
-Codec can only store data in the `/codec` folder.
-Data saved outside of this folder will not be saved after a codec restart.
+Codec is not a server hosting or cloud service.
 
-if a mysql database is installed and the data folder is not in `/codec`, the database is deleted after a restart of codec.
+## Warning for Compute/Software/Hosting
+It is allowed to use software on the released ports ("/codec/.codec/ports.into.txt").
+
+Other software may not be run for more than 8 hours without an interruption of at least half of the runtime.
+That means a break of at least 4 hours after 8 hours, a break of at least 3 hours after 6 hours and a break of at least 1 hour after 2 hours.
+
+## Warning for Storage/Cloud/Database
+Also its not allowed to use codec as place to store data.
+Please try not to use more than 1 GB.
+if you exceed this limit, we will contact you before we delete anything. 
+
+If the container uses more than 4 GB, we may look into the container's data and delete folders and files without asking and warning again.
 
 # Ecosystem
+
 ## Container
 Codec runs inside a linux container. this is something like a virtual machine.
 
@@ -34,7 +47,12 @@ Codec runs inside a linux container. this is something like a virtual machine.
 Breaking out of this container is prevented by mechanisms, but is still not permitted.
 
 # Persistent data
-If software and its data are to be stored persistently, the following [Software](#Software) and [Data](#Data) steps must be taken.
+Codec can only store data in the `/codec` folder.
+Data saved outside of this folder will not be saved after a codec restart.
+
+If a mysql database is installed and the data folder is not in `/codec`, the DBMS and  the database is deleted after a restart of the codec container.
+
+If software and its data needs to be stored persistently, then follow the [Software](#Software) and [Data](#Data) steps.
 
 ## Software
 No software should be installed in the `/codec` folder.
@@ -69,6 +87,8 @@ Because the link points to `/codec/mounts/*`, all data will be stored permanentl
 ## Docker
 The codec docker image supports `dind` ("Docker in Docker"), which means `docker can be used` within the codec container if the host wants to support it.
 
+Use `codec modon docker` to enable dockerd.
+
 ## Systemd
 The first thing the codec container starts is systemd.
 
@@ -90,7 +110,7 @@ Codec allows you to place your own commands in the `/codec/.codec/bin` folder.
 These can then be used in the command line.
 
 There are already some helpful commands that are not required for the codec ecosystem.
-### Examples
+#### Command examples:
  - aptup (apt system update, upgrade, autoremove and clean up)
  - gin (shows curren git branche and file changes)
  - gundo (shows and undo the last commit if you press enter)

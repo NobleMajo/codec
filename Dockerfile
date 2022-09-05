@@ -28,7 +28,7 @@ ENV LANG en_US.UTF-8
 RUN apt-get update \
     \
     && apt-get install -y --no-install-recommends \
-    sudo bash adduser systemctl curl nano locales \
+    sudo bash adduser systemctl curl git nano locales lsof \
     \
     && apt-get install -y --no-install-recommends \
     systemd systemd-cron screen rsyslog \

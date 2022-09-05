@@ -16,5 +16,8 @@ apt-get update
 # run vscode server service
 systemctl start vscode
 
+# readme 
+/etc/codec/readme.sh
+
 # init module system
 /etc/codec/modules.sh
