@@ -55,16 +55,4 @@ if [[ "$CMD" = s* ]]; then
     CMD="start"
 fi
 
-if [ "$CMD" == "install" ]; then
-    echo "Install codeccli..."
-    rm -rf /usr/bin/codeccli
-    sudo ln -s $CURRENT_DIR/codeccli /usr/bin/codeccli
-    exit 1
-fi 
-if [ "$CMD" == "uninstall" ]; then
-    echo "Uninstall codeccli..."
-    sudo rm -rf /usr/bin/codeccli
-    exit 1
-fi 
-
 $CURRENT_DIR/scripts/$CMD.sh ${@:2}
