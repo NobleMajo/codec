@@ -225,9 +225,12 @@ if [[ "$1" == "-rh" || "$1" == "---hash" || "$1" == "hash" ]]; then
 
     sed -i '/^hashed-password:/d' /codec/.codec/vscode-server.yaml
     echo -n "hashed-password: $HASH" >> /codec/.codec/vscode-server.yaml
-    systemctl restart vscode
 
     echo "///CODEC///: Hash set!"
+
+    echo "///CODEC///: Codec is restarting..."
+    echo "Please reload the page!"
+    systemctl restart vscode
     exit 0
 fi
 
