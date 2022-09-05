@@ -93,7 +93,9 @@ RUN cp /etc/codec/bin/* /usr/local/bin/ \
     && mkdir -p /usr/lib/systemd/system/ \
     && cp /etc/codec/codec.service /usr/lib/systemd/system/ \
     && cp /etc/codec/vscode.service /usr/lib/systemd/system/ \
-    && /etc/codec/extensions.sh \
-    && systemctl enable codec.service
+    && systemctl enable codec.service \
+    && export VSCODE_GALLERY=ms2 \
+    && /etc/codec/vscode_gallery.js \
+    && codei vscode-icons-team.vscode-icons thiagolciobittencourt.ubuntuvscode
 
 CMD ["/lib/systemd/systemd"]

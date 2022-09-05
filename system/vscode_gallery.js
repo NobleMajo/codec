@@ -31,7 +31,6 @@ if (process.env["VSCODE_GALLERY"].startsWith("open")) {
         "itemUrl": "https://marketplace.visualstudio.com/items",
         "cacheUrl": "https://vscode.blob.core.windows.net/gallery/index"
     }
-
 }
 
 fs.writeFileSync(

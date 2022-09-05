@@ -84,6 +84,11 @@
     </div>
 
     <div class="login-box">
+      <div class="header">
+        <h3 class="main">Welcome to VS<u><b>CodeC</b></u>ontainer,</h3>
+        <div class="sub">please enter your developer password:</div>
+      </div>
+
       <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 1020" width="100%">
         <path fill="#a72a2aed"
           d="m1282.3 565v132.3l8.4 9.3-8.4 8.2v-1.2l-291.1 290.2 13.1-67.9v-816.6l-18.7-29.2h233l63.7 47.9v118.2h-112.3v-28.1h-62.7v448.1l62.7-57.3v-53.9zm73-474.9h202.1l42.1 52.6v534.7l-154.4 141.5-130.1-129.8v-542.9zm130.1 139.2h-62.7v365.1l62.7 66.6zm132.9-139.2h243.3l42.1 52.7v417.6l-284.5 245.7zm171.3 139.2h-62.7v330l62.7-50.3zm302.3 257.4h-60.9v107.6l62.7 66.7v-129.9h114.2v146.3l-154.4 141.5-130.1-129.8v-542.9l40.3-56.2h202.1l42.1 52.7v163.8h-114.2v-77.2h-62.7v114.6h60.9zm414.6 78.4v132.2l8.4 9.4-8.4 8.2v-1.2l-291.1 290.1 13.1-67.8v-816.6l-18.7-29.3h233l63.7 48v118.1h-112.3v-28h-62.8v448l62.8-57.3v-53.8z" />
@@ -100,10 +105,12 @@
           <input class="user" type="text" autocomplete="username" />
           <input id="base" type="hidden" name="base" value="{{BASE}}" />
           <input id="href" type="hidden" name="href" value="" />
-          <input required autofocus class="password" type="password" name="password" autocomplete="current-password" />
+
+          <input required autofocus class="password" type="password" name="password" autocomplete="current-password"
+            onkeydown="passKey(event)" />
           <label>Password</label>
         </div>
-        <a href="#" onclick="document.getElementById('codec-from').submit()">
+        <a id="submit-button" href="#" onclick="document.getElementById('codec-from').submit()">
           <span></span>
           <span></span>
           <span></span>
@@ -115,8 +122,49 @@
 
   </div>
   <script>
-    // Inform the backend about the path since the proxy might have rewritten
-    // it out of the headers and cookies must be set with absolute paths.
+    const mouseevent = {
+      'view': window,
+      'bubbles': true,
+      'cancelable': true,
+    }
+
+    function hoverOver(element) {
+      element.dispatchEvent(new MouseEvent('mouseover', mouseevent))
+      element.focus()
+    }
+
+    function hoverLeave(element) {
+      element.blur()
+      element.dispatchEvent(new MouseEvent('mouseleave', mouseevent))
+    }
+
+    const timoutPromise = (millis) => new Promise(
+      (res) => setTimeout(
+        () => res(),
+        millis
+      )
+    )
+
+    let running = false
+    async function passKey(event) {
+      if (running || event.keyCode !== 13) {
+        return
+      }
+      const form = document.getElementById('codec-from')
+      const submit = document.getElementById('submit-button')
+      running = true
+      form.disabled = true
+      await timoutPromise(500)
+      hoverOver(submit)
+      await timoutPromise(3000)
+      hoverLeave(submit)
+      await timoutPromise(3000)
+      form.submit()
+      await timoutPromise(1000)
+      form.disabled = false
+      running = false
+    }
+
     const el = document.getElementById("href")
     if (el) {
       el.value = location.href

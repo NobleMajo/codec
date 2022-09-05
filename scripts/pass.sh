@@ -9,4 +9,4 @@ fi
 
 echo "Change password of '$1':"
 
-docker exec -it "codec_$1" codec -ip
+docker exec -it "codec_$1" codec -i

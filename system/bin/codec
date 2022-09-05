@@ -234,7 +234,7 @@ fi
 PASSWORD="$2"
 # if the first argument is -i then ask for a password in a prompt and save it in the first argument
 if [[
-    "$1" == "-ip" ||
+    "$1" == "-i" ||
     "$1" == "--interactive" ||
     "$1" == "interactive" ||
     "$1" == "setpw" ||
@@ -260,7 +260,7 @@ if [[
     "$1" == "-p" || 
     "$1" == "--pass" || 
     "$1" == "pass" || 
-    "$1" == "-ip" || 
+    "$1" == "-i" || 
     "$1" == "--interactive" || 
     "$1" == "interactive" || 
     "$1" == "setpw" ||
