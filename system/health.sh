@@ -9,6 +9,8 @@ mkdir -p /etc/codec/logs
 
 echo "[CODEC][HEALTH]: Copy codec skel..."
 cp -nr /etc/codec/skel/* /codec/.codec/
+rm -rf /codec/.codec/readme.md
+cp /etc/codec/readme.md /codec/.codec/
 
 echo "[CODEC][HEALTH]: Mounting..."
 /etc/codec/mounts.js

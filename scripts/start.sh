@@ -97,6 +97,13 @@ docker run -d --privileged \
     -v "$CODEC_USER_DATA/$1:/codec" \
     codec2
 
+docker run -it --rm \
+    --name "codeccli-$1-helper" \
+    -v "$CODEC_USER_DATA/$1:/codec" \
+    ubuntu:22.04 \
+        bash -c \
+        "echo '$START_PORT-$END_PORT' > /codec/.codec/ports.info.txt"
+
 if [ "$ALREADY_EXIST" == "false" ]; then
   sleep 1
   $CURRENT_DIR/pass.sh $1

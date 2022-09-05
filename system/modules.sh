@@ -55,7 +55,7 @@ for ASYNC_MODULE_PATH in $ASYNC_MODULE_PATHS; do
     ASYNC_MODULE_LOGS_PATH=$LOGS_PATH/module.$ASYNC_MODULE_NAME.async.log
     echo "[CODEC][MODULE][ASYNC]: Start '$ASYNC_MODULE_NAME' async..."
     touch $ASYNC_MODULE_LOGS_PATH
-    bash -c "$ASYNC_MODULE_PATH" > $ASYNC_MODULE_LOGS_PATH & echo
+    bash -c "$ASYNC_MODULE_PATH" > $ASYNC_MODULE_LOGS_PATH & echo "Started $ASYNC_MODULE_NAME async in background!"
 done
 
 

@@ -28,3 +28,5 @@ docker run -it --rm \
     -v "$CODEC_USER_DATA:/app" \
     ubuntu:22.04 \
         rm -rf "/app/$1"
+
+echo "Done!"

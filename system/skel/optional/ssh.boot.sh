@@ -1,12 +1,5 @@
 #!/bin/bash
 
-PARENT_NAME="$(basename $(dirname $(realpath $0)))"
-if [ $PARENT_NAME != "modules" ]; then
-    systemctl disable sshd
-    systemctl stop sshd
-    exit 0
-fi
-
 if [ -z "$SSH_SERVER_PORT" ]; then
     SSH_SERVER_PORT="$CODEC_START_PORT"
 fi

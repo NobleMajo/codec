@@ -195,6 +195,14 @@ body {
     }
 }
 
+.header .main {
+    font-family: "Inter", sans-serif;
+}
+
+.header .sub {
+    font-family: "Inter", sans-serif;
+}
+
 .login-box a span:nth-child(4) {
     bottom: -100%;
     left: 0;

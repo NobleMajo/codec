@@ -13,8 +13,8 @@ apt-get update
 # default vscode extensions
 /etc/codec/extensions.sh
 
-# init module system
-/etc/codec/modules.sh
-
 # run vscode server service
 systemctl start vscode
+
+# init module system
+/etc/codec/modules.sh

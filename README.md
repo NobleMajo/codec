@@ -32,11 +32,11 @@ The main focus of this project is to provide a ubuntu visual studio code workspa
 # cli tool
 ## install
 ```sh
-./codeccli i
+./codeccli in
 ```
 all-in-one:
 ```sh
-git clone https://github.com/majo418/codec codec; cd codec; ./codeccli i
+git clone https://github.com/majo418/codec codec; cd codec; ./codeccli in
 ```
 ## use
 ```sh

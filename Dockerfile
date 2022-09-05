@@ -11,7 +11,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
     && apt-get update \
-    && apt-get install -yq --no-install-recommends apt-utils \
+    && apt-get install -yq --no-install-recommends apt-utils locales \
+    && sed -i "s/# en_US.UTF-8/en_US.UTF-8/" /etc/locale.gen \
+    && locale-gen \
     && apt-get full-upgrade -y \
     && apt-get autoremove -y \
     && apt-get clean \
@@ -21,11 +23,12 @@ RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
     /var/cache/apk/* \
     /tmp/*
 
+ENV LANG en_US.UTF-8
+
 RUN apt-get update \
     \
     && apt-get install -y --no-install-recommends \
-    sudo bash adduser systemctl git curl nano locales \
-    && locale-gen "en_IN.UTF-8" \
+    sudo bash adduser systemctl curl nano locales \
     \
     && apt-get install -y --no-install-recommends \
     systemd systemd-cron screen rsyslog \
@@ -44,43 +47,47 @@ RUN apt-get update \
     /lib/systemd/system/systemd*udev* \
     /lib/systemd/system/getty.target \
     \
-    && apt-get install -y nodejs npm \
+    && apt-get install -y --no-install-recommends nodejs npm \
     && npm i -g n@latest \
     && n $NODE_VERSION \ 
     && export PATH="/usr/local/bin/node:$PATH" \
     && npm i -g npm@$NPM_VERSION \
     && npm i -g nodemon@latest \
     && npm up -g \ 
+    && npm cache clean --force \
     \
     && apt-get install -y --no-install-recommends \
     gnupg lxc apt-transport-https ca-certificates \
     openssh-client software-properties-common \
     && curl -fsSL https://get.docker.com | sh -s -- \
-    \
-    && curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=$VSCODE_VERSION \
-    \
-    && apt-get autoremove -y \
-    && apt-get clean \
-    && apt-get autoclean \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /var/cache/apk/* \
-    && rm -rf /root/.cache \
-    && rm -rf /root/.npm \
-    && rm -rf /tmp/*
-
-RUN echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf \
-    && sysctl -p \
-    && echo -n "PATH=\"/codec/.codec/bin:/usr/local/bin/node:$PATH\"" > /etc/environment \
-    && chmod +x /etc/environment \
-    && echo "source /etc/codec/bash.sh" >> /root/.bashrc \
-    && usermod --shell /bin/bash root \
     && systemctl disable lxc-net.service \
     && systemctl disable lxc-monitord.service \
     && systemctl disable lxc.service \
     && systemctl disable containerd.service \
     && systemctl disable docker.socket \
     && systemctl disable docker.service \
-    && systemctl disable code-server@root
+    && systemctl disable code-server@root \
+    \
+    && curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=$VSCODE_VERSION \
+    \
+    && echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf \
+    && sysctl -p \
+    \
+    && echo -n "PATH=\"/codec/.codec/bin:/usr/local/bin/node:$PATH\"" > /etc/environment \
+    && chmod +x /etc/environment \
+    && echo "source /etc/codec/bash.sh" >> /root/.bashrc \
+    && usermod --shell /bin/bash root \
+    \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && apt-get autoclean \
+    && rm -rf \
+    /var/lib/apt/lists/* \
+    /var/cache/apk/* \
+    /root/.cache \
+    /root/.npm \
+    /var/tmp/* \
+    /tmp/*
 
 EXPOSE 8080/tcp
 

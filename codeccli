@@ -2,8 +2,7 @@
 
 CURRENT_DIR=$(dirname $(realpath $0))
 
-echo "[CODECCLI]"
-echo "'codeccli help' for more infos!"
+echo "-----[CodecCLI]-----"
 echo ""
 
 if [ -z $1 ]; then
@@ -13,17 +12,17 @@ if [ -z $1 ]; then
 fi
 CMD="$1"
 
-if [[ "$CMD" = i* ]]; then
+if [[ "$CMD" = in* ]]; then
     CMD="install"
 fi
-if [[ "$CMD" = u* ]]; then
+if [[ "$CMD" = un* ]]; then
     CMD="uninstall"
 fi
 
-if [[ "$CMD" = a* ]]; then
+if [[ "$CMD" = at* ]]; then
     CMD="attach"
 fi
-if [[ "$CMD" = n* ]]; then
+if [[ "$CMD" = bu* ]]; then
     CMD="build"
 fi
 if [[ "$CMD" = c* ]]; then
@@ -31,28 +30,36 @@ if [[ "$CMD" = c* ]]; then
 fi
 if [[ "$CMD" = dev* ]]; then
     CMD="dev"
-elif [[ "$CMD" = d* ]]; then
+elif [[ "$CMD" = de* ]]; then
     CMD="delete"
 fi
-if [[ "$CMD" = e* ]]; then
+if [[ "$CMD" = ex* ]]; then
     CMD="exist"
 fi
-if [[ "$CMD" = h* ]]; then
+if [[ "$CMD" = he* ]]; then
     CMD="help"
 fi
 if [[ "$CMD" = lo* ]]; then
     CMD="logs"
-elif [[ "$CMD" = l* ]]; then
+elif [[ "$CMD" = li* ]]; then
     CMD="list"
 fi
-if [[ "$CMD" = p* ]]; then
+if [[ "$CMD" = pa* ]]; then
     CMD="pass"
 fi
-if [[ "$CMD" = r* ]]; then
+if [[ "$CMD" = re* ]]; then
     CMD="reset"
 fi
-if [[ "$CMD" = s* ]]; then
+if [[ "$CMD" = st* ]]; then
     CMD="start"
+fi
+
+if [ ! -f "$CURRENT_DIR/scripts/$CMD.sh" ]; then
+    echo "CodecCLI command $CMD not found!"
+    echo ""
+    echo "Help:"
+    $CURRENT_DIR/scripts/help.sh
+    exit 1
 fi
 
 $CURRENT_DIR/scripts/$CMD.sh ${@:2}
