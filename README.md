@@ -1,58 +1,54 @@
-
-# codec
-![Docker](https://img.shields.io/docker/image-size/majo418/codec)
-![CI/CD](https://github.com/majo418/codec/workflows/Image/badge.svg)
+# npwm
+![CI/CD](https://github.com/majo418/npwm/workflows/Publish/badge.svg)
 ![MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+![typescript](https://img.shields.io/badge/dynamic/json?style=plastic&color=blue&label=Typescript&prefix=v&query=devDependencies.typescript&url=https%3A%2F%2Fraw.githubusercontent.com%2Fmajo418%2Fnpwm%2Fmain%2Fpackage.json)
+![npm](https://img.shields.io/npm/v/npwm.svg?style=plastic&logo=npm&color=red)
+![github](https://img.shields.io/badge/dynamic/json?style=plastic&color=darkviolet&label=GitHub&prefix=v&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fmajo418%2Fnpwm%2Fmain%2Fpackage.json)
 
-![](https://img.shields.io/badge/dynamic/json?color=green&label=watchers&query=watchers&suffix=x&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fmajo418%2Fcodec)
-![](https://img.shields.io/badge/dynamic/json?color=yellow&label=stars&query=stargazers_count&suffix=x&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fmajo418%2Fcodec)
-![](https://img.shields.io/badge/dynamic/json?color=orange&label=subscribers&query=subscribers_count&suffix=x&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fmajo418%2Fcodec)
-![](https://img.shields.io/badge/dynamic/json?color=navy&label=forks&query=forks&suffix=x&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fmajo418%2Fcodec)
-![](https://img.shields.io/badge/dynamic/json?color=darkred&label=open%20issues&query=open_issues&suffix=x&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fmajo418%2Fcodec)
+![](https://img.shields.io/badge/dynamic/json?color=green&label=watchers&query=watchers&suffix=x&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fmajo418%2Fnpwm)
+![](https://img.shields.io/badge/dynamic/json?color=yellow&label=stars&query=stargazers_count&suffix=x&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fmajo418%2Fnpwm)
+![](https://img.shields.io/badge/dynamic/json?color=orange&label=subscribers&query=subscribers_count&suffix=x&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fmajo418%2Fnpwm)
+![](https://img.shields.io/badge/dynamic/json?color=navy&label=forks&query=forks&suffix=x&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fmajo418%2Fnpwm)
+![](https://img.shields.io/badge/dynamic/json?color=darkred&label=open%20issues&query=open_issues&suffix=x&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fmajo418%2Fnpwm)
 
 # table of contents
-- [codec](#codec)
+- [npwm](#npwm)
 - [table of contents](#table-of-contents)
 - [about](#about)
-- [cli tool](#cli-tool)
-  - [install](#install)
+- [npm scripts](#npm-scripts)
   - [use](#use)
-  - [debug](#debug)
-  - [stop](#stop)
+  - [base scripts](#base-scripts)
+  - [watch mode](#watch-mode)
 - [contribution](#contribution)
 
-# about
-|
-[Docker Hub](https://hub.docker.com/r/majo418/codec)
-|
-[GitHub](https://github.com/majo418/codec)
-|  
-The main focus of this project is to provide a ubuntu visual studio code workspace in a docker container accessible from the browser.
+# about  
+Work in progrss!  
+A workspace scanning tool to fine outdated npm dependencies.
 
-# cli tool
-## install
-```sh
-./codeccli in
-```
-all-in-one:
-```sh
-git clone https://github.com/majo418/codec codec; cd codec; ./codeccli in
-```
+# npm scripts
+The npm scripts are made for linux but can also work on mac and windows.
 ## use
+You can run npm scripts in the project folder like this:
 ```sh
-codeccli start <NAME> <START_PORT> <PORT_COUNT> # starts a new container
-codeccli pass <NAME> # change the password of a container
+npm run <scriptname>
 ```
-## debug
+Here is an example:
 ```sh
-codeccli list # show list of container volumes
-codeccli logs <NAME> # show systemd and codec service logs of a container
+npm run test
 ```
-## stop
+
+## base scripts
+You can find all npm scripts in the `package.json` file.
+This is a list of the most important npm scripts:
+ - test // test the app
+ - build // build the app
+ - exec // run the app
+ - start // build and run the app
+
+## watch mode
+Like this example you can run all npm scripts in watch mode:
 ```sh
-codeccli close <NAME> # stop and remove the container
-codeccli reset <NAME> # reset all files in /codec/mounts and /codec/.codec
-codeccli delete <NAME> # delete all persistent container files
+npm run start:watch
 ```
 
 # contribution
@@ -66,5 +62,4 @@ codeccli delete <NAME> # delete all persistent container files
 ---
 **cya ;3**  
 *by majo418*
-
 

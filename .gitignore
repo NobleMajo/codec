@@ -1,4 +1,24 @@
+# app data
 .store
 
+# mac
+.DS_Store
+
+# windows
+Thumbs.db
+
+# vscode
+**/.vscode
+
+# codec
+core
+
+# npm
+node_modules
+.npmrc
+.npm
+dist
+
+# git
 !.keep
 !.gitkeep
