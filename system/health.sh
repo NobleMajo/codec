@@ -3,9 +3,10 @@
 echo "[CODEC][HEALTH]: Create folder..."
 mkdir -p /codec/.codec/modules
 mkdir -p /codec/mounts
+
 mkdir -p /codec/archived
 mkdir -p /codec/workspace
-mkdir -p /etc/codec/logs
+mkdir -p /codec/todo
 
 echo "[CODEC][HEALTH]: Copy codec skel..."
 cp -nr /etc/codec/skel/* /codec/.codec/

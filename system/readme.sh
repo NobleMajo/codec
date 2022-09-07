@@ -1,12 +1,15 @@
 #!/bin/bash
 
-echo "[CODEC][README]: Create folder..."
+echo "[CODEC][README]: Init..."
 rm -rf /codec/.codec/readme.md
-if [ -f "/etc/codec/readme.md" ] ; then
+
+if [ -f "/codec/.codec/readme.md" ]; then
+  if [ "$(cat /etc/codec/readme.md)" == "$(cat /codec/.codec/readme.md)" ]; then
     exit 0
-fi 
-if cmp -s "/etc/codec/readme.md" "/codec/.codec/readme.md"; then
-    exit 0
+  fi
 fi
 
-code /etc/codec/readme.md
+cp /etc/codec/readme.md /codec/.codec/readme.md
+
+echo "[CODEC][README]: Open readme file!"
+code /etc/codec/readme.md > /dev/null 2>&1

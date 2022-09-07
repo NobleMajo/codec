@@ -13,11 +13,18 @@ apt-get update
 # default vscode extensions
 /etc/codec/extensions.sh
 
-# run vscode server service
-systemctl start vscode
-
-# readme 
-/etc/codec/readme.sh
-
 # init module system
 /etc/codec/modules.sh
+
+# run vscode server service
+echo "[CODEC][VSCODE]: Start vscode service..."
+systemctl start vscode
+
+# init async modules
+/etc/codec/modules_async.sh
+
+sleep 1
+/etc/codec/readme.sh
+
+
+
