@@ -1,13 +1,14 @@
 import { CmdDefinition, BoolFlag, ValueFlag } from "cmdy"
-import env from "../env/envParser"
-import * as dns from "dns"
 import { cmdyFlag } from "typenvy"
+import env from "../env/envParser"
 import { envData } from "../env/envParser"
+
+import * as express from "express"
 
 export const httpPort: ValueFlag = cmdyFlag(
     {
-        name: "http-port",
-        alias: ["http"],
+        name: "port",
+        alias: ["http-port"],
         shorthand: "p",
         types: ["number"],
         description: "Set the http port (default: 80 but disabled if any port is set)",
@@ -30,8 +31,8 @@ export const trustAllCerts: BoolFlag = cmdyFlag(
 
 export const bindHostAddress: ValueFlag = cmdyFlag(
     {
-        name: "bind-host-address",
-        alias: ["b-h-a", "bha", "bind-host-address", "bind-address"],
+        name: "host",
+        alias: ["b-h-a", "bha", "bind-host-address", "bind-address", "bind-host-address"],
         shorthand: "b",
         types: ["string"],
         description: "Set the host where the server pind the ports",
@@ -40,27 +41,14 @@ export const bindHostAddress: ValueFlag = cmdyFlag(
     envData
 )
 
-export const dnsServerAddress: ValueFlag = cmdyFlag(
-    {
-        name: "dns-server-address",
-        alias: ["dns-server", "dnsserveraddress", "dns-address", "dns"],
-        types: ["string"],
-        description: "Add a dns address to the existing dns addresses",
-        multiValues: true,
-    },
-    "DNS_SERVER_ADDRESSES",
-    envData
-)
-
 const root: CmdDefinition = {
-    name: "cprox",
-    description: "CProX is a easy to configure redirect, proxy and static webserver",
-    details: "You can use CProX as webserver. It can proxy, redirect and service static content on requests",
+    name: "codec-prodiver-backend",
+    description: "Codec provider backend",
+    details: "A backend for codec",
     flags: [
         httpPort,
         trustAllCerts,
         bindHostAddress,
-        dnsServerAddress,
     ],
     allowUnknownArgs: true,
     cmds: [
@@ -75,15 +63,21 @@ const root: CmdDefinition = {
             "\n\n"
         )
 
-        dns.setServers(env.DNS_SERVER_ADDRESSES)
+        console.info("PORT: " + env.HTTP_PORT)
 
-        console.info("test data: ", cmd.valueFlags)
-        console.info("test data: ", cmd.arrayFlags)
-        console.info("test data: ", cmd.flags)
+        const app = express()
 
-        let httpPort = Number(cmd.valueFlags["http-port"])
+        app.use((req, res) => {
+            console.info("req: " + req.socket.localAddress + ":" + req.socket.localPort)
+            res.send("NO! NO! NO!")
+        })
 
-        console.info("Test: " + httpPort)
+        app.listen(env.HTTP_PORT, env.BIND_ADDRESS, () => {
+            console.info(
+                "Codec provider backend listen on " +
+                env.BIND_ADDRESS + ":" + env.HTTP_PORT
+            )
+        })
     }
 }
 

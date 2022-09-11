@@ -19,16 +19,17 @@
     "tsc": "tsc -p tsconfig.json",
     "start": "ts-node src/index.ts",
     "exec": "node dist/index.js",
-    "test": "mocha --require ts-node/register src/test/**/*.test.ts",
-    "build": "npm run tsc",
-    "start:watch": "nodemon -w ./src -x \"npm run start\" --ext *.ts",
-    "build:watch": "nodemon -w ./src -x \"npm run build\" --ext *.ts",
-    "test:watch": "nodemon -w ./src -x \"npm run test\" --ext *.ts",
-    "exec:watch": "nodemon -w ./dist -x \"npm run exec\"",
-    "dev": "npm run start:watch"
+    "test": "mocha --paralell --exit --require ts-node/register src/test/**/*.test.ts",
+    "build": "npm run tsc --",
+    "start:watch": "nodemon -w ./src -x \"npm run start --\" --ext *.ts --",
+    "build:watch": "nodemon -w ./src -x \"npm run build --\" --ext *.ts --",
+    "test:watch": "nodemon -w ./src -x \"npm run test --\" --ext *.ts --",
+    "exec:watch": "nodemon -w ./dist -x \"npm run exec --\" --",
+    "dev": "nodemon -w ./src -x \"npm run build; npm run test; npm run start --\" --ext *.ts --"
   },
   "devDependencies": {
     "@types/chai": "4",
+    "@types/express": "4",
     "@types/mocha": "9",
     "@types/node": "16",
     "@types/node-fetch": "2",
@@ -41,7 +42,6 @@
   },
   "dependencies": {
     "cmdy": "1",
-    "majotools": "1",
     "typenvy": "1"
   }
 }
