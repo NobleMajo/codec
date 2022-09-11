@@ -29,6 +29,7 @@ body {
 }
 
 .error-box {
+    margin-top: 18px;
     color: #a72a2aed;
     font-size: 22px;
     font-family: "Inter", sans-serif;
