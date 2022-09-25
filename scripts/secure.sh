@@ -23,16 +23,8 @@ fi
 
 $CURRENT_DIR/close.sh "$1"
 
-echo "Reset .codec folder for '$1'..."
+echo "Set secure boot '$1'..."
 docker run -it --rm \
     -v "$CODEC_USER_DATA/$1/.codec:/app" \
     ubuntu:22.04 \
-        rm -rf "/app/*"
-
-echo "Reset ports cache for '$1'..."
-docker run -it --rm \
-    --name "codeccli-$1-port-helper" \
-    -v "$CODEC_USER_DATA/codec_ports:/app" \
-    ubuntu:22.04 \
-        bash -c \
-        "rm -rf /app/$1.start.port && rm -rf /app/$1.count.port"
+        "rm -rf /app/modules.backup && mv /app/modules /app/modules.backup"

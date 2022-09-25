@@ -26,16 +26,43 @@ if [ -z "$DEFAULT_CODEC_PORT_COUNT" ]; then
     DEFAULT_CODEC_PORT_COUNT="10"
 fi
 
+
 START_PORT="$2" # 20
 PORT_COUNT="$3" # 5
 
-if [ -z $2 ]; then
-    echo "Start port not defined!"
-    exit 1
+if [ -z $START_PORT ]; then
+    START_PORT="$(
+        docker run -it --rm \
+            --name "codeccli-$1-port-reader" \
+            -v "$CODEC_USER_DATA/codec_ports:/app" \
+            ubuntu:22.04 \
+                bash -c \
+                "cat /app/$1.start.port"
+        )"
+    if [ -z $START_PORT ]; then
+        echo "Start port not defined!"
+        exit 1
+    fi
 fi
-if [ -z $3 ]; then
-    PORT_COUNT="$DEFAULT_CODEC_PORT_COUNT"
+echo "Defined start port is:"
+echo "'$START_PORT'"
+
+if [ -z $PORT_COUNT ]; then
+    PORT_COUNT="$(
+        docker run -it --rm \
+            --name "codeccli-$1-port-reader" \
+            -v "$CODEC_USER_DATA/codec_ports:/app" \
+            ubuntu:22.04 \
+                bash -c \
+                "touch /app/$1.count.port && cat /app/$1.count.port"
+        )"
+    if [ -z $PORT_COUNT ]; then
+        PORT_COUNT="$DEFAULT_CODEC_PORT_COUNT"
+    fi
 fi
+
+echo "Defined port count is:"
+echo "'$PORT_COUNT'"
 
 if (( START_PORT > 65535 )); then
     echo "The start port '$START_PORT' is not in the port range (1-65535)!"
@@ -98,11 +125,18 @@ docker run -d --privileged \
     codec2
 
 docker run -it --rm \
-    --name "codeccli-$1-helper" \
+    --name "codeccli-$1-info-helper" \
     -v "$CODEC_USER_DATA/$1:/codec" \
     ubuntu:22.04 \
         bash -c \
         "echo '$START_PORT-$END_PORT' > /codec/.codec/ports.info.txt"
+
+docker run -it --rm \
+    --name "codeccli-$1-port-helper" \
+    -v "$CODEC_USER_DATA/codec_ports:/app" \
+    ubuntu:22.04 \
+        bash -c \
+        "echo -n '$START_PORT' > /app/$1.start.port && echo -n '$PORT_COUNT' > /app/$1.count.port"
 
 if [ "$ALREADY_EXIST" == "false" ]; then
   sleep 1
