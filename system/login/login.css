@@ -96,12 +96,12 @@ body {
     font-size: 16px;
     color: #fff;
     pointer-events: none;
-    transition: 0.5s;
+    transition: 0.8s;
 }
 
 .login-box .user-box input:focus ~ label,
 .login-box .user-box input:valid ~ label {
-    top: -20px;
+    top: -24px;
     left: 0;
     color: #ee8241;
     font-size: 12px;
@@ -116,7 +116,7 @@ body {
     text-decoration: none;
     text-transform: uppercase;
     overflow: hidden;
-    transition: 0.5s;
+    transition: 0.8s;
     margin-top: 10px;
     letter-spacing: 4px;
 
