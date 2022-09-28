@@ -1,3 +1,9 @@
 {
-    "storage-driver": "vfs"
+    "storage-driver": "vfs",
+    "debug": true,
+    "log-driver": "json-file",
+    "log-opts": {
+        "max-size": "24m",
+        "max-file": "3"
+    }
 }

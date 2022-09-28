@@ -12,8 +12,14 @@ USER_LIST=$(
         -v "$CODEC_USER_DATA:/app" \
         -w /app \
         ubuntu:22.04 \
-            ls -AQ
+            echo -n "*"
 )
 
 echo "User container:"
-echo "$USER_LIST"
+for USER_FOLDER in $USER_LIST; do
+    if [ $USER_FOLDER == ".codec" ]; then
+        continue
+    fi
+    echo " - $USER_FOLDER"
+done
+echo "..."

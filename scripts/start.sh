@@ -18,7 +18,7 @@ if [ -z "$CODEC_NET" ]; then
     CODEC_NET="ff_cunet"
 fi
 
-if [ -z "$MAX_ALLOED_CODEC_PORTS" ]; then
+if [ -z "$MAX_ALLOED_CODEC_PORTs" ]; then
     MAX_ALLOED_CODEC_PORTS=30
 fi
 
@@ -34,7 +34,7 @@ if [ -z $START_PORT ]; then
     START_PORT="$(
         docker run -it --rm \
             --name "codeccli-$1-port-reader" \
-            -v "$CODEC_USER_DATA/codec_ports:/app" \
+            -v "$CODEC_USER_DATA/.codec/ports:/app" \
             ubuntu:22.04 \
                 bash -c \
                 "cat /app/$1.start.port"
@@ -51,7 +51,7 @@ if [ -z $PORT_COUNT ]; then
     PORT_COUNT="$(
         docker run -it --rm \
             --name "codeccli-$1-port-reader" \
-            -v "$CODEC_USER_DATA/codec_ports:/app" \
+            -v "$CODEC_USER_DATA/.codec/ports:/app" \
             ubuntu:22.04 \
                 bash -c \
                 "touch /app/$1.count.port && cat /app/$1.count.port"
@@ -133,7 +133,7 @@ docker run -it --rm \
 
 docker run -it --rm \
     --name "codeccli-$1-port-helper" \
-    -v "$CODEC_USER_DATA/codec_ports:/app" \
+    -v "$CODEC_USER_DATA/.codec/ports:/app" \
     ubuntu:22.04 \
         bash -c \
         "echo -n '$START_PORT' > /app/$1.start.port && echo -n '$PORT_COUNT' > /app/$1.count.port"

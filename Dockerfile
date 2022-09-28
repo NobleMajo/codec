@@ -28,7 +28,10 @@ ENV LANG en_US.UTF-8
 RUN apt-get update \
     \
     && apt-get install -y --no-install-recommends \
-    sudo bash adduser systemctl curl tar lbzip2 wget git nano locales lsof \
+    sudo bash adduser systemctl lbzip2 locales lsof \
+    \
+    && apt-get install -y --no-install-recommends \
+    curl wget tar zip git nano \
     \
     && apt-get install -y --no-install-recommends \
     systemd systemd-cron screen rsyslog \
@@ -47,19 +50,32 @@ RUN apt-get update \
     /lib/systemd/system/systemd*udev* \
     /lib/systemd/system/getty.target \
     \
-    && apt-get install -y --no-install-recommends nodejs npm \
-    && npm i -g n@latest \
-    && n $NODE_VERSION \ 
-    && export PATH="/usr/local/bin/node:$PATH" \
-    && npm i -g npm@$NPM_VERSION \
-    && npm i -g nodemon@latest \
-    && npm up -g \ 
-    && npm cache clean --force \
-    \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && apt-get autoclean \
+    && rm -rf \
+    /var/lib/apt/lists/* \
+    /var/cache/apk/* \
+    /tmp/*
+
+RUN addgroup \
+    --gid 10001 \
+    codec \
+    && adduser \
+    --system \
+    --shell /bin/bash \
+    --uid 10001 \
+    --gid 10001 \
+    --disabled-password \
+    --home /home/codec \
+    codec
+
+RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     gnupg lxc apt-transport-https ca-certificates \
-    openssh-client software-properties-common \
+    openssh-client software-properties-common uidmap \
     && curl -fsSL https://get.docker.com | sh -s -- \
+    && sudo --user codec dockerd-rootless-setuptool.sh install \
     && systemctl disable lxc-net.service \
     && systemctl disable lxc-monitord.service \
     && systemctl disable lxc.service \
@@ -68,15 +84,24 @@ RUN apt-get update \
     && systemctl disable docker.service \
     && systemctl disable code-server@root \
     \
-    && curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=$VSCODE_VERSION \
-    \
-    && echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf \
-    && sysctl -p \
-    \
-    && echo -n "PATH=\"/codec/.codec/bin:/usr/local/bin/node:$PATH\"" > /etc/environment \
-    && chmod +x /etc/environment \
-    && echo "source /etc/codec/bash.sh" >> /root/.bashrc \
-    && usermod --shell /bin/bash root \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && apt-get autoclean \
+    && rm -rf \
+    /var/lib/apt/lists/* \
+    /var/cache/apk/* \
+    /tmp/*
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends  \
+    nodejs npm \
+    && npm i -g n@latest \
+    && n $NODE_VERSION \ 
+    && export PATH="/usr/local/bin/node:$PATH" \
+    && npm i -g npm@$NPM_VERSION \
+    && npm i -g nodemon@latest \
+    && npm up -g \ 
+    && npm cache clean --force \
     \
     && apt-get autoremove -y \
     && apt-get clean \
@@ -84,10 +109,26 @@ RUN apt-get update \
     && rm -rf \
     /var/lib/apt/lists/* \
     /var/cache/apk/* \
-    /root/.cache \
-    /root/.npm \
-    /var/tmp/* \
     /tmp/*
+
+RUN apt-get update \
+    && curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=$VSCODE_VERSION \
+    \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && apt-get autoclean \
+    && rm -rf \
+    /var/lib/apt/lists/* \
+    /var/cache/apk/* \
+    /tmp/*
+
+RUN echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf \
+    && sysctl -p \
+    \
+    && echo -n "PATH=\"/codec/.codec/bin:/usr/local/bin/node:$PATH\"" > /etc/environment \
+    && chmod +x /etc/environment \
+    && echo "source /etc/codec/bash.sh" >> /root/.bashrc \
+    && usermod --shell /bin/bash root
 
 EXPOSE 8080/tcp
 

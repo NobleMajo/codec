@@ -23,8 +23,4 @@ systemctl start vscode
 # init async modules
 /etc/codec/modules_async.sh
 
-sleep 1
-/etc/codec/readme.sh
-
-
-
+echo "[CODEC][VSCODE]: Done!"
