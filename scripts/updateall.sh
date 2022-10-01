@@ -1,2 +1,81 @@
 #!/bin/bash
 
+CURRENT_DIR=$(dirname $(realpath $0))
+
+if [ -z "$CODEC_USER_DATA" ]; then
+    CODEC_USER_DATA="/var/lib/codec"
+fi
+
+FLAG_NAME="--scratch"
+FLAG_SHORTNAME="-s"
+if [ "$1" == "$FLAG_NAME" ] ||  [ "$1" == "$FLAG_SHORTNAME" ]  || 
+    [ "$2" == "$FLAG_NAME" ] ||  [ "$2" == "$FLAG_SHORTNAME" ]  || 
+    [ "$3" == "$FLAG_NAME" ] ||  [ "$3" == "$FLAG_SHORTNAME" ]  || 
+    [ "$4" == "$FLAG_NAME" ] || [ "$5" == "$FLAG_NAME" ] || 
+    [ "$6" == "$FLAG_NAME" ] || [ "$7" == "$FLAG_NAME" ] ||
+    [ "$4" == "$FLAG_SHORTNAME" ] || [ "$5" == "$FLAG_SHORTNAME" ] || 
+    [ "$6" == "$FLAG_SHORTNAME" ] || [ "$7" == "$FLAG_SHORTNAME" ]; then
+    $CURRENT_DIR/build.sh -s > /dev/null 2>&1 &
+    BUILD_PID=$!
+    echo "[CODEC_CLI][UPDATEALL]: Build image in background from scratch!"
+    echo "This can take some minutes!"
+    echo "Background process id: '$BUILD_PID'"
+else
+    $CURRENT_DIR/build.sh > /dev/null 2>&1 &
+    BUILD_PID=$!
+    echo "[CODEC_CLI][UPDATEALL]: Build image in background."
+    echo "Background process id: '$BUILD_PID'"
+fi
+
+echo "[CODEC_CLI][UPDATEALL]: Load codec container user list..."
+USER_LIST=$(
+    docker run -it --rm \
+        -v "$CODEC_USER_DATA:/app" \
+        -w /app \
+        ubuntu:22.04 \
+            ls -AQ
+)
+
+USER_LIST=${USER_LIST::-1}
+USER_ARR=()
+for USER_FOLDER in ${USER_LIST[@]}; do
+    if [ $USER_FOLDER == '".codec"' ]; then
+        continue
+    fi
+    USER_ARR+=($(echo -n "${USER_FOLDER:1:-1}"))
+done
+
+if ["${#USER_ARR[@]}" == "0"]; then
+    echo "[CODEC_CLI][UPDATEALL]: No codec user exists!"
+    exit 1
+fi
+
+echo ""
+echo "[CODEC_CLI][UPDATEALL]: "
+echo "##### UPDATE ALL #####"
+echo "# Start following users?"
+for USER_NAME in ${USER_ARR[@]}; do
+    echo "# - '$USER_NAME'"
+done
+
+echo "# Enter 'y' to start the '${#USER_ARR[@]}' codec user containers."
+echo "# [CTRL] + [C] to abort!"
+read INPUT_VALUE
+if [ "$INPUT_VALUE" != "y" ]; then
+    echo "Abort because input was not 'y'!"
+    exit 1
+fi 
+
+echo "[CODEC_CLI][UPDATEALL]: Wait for image building..."
+wait $BUILD_PID
+echo "[CODEC_CLI][UPDATEALL]: Image ready!"
+
+echo "[CODEC_CLI][UPDATEALL]: Start user container..."
+for USER_NAME in ${USER_ARR[@]}; do
+    echo "##### ##### ##### ##### ##### ##### #####"
+    echo "                    Next user: $USER_NAME"
+    $CURRENT_DIR/start.sh "$USER_NAME" -f
+done
+echo "##### ##### ##### ##### ##### ##### #####"
+
+echo "[CODEC_CLI][UPDATEALL]: All containers started!"

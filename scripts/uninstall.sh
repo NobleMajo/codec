@@ -6,10 +6,11 @@ if [ -z "$CODEC_INSTALL_PATH" ]; then
     CODEC_INSTALL_PATH="/usr/bin"
 fi
 
-echo "Need super user rights to uninstall codeccli..."
-sudo echo "Super user access granted!"
+echo "[CODEC_CLI][UNINSTALL]: Need super user rights to uninstall codeccli..."
+sudo echo "[CODEC_CLI][UNINSTALL]: Super user access granted!"
 
 if [ "$1" != "-f" ] && [ "$1" != "--force" ]; then
+    echo "[CODEC_CLI][UNINSTALL]: Uninstall codeccli?"
     echo "If you want to uninstall codec enter 'y'."
     read INPUT_VALUE
     if [ "$INPUT_VALUE" != "y" ]; then
@@ -18,7 +19,7 @@ if [ "$1" != "-f" ] && [ "$1" != "--force" ]; then
     fi
 fi
 
-echo "Uninstall codeccli..."
+echo "[CODEC_CLI][UNINSTALL]: Uninstall codeccli..."
 sudo rm -rf $CODEC_INSTALL_PATH/codeccli
 
-echo "Done!"
+echo "[CODEC_CLI][UNINSTALL]: Done!"

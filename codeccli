@@ -19,6 +19,20 @@ if [[ "$CMD" = un* ]]; then
     CMD="uninstall"
 fi
 
+if [[ "$CMD" = up* ]]; then
+    CMD="updateall"
+fi
+
+if [[ "$CMD" = defaultp* ]]; then
+    CMD="defaultpass"
+fi
+if [[ "$CMD" = passh* ]]; then
+    CMD="passhash"
+fi
+if [[ "$CMD" = setp* ]]; then
+    CMD="setpass"
+fi
+
 if [[ "$CMD" = at* ]]; then
     CMD="attach"
 fi
@@ -47,8 +61,17 @@ fi
 if [[ "$CMD" = pa* ]]; then
     CMD="pass"
 fi
-if [[ "$CMD" = re* ]]; then
+
+if [[ "$CMD" = ra* ]]; then
+    CMD="randompass"
+elif [[ "$CMD" = reseth* ]]; then
+    CMD="resethash"
+elif [[ "$CMD" = re* ]]; then
     CMD="reset"
+fi
+
+if [[ "$CMD" = sto* ]]; then
+    CMD="stopall"
 fi
 if [[ "$CMD" = st* ]]; then
     CMD="start"

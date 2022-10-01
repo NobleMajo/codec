@@ -36,7 +36,10 @@ done
 
 echo "[CODEC][MODULE]: $MODULE_COUNTER modules found!"
 
-export CODEC_APT_MODULES=""
+export CODEC_APT_PACKAGES=""
+export CODEC_NPM_PACKAGES=""
+source /codec/.codec/env.sh > $LOGS_PATH/user.env.log
+
 for ENV_MODULE_PATH in $ENV_MODULE_PATHS; do
     ENV_MODULE_NAME=$(basename "$ENV_MODULE_PATH")
     ENV_MODULE_LOGS_PATH=$LOGS_PATH/module.$ENV_MODULE_NAME.env.log
@@ -47,13 +50,20 @@ for ENV_MODULE_PATH in $ENV_MODULE_PATHS; do
 done
 
 apt-get update
-if [ "$CODEC_APT_MODULES" != "" ]; then
-    read -ra CODEC_APT_MODULES2 <<<"$CODEC_APT_MODULES"
-    echo "[CODEC][MODULE][APT]: Install following modules:"
-    echo "'$CODEC_APT_MODULES'"
-    apt-get install -y --no-install-recommends $CODEC_APT_MODULES2
+if [ "$CODEC_APT_PACKAGES" != "" ]; then
+    echo "[CODEC][MODULE][APT]: Install following packages:"
+    echo "'$CODEC_APT_PACKAGES'"
+    apt-get install -y --no-install-recommends $CODEC_APT_PACKAGES
 else 
-    echo "[CODEC][MODULE][APT]: No apt modules defined!"
+    echo "[CODEC][MODULE][APT]: No apt packages defined!"
+fi
+
+if [ "$CODEC_NPM_PACKAGES" != "" ]; then
+    echo "[CODEC][MODULE][NPM]: Install following packages:"
+    echo "'$CODEC_NPM_PACKAGES'"
+    npm i -g $CODEC_NPM_PACKAGES
+else 
+    echo "[CODEC][MODULE][NPM]: No npm packages defined!"
 fi
 
 for BOOT_MODULE_PATH in $BOOT_MODULE_PATHS; do

@@ -3,7 +3,7 @@
 CURRENT_DIR=$(dirname $(realpath $0))
 
 if [ -z "$1" ]; then
-    echo "No codec user defined!"
+    echo "[CODEC_CLI][EXIST]: No codec user defined!"
     exit 1
 fi
 
@@ -33,10 +33,10 @@ if [ "$2" == "CODECDIR" ]; then
                 ls -AQ
     )"
     if [[ $CODEC_DIR != *"\".codec\""* ]]; then
-        echo "false"
+        echo -n "false"
         exit 1
     fi
 fi
 
-echo "true"
+echo -n "true"
 exit 0

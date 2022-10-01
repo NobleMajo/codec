@@ -13,5 +13,5 @@ DEV_TOOLS="neofetch openssl $DEV_TOOLS"
 # essentials
 DEV_TOOLS="build-essential $DEV_TOOLS" 
 
-export CODEC_APT_MODULES="$DEV_TOOLS$CODEC_APT_MODULES"
+export CODEC_APT_PACKAGES="$DEV_TOOLS$CODEC_APT_PACKAGES"
     

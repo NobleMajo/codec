@@ -7,19 +7,20 @@ if [ -z "$CODEC_INSTALL_PATH" ]; then
     CODEC_INSTALL_PATH="/usr/bin"
 fi
 
-echo "Need super user rights to install codeccli..."
-sudo echo "Super user access granted!"
+echo "[CODEC_CLI][INSTALL]: Need super user rights to install codeccli..."
+sudo echo "[CODEC_CLI][INSTALL]: Super user access granted!"
 
-echo "Install codeccli..."
+echo "[CODEC_CLI][INSTALL]: Install codeccli..."
 sudo rm -rf $CODEC_INSTALL_PATH/codeccli
 sudo ln -s $CODEC_CLI_PATH $CODEC_INSTALL_PATH/codeccli
 
-if [ "$1" != "-f" ] && [ "$1" != "--force" ]; then
+if [ "$1" != "-i" ] && [ "$1" != "--image" ]; then
+    echo "[CODEC_CLI][INSTALL]: Build codec image?"
     echo "If you also want to build and cache the newest codec image enter 'y'."
     read INPUT_VALUE
     if [ "$INPUT_VALUE" == "y" ]; then
-        $CODEC_CLI_PATH build
+        $CURRENT_DIR/build.sh -s
     fi
 fi
 
-echo "Done!"
+echo "[CODEC_CLI][INSTALL]: Done!"

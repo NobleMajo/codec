@@ -136,12 +136,8 @@ if [[ "$1" == "-em" || "$1" == "--modon" || "$1" == "modon" ]]; then
             $MODULES_PATH/$MODULE_NAME.bash.sh
     fi
 
-    echo "Restart codec to apply changes? (y/n)"
-    read INPUT_VALUE
-    if [ "$INPUT_VALUE" == "y" ]; then
-        codec -r
-    fi
-    echo "Apply changes on next codec restart!"
+    echo "Apply the changes on next codec restart!"
+    echo "Restart via: 'codec -r'"
     exit 0
 fi
 
@@ -154,12 +150,8 @@ if [[ "$1" == "-dm" || "$1" == "--modoff" || "$1" == "modoff" ]]; then
     echo "///CODEC///: Disable module '$MODULE_NAME'..."
     rm -rf $MODULES_PATH/$MODULE_NAME.*.sh
 
-    echo "Restart codec to apply changes? (y/n)"
-    read INPUT_VALUE
-    if [ "$INPUT_VALUE" == "y" ]; then
-        codec -r
-    fi
-    echo "Apply changes on next codec restart!"
+    echo "Apply the changes on next codec restart!"
+    echo "Restart via: 'codec -r'"
     exit 0
 fi
 
@@ -247,15 +239,16 @@ if [[
     while [ ${#PASSWORD} -lt 8 ]; do 
         echo "///CODEC///: Enter a password with min 8 letters:"
         read -s PASSWORD
-    done
 
-    echo -n "///CODEC///: Enter password again: "
-    read -s RE_PASSWORD
-    echo
-    if [ "$PASSWORD" != "$RE_PASSWORD" ]; then
-        echo "///CODEC///: Passwords do not match"
-        exit 1
-    fi
+        echo -n "///CODEC///: Enter password again:"
+        read -s RE_PASSWORD
+        echo
+        if [ "$PASSWORD" != "$RE_PASSWORD" ]; then
+            echo "///CODEC///: Passwords do not match! Try again!"
+            echo "[CTRL] + [C] to abort"
+            continue
+        fi
+    done
 fi
 
 # if first argument is -p, --password, -i or --interactive, set the password

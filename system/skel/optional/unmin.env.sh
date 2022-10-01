@@ -1,3 +1,3 @@
 #!/bin/bash
 
-export CODEC_APT_MODULES="man $CODEC_APT_MODULES"
+export CODEC_APT_PACKAGES="man $CODEC_APT_PACKAGES"

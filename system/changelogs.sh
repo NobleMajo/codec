@@ -1,14 +1,15 @@
 #!/bin/bash
 
 echo "[CODEC][CHANGELOGS]: Init..."
-rm -rf /codec/.codec/changelogs.md
+touch /codec/.codec/changelogs.md
 
-if [ -f "/codec/.codec/changelogs.md" ] && [ "$(cat /etc/codec/changelogs.md)" == "$(cat /codec/.codec/changelogs.md)" ]; then
-    echo "EXIT 222"
+if [ -f "/codec/.codec/changelogs.md" ]; then
+  if [ "$(cat /etc/codec/changelogs.md)" == "$(cat /codec/.codec/changelogs.md)" ]; then
+    echo "[CODEC][CHANGELOGS]: No changes."
     exit 0
-fi 
+  fi
+fi
 
+rm -rf /codec/.codec/changelogs.md
 cp /etc/codec/changelogs.md /codec/.codec/changelogs.md
-
-echo "[CODEC][CHANGELOGS]: Open changelogs file!"
-code /etc/codec/changelogs.md > /dev/null 2>&1
+cp /etc/codec/changelogs.md /codec/workspace/CODEC_CHANGELOGS.md

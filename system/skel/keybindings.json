@@ -7,672 +7,672 @@
     {
         "key": "ctrl+f",
         "command": "actions.find",
-        "when": "(isLinux || isWindows) && actionsFind"
+        "when": "!isMac && actionsFind"
     },
     {
         "key": "ctrl+y",
         "command": "redo",
-        "when": "(isLinux || isWindows) && textInputFocus && !editorReadonly"
+        "when": "!isMac && textInputFocus && !editorReadonly"
     },
     {
         "key": "ctrl+numpad_divide",
         "command": "editor.fold",
-        "when": "(isLinux || isWindows) && editorFocus"
+        "when": "!isMac && editorFocus"
     },
     {
         "key": "ctrl+numpad_multiply",
         "command": "editor.unfold",
-        "when": "(isLinux || isWindows) && editorFocus"
+        "when": "!isMac && editorFocus"
     },
     {
         "key": "ctrl+shift+numpad_divide",
         "command": "editor.foldAll",
-        "when": "(isLinux || isWindows) && editorFocus"
+        "when": "!isMac && editorFocus"
     },
     {
         "key": "ctrl+shift+numpad_multiply",
         "command": "editor.unfoldAll",
-        "when": "(isLinux || isWindows) && editorFocus"
+        "when": "!isMac && editorFocus"
     },
     {
         "key": "ctrl+3",
         "command": "workbench.action.showCommands",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+shift+r",
         "command": "workbench.action.quickOpen",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+h",
         "command": "workbench.view.search",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+shift+t",
         "command": "workbench.action.showAllSymbols",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+l",
         "command": "workbench.action.gotoLine",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+w",
         "command": "workbench.action.closeActiveEditor",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+shift+s",
         "command": "workbench.action.files.saveAll",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+alt+s",
         "command": "workbench.action.files.saveAs",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+alt+t",
         "command": "workbench.action.terminal.toggleTerminal",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+m",
         "command": "workbench.action.toggleSidebarVisibility",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+e",
         "command": "workbench.action.openPreviousRecentlyUsedEditorInGroup",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+shift+w",
         "command": "workbench.action.closeAllEditors",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+shift+f4",
         "command": "workbench.action.closeAllEditors",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+f12",
         "command": "workbench.action.focusActiveEditorGroup",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+shift+c",
         "command": "editor.action.commentLine",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+shift+/",
         "command": "editor.action.blockComment",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+alt+y",
         "command": "editor.action.toggleWordWrap",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+alt+j",
         "command": "editor.action.joinLines",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+o",
         "command": "workbench.action.gotoSymbol",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+shift+f",
         "command": "editor.action.formatSelection",
-        "when": "(isLinux || isWindows) && editorTextFocus && editorHasSelection"
+        "when": "!isMac && editorTextFocus && editorHasSelection"
     },
     {
         "key": "ctrl+shift+f",
         "command": "editor.action.formatDocument",
-        "when": "(isLinux || isWindows) && editorTextFocus && !editorHasSelection"
+        "when": "!isMac && editorTextFocus && !editorHasSelection"
     },
     {
         "key": "cmd+shift+down",
         "command": "editor.action.copyLinesDownAction",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "cmd+shift+up",
         "command": "editor.action.copyLinesUpAction",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "alt+down",
         "command": "editor.action.moveLinesDownAction",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "alt+up",
         "command": "editor.action.moveLinesUpAction",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+d",
         "command": "editor.action.deleteLines",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+shift+delete",
         "command": "deleteAllRight",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+alt+r",
         "command": "editor.action.rename",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+shift+o",
         "command": "editor.action.organizeImports",
-        "when": "(isLinux || isWindows) && editorTextFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)source\\.organizeImports\\b/"
+        "when": "!isMac && editorTextFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)source\\.organizeImports\\b/"
     },
     {
         "key": "ctrl+space",
         "command": "editor.action.triggerSuggest",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+.",
         "command": "editor.action.marker.next",
-        "when": "(isLinux || isWindows) && editorFocus && !editorReadonly"
+        "when": "!isMac && editorFocus && !editorReadonly"
     },
     {
         "key": "f3",
         "command": "editor.action.goToDeclaration",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+1",
         "command": "editor.action.quickFix",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+shift+g",
         "command": "editor.action.referenceSearch.trigger",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+shift+b",
         "command": "editor.debug.action.toggleBreakpoint",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+shift+x",
         "command": "editor.action.transformToUppercase",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+shift+y",
         "command": "editor.action.transformToLowercase",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+k",
         "command": "editor.action.nextSelectionMatchFindAction",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "ctrl+shift+k",
         "command": "editor.action.previousSelectionMatchFindAction",
-        "when": "(isLinux || isWindows) && editorTextFocus"
+        "when": "!isMac && editorTextFocus"
     },
     {
         "key": "alt+left",
         "command": "cursorWordPartLeft",
-        "when": "(isLinux || isWindows) && textInputFocus"
+        "when": "!isMac && textInputFocus"
     },
     {
         "key": "alt+right",
         "command": "cursorWordPartRight",
-        "when": "(isLinux || isWindows) && textInputFocus"
+        "when": "!isMac && textInputFocus"
     },
     {
         "key": "alt+shift+left",
         "command": "cursorWordPartLeftSelect",
-        "when": "(isLinux || isWindows) && textInputFocus"
+        "when": "!isMac && textInputFocus"
     },
     {
         "key": "alt+shift+right",
         "command": "cursorWordPartRightSelect",
-        "when": "(isLinux || isWindows) && textInputFocus"
+        "when": "!isMac && textInputFocus"
     },
     {
         "key": "ctrl+alt+left",
         "command": "workbench.action.navigateBack",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "ctrl+alt+right",
         "command": "workbench.action.navigateForward",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "f8",
         "command": "workbench.action.debug.continue",
-        "when": "(isLinux || isWindows) && inDebugMode"
+        "when": "!isMac && inDebugMode"
     },
     {
         "key": "ctrl+shift+f11",
         "command": "workbench.action.debug.start",
-        "when": "(isLinux || isWindows) && !inDebugMode"
+        "when": "!isMac && !inDebugMode"
     },
     {
         "key": "f5",
         "command": "workbench.action.debug.stepInto",
-        "when": "(isLinux || isWindows) && inDebugMode"
+        "when": "!isMac && inDebugMode"
     },
     {
         "key": "f7",
         "command": "workbench.action.debug.stepOut",
-        "when": "(isLinux || isWindows) && inDebugMode"
+        "when": "!isMac && inDebugMode"
     },
     {
         "key": "f6",
         "command": "workbench.action.debug.stepOver",
-        "when": "(isLinux || isWindows) && inDebugMode"
+        "when": "!isMac && inDebugMode"
     },
     {
         "key": "ctrl+f2",
         "command": "workbench.action.debug.stop",
-        "when": "(isLinux || isWindows) && inDebugMode"
+        "when": "!isMac && inDebugMode"
     },
     {
         "key": "ctrl+shift+C",
         "command": "-editor.action.commentLine",
-        "when": "(isLinux || isWindows) && editorTextFocus && !editorReadonly"
+        "when": "!isMac && editorTextFocus && !editorReadonly"
     },
     {
         "key": "ctrl+shift+C",
         "command": "-toggleExplainMode",
-        "when": "(isLinux || isWindows) && suggestWidgetVisible"
+        "when": "!isMac && suggestWidgetVisible"
     },
     {
         "key": "ctrl+shift+z",
         "command": "-redo",
-        "when": "(isLinux || isWindows) && textInputFocus && !editorReadonly"
+        "when": "!isMac && textInputFocus && !editorReadonly"
     },
     {
         "key": "shift+alt+z",
         "command": "workbench.action.files.saveLocalFile",
-        "when": "(isLinux || isWindows) && remoteFileDialogVisible"
+        "when": "!isMac && remoteFileDialogVisible"
     },
     {
         "key": "shift+alt+z",
         "command": "-workbench.action.files.saveAs",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "shift+ctrl+s",
         "command": "-workbench.action.files.saveAs",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "shift+ctrl+s",
         "command": "-workbench.action.files.saveLocalFile",
-        "when": "(isLinux || isWindows) && remoteFileDialogVisible"
+        "when": "!isMac && remoteFileDialogVisible"
     },
     {
         "key": "shift+alt+q",
         "command": "workbench.action.closeWindow",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "shift+ctrl+w",
         "command": "-workbench.action.closeWindow",
-        "when": "(isLinux || isWindows)"
+        "when": "!isMac"
     },
     {
         "key": "cmd+d",
         "command": "editor.action.addSelectionToNextFindMatch",
-        "when": "(isLinux || isWindows) && editorFocus"
+        "when": "!isMac && editorFocus"
     },
     // MacOS
     {
         "key": "cmd+f",
         "command": "actions.find",
-        "when": "!(isLinux || isWindows) && actionsFind"
+        "when": "isMac && actionsFind"
     },
     {
         "key": "cmd+y",
         "command": "redo",
-        "when": "!(isLinux || isWindows) && textInputFocus && !editorReadonly"
+        "when": "isMac && textInputFocus && !editorReadonly"
     },
     {
         "key": "cmd+numpad_divide",
         "command": "editor.fold",
-        "when": "!(isLinux || isWindows) && editorFocus"
+        "when": "isMac && editorFocus"
     },
     {
         "key": "cmd+numpad_multiply",
         "command": "editor.unfold",
-        "when": "!(isLinux || isWindows) && editorFocus"
+        "when": "isMac && editorFocus"
     },
     {
         "key": "cmd+shift+numpad_divide",
         "command": "editor.foldAll",
-        "when": "!(isLinux || isWindows) && editorFocus"
+        "when": "isMac && editorFocus"
     },
     {
         "key": "cmd+shift+numpad_multiply",
         "command": "editor.unfoldAll",
-        "when": "!(isLinux || isWindows) && editorFocus"
+        "when": "isMac && editorFocus"
     },
     {
         "key": "cmd+3",
         "command": "workbench.action.showCommands",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+shift+r",
         "command": "workbench.action.quickOpen",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+h",
         "command": "workbench.view.search",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+shift+t",
         "command": "workbench.action.showAllSymbols",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+l",
         "command": "workbench.action.gotoLine",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+w",
         "command": "workbench.action.closeActiveEditor",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+shift+s",
         "command": "workbench.action.files.saveAll",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+alt+s",
         "command": "workbench.action.files.saveAs",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+alt+t",
         "command": "workbench.action.terminal.toggleTerminal",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+m",
         "command": "workbench.action.toggleSidebarVisibility",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+e",
         "command": "workbench.action.openPreviousRecentlyUsedEditorInGroup",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+shift+w",
         "command": "workbench.action.closeAllEditors",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+shift+f4",
         "command": "workbench.action.closeAllEditors",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+f12",
         "command": "workbench.action.focusActiveEditorGroup",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+shift+c",
         "command": "editor.action.commentLine",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+shift+/",
         "command": "editor.action.blockComment",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+alt+y",
         "command": "editor.action.toggleWordWrap",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+alt+j",
         "command": "editor.action.joinLines",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+o",
         "command": "workbench.action.gotoSymbol",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+shift+f",
         "command": "editor.action.formatSelection",
-        "when": "!(isLinux || isWindows) && editorTextFocus && editorHasSelection"
+        "when": "isMac && editorTextFocus && editorHasSelection"
     },
     {
         "key": "cmd+shift+f",
         "command": "editor.action.formatDocument",
-        "when": "!(isLinux || isWindows) && editorTextFocus && !editorHasSelection"
+        "when": "isMac && editorTextFocus && !editorHasSelection"
     },
     {
         "key": "ctrl+shift+down",
         "command": "editor.action.copyLinesDownAction",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "ctrl+shift+up",
         "command": "editor.action.copyLinesUpAction",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "alt+down",
         "command": "editor.action.moveLinesDownAction",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "alt+up",
         "command": "editor.action.moveLinesUpAction",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+d",
         "command": "editor.action.deleteLines",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+shift+delete",
         "command": "deleteAllRight",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+alt+r",
         "command": "editor.action.rename",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+shift+o",
         "command": "editor.action.organizeImports",
-        "when": "!(isLinux || isWindows) && editorTextFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)source\\.organizeImports\\b/"
+        "when": "isMac && editorTextFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)source\\.organizeImports\\b/"
     },
     {
         "key": "cmd+space",
         "command": "editor.action.triggerSuggest",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+.",
         "command": "editor.action.marker.next",
-        "when": "!(isLinux || isWindows) && editorFocus && !editorReadonly"
+        "when": "isMac && editorFocus && !editorReadonly"
     },
     {
         "key": "f3",
         "command": "editor.action.goToDeclaration",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+1",
         "command": "editor.action.quickFix",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+shift+g",
         "command": "editor.action.referenceSearch.trigger",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+shift+b",
         "command": "editor.debug.action.toggleBreakpoint",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+shift+x",
         "command": "editor.action.transformToUppercase",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+shift+y",
         "command": "editor.action.transformToLowercase",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+k",
         "command": "editor.action.nextSelectionMatchFindAction",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "cmd+shift+k",
         "command": "editor.action.previousSelectionMatchFindAction",
-        "when": "!(isLinux || isWindows) && editorTextFocus"
+        "when": "isMac && editorTextFocus"
     },
     {
         "key": "alt+left",
         "command": "cursorWordPartLeft",
-        "when": "!(isLinux || isWindows) && textInputFocus"
+        "when": "isMac && textInputFocus"
     },
     {
         "key": "alt+right",
         "command": "cursorWordPartRight",
-        "when": "!(isLinux || isWindows) && textInputFocus"
+        "when": "isMac && textInputFocus"
     },
     {
         "key": "alt+shift+left",
         "command": "cursorWordPartLeftSelect",
-        "when": "!(isLinux || isWindows) && textInputFocus"
+        "when": "isMac && textInputFocus"
     },
     {
         "key": "alt+shift+right",
         "command": "cursorWordPartRightSelect",
-        "when": "!(isLinux || isWindows) && textInputFocus"
+        "when": "isMac && textInputFocus"
     },
     {
         "key": "cmd+alt+left",
         "command": "workbench.action.navigateBack",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "cmd+alt+right",
         "command": "workbench.action.navigateForward",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "f8",
         "command": "workbench.action.debug.continue",
-        "when": "!(isLinux || isWindows) && inDebugMode"
+        "when": "isMac && inDebugMode"
     },
     {
         "key": "cmd+shift+f11",
         "command": "workbench.action.debug.start",
-        "when": "!(isLinux || isWindows) && !inDebugMode"
+        "when": "isMac && !inDebugMode"
     },
     {
         "key": "f5",
         "command": "workbench.action.debug.stepInto",
-        "when": "!(isLinux || isWindows) && inDebugMode"
+        "when": "isMac && inDebugMode"
     },
     {
         "key": "f7",
         "command": "workbench.action.debug.stepOut",
-        "when": "!(isLinux || isWindows) && inDebugMode"
+        "when": "isMac && inDebugMode"
     },
     {
         "key": "f6",
         "command": "workbench.action.debug.stepOver",
-        "when": "!(isLinux || isWindows) && inDebugMode"
+        "when": "isMac && inDebugMode"
     },
     {
         "key": "cmd+f2",
         "command": "workbench.action.debug.stop",
-        "when": "!(isLinux || isWindows) && inDebugMode"
+        "when": "isMac && inDebugMode"
     },
     {
         "key": "cmd+shift+C",
         "command": "-editor.action.commentLine",
-        "when": "!(isLinux || isWindows) && editorTextFocus && !editorReadonly"
+        "when": "isMac && editorTextFocus && !editorReadonly"
     },
     {
         "key": "cmd+shift+C",
         "command": "-toggleExplainMode",
-        "when": "!(isLinux || isWindows) && suggestWidgetVisible"
+        "when": "isMac && suggestWidgetVisible"
     },
     {
         "key": "cmd+shift+z",
         "command": "-redo",
-        "when": "!(isLinux || isWindows) && textInputFocus && !editorReadonly"
+        "when": "isMac && textInputFocus && !editorReadonly"
     },
     {
         "key": "shift+alt+z",
         "command": "workbench.action.files.saveLocalFile",
-        "when": "!(isLinux || isWindows) && remoteFileDialogVisible"
+        "when": "isMac && remoteFileDialogVisible"
     },
     {
         "key": "shift+alt+z",
         "command": "-workbench.action.files.saveAs",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "shift+cmd+s",
         "command": "-workbench.action.files.saveAs",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "shift+cmd+s",
         "command": "-workbench.action.files.saveLocalFile",
-        "when": "!(isLinux || isWindows) && remoteFileDialogVisible"
+        "when": "isMac && remoteFileDialogVisible"
     },
     {
         "key": "shift+alt+q",
         "command": "workbench.action.closeWindow",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "shift+cmd+w",
         "command": "-workbench.action.closeWindow",
-        "when": "!(isLinux || isWindows)"
+        "when": "isMac"
     },
     {
         "key": "ctrl+d",
         "command": "editor.action.addSelectionToNextFindMatch",
-        "when": "!(isLinux || isWindows) && editorFocus"
+        "when": "isMac && editorFocus"
     }
 ]

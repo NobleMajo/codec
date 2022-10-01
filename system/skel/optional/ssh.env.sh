@@ -1,3 +1,3 @@
 #!/bin/bash
 
-export CODEC_APT_MODULES="openssh-server $CODEC_APT_MODULES"
+export CODEC_APT_PACKAGES="openssh-server $CODEC_APT_PACKAGES"

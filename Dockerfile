@@ -75,7 +75,6 @@ RUN apt-get update \
     gnupg lxc apt-transport-https ca-certificates \
     openssh-client software-properties-common uidmap \
     && curl -fsSL https://get.docker.com | sh -s -- \
-    && sudo --user codec dockerd-rootless-setuptool.sh install \
     && systemctl disable lxc-net.service \
     && systemctl disable lxc-monitord.service \
     && systemctl disable lxc.service \
