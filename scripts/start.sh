@@ -192,6 +192,8 @@ echo "[CODEC_CLI][START]: Image ready!"
 
 $CURRENT_DIR/close.sh $1
 
+docker network create "$CODEC_NET" > /dev/null 2>&1
+
 echo "[CODEC_CLI][START]: Start container..."
 docker run -d \
     $EXTRA_DOCKER_START_ARGS \
