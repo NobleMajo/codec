@@ -5,7 +5,7 @@ FROM ubuntu:22.04
 LABEL version="1.0" maintainer="Majo Richter <majo418@coreunit.net>"
 
 ARG NODE_VERSION=16
-ARG NPM_VERSION=8
+ARG NPM_VERSION=9
 ARG VSCODE_VERSION=4.8.3
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -23,7 +23,25 @@ RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
     /var/cache/apk/* \
     /tmp/*
 
-ENV LANG en_US.UTF-8
+ENV LANG "en_US.UTF-8"
+ENV LANGUAGE "en"
+ENV LC_CTYPE "en_US.UTF-8"
+ENV LC_NUMERIC "en_US.UTF-8"
+ENV LC_TIME "en_US.UTF-8"
+ENV LC_COLLATE "en_US.UTF-8"
+ENV LC_MONETARY "en_US.UTF-8"
+ENV LC_MESSAGES "en_US.UTF-8"
+ENV LC_PAPER "en_US.UTF-8"
+ENV LC_NAME "en_US.UTF-8"
+ENV LC_ADDRESS "en_US.UTF-8"
+ENV LC_TELEPHONE "en_US.UTF-8"
+ENV LC_MEASUREMENT "en_US.UTF-8"
+ENV LC_IDENTIFICATION "en_US.UTF-8"
+ENV LC_ALL "en_US.UTF-8"
+
+RUN export L='us' \
+    && sed -i 's/XKBLAYOUT=\"\w*"/XKBLAYOUT=\"'$L'\"/g' /etc/default/keyboard
+
 
 RUN apt-get update \
     \
