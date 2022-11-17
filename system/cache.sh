@@ -6,4 +6,5 @@ rm -rf /codec/mounts/vscode/logs
 rm -rf /codec/mounts/vscode/CachedExtensions
 rm -rf /codec/mounts/vscode/coder-logs
 rm -rf /codec/mounts/vscode/User/customBuiltinExtensionsCache.json
+rm -rf /tmp/*
 
