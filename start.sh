@@ -2,4 +2,4 @@
 
 ./codeccli build -s
 
-./codeccli start 
+./codeccli start tester 30000 0 -f

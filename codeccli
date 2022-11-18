@@ -39,7 +39,13 @@ fi
 if [[ "$CMD" = bu* ]]; then
     CMD="build"
 fi
-if [[ "$CMD" = c* ]]; then
+if [[ "$CMD" = cr* ]]; then
+    CMD="cron"
+fi
+if [[ "$CMD" = un* ]]; then
+    CMD="uncron"
+fi
+if [[ "$CMD" = cl* ]]; then
     CMD="close"
 fi
 if [[ "$CMD" = dev* ]]; then

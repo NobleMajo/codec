@@ -1,7 +1,6 @@
 #!/bin/bash
 
-echo "Need root access..."
-sudo echo "Root access granted!"
+./uncron.sh
 
 sudo crontab -l > /tmp/codec-cron
 sudo echo "50 4 * * * codeccli updateall -s -f" >> /tmp/codec-cron

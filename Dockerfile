@@ -40,10 +40,7 @@ ENV LC_IDENTIFICATION "en_US.UTF-8"
 ENV LC_ALL "en_US.UTF-8"
 
 RUN export L='us' \
-    && sed -i 's/XKBLAYOUT=\"\w*"/XKBLAYOUT=\"'$L'\"/g' /etc/default/keyboard
-
-
-RUN apt-get update \
+    && apt-get update \
     \
     && apt-get install -y --no-install-recommends \
     sudo bash adduser systemctl lbzip2 locales lsof \
@@ -113,11 +110,11 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends  \
     nodejs npm \
     && npm i -g n@latest \
-    && n $NODE_VERSION \ 
+    && n $NODE_VERSION \
     && export PATH="/usr/local/bin/node:$PATH" \
     && npm i -g npm@$NPM_VERSION \
     && npm i -g nodemon@latest \
-    && npm up -g \ 
+    && npm up -g \
     && npm cache clean --force \
     \
     && apt-get autoremove -y \
