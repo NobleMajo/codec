@@ -8,12 +8,12 @@ fi
 
 FLAG_NAME="--scratch"
 FLAG_SHORTNAME="-s"
-if [ "$1" == "$FLAG_NAME" ] ||  [ "$1" == "$FLAG_SHORTNAME" ]  || 
-    [ "$2" == "$FLAG_NAME" ] ||  [ "$2" == "$FLAG_SHORTNAME" ]  || 
-    [ "$3" == "$FLAG_NAME" ] ||  [ "$3" == "$FLAG_SHORTNAME" ]  || 
-    [ "$4" == "$FLAG_NAME" ] || [ "$5" == "$FLAG_NAME" ] || 
+if [ "$1" == "$FLAG_NAME" ] ||  [ "$1" == "$FLAG_SHORTNAME" ]  ||
+    [ "$2" == "$FLAG_NAME" ] ||  [ "$2" == "$FLAG_SHORTNAME" ]  ||
+    [ "$3" == "$FLAG_NAME" ] ||  [ "$3" == "$FLAG_SHORTNAME" ]  ||
+    [ "$4" == "$FLAG_NAME" ] || [ "$5" == "$FLAG_NAME" ] ||
     [ "$6" == "$FLAG_NAME" ] || [ "$7" == "$FLAG_NAME" ] ||
-    [ "$4" == "$FLAG_SHORTNAME" ] || [ "$5" == "$FLAG_SHORTNAME" ] || 
+    [ "$4" == "$FLAG_SHORTNAME" ] || [ "$5" == "$FLAG_SHORTNAME" ] ||
     [ "$6" == "$FLAG_SHORTNAME" ] || [ "$7" == "$FLAG_SHORTNAME" ]; then
     $CURRENT_DIR/build.sh -s > /dev/null 2>&1 &
     BUILD_PID=$!
@@ -45,7 +45,7 @@ for USER_FOLDER in ${USER_LIST[@]}; do
     USER_ARR+=($(echo -n "${USER_FOLDER:1:-1}"))
 done
 
-if ["${#USER_ARR[@]}" == "0"]; then
+if [ "${#USER_ARR[@]}" == "0" ]; then
     echo "[CODEC_CLI][UPDATEALL]: No codec user exists!"
     exit 1
 fi

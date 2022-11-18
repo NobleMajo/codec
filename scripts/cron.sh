@@ -1,6 +1,8 @@
 #!/bin/bash
 
-./uncron.sh
+CURRENT_DIR=$(dirname $(realpath $0))
+
+$CURRENT_DIR/uncron.sh
 
 sudo crontab -l > /tmp/codec-cron
 sudo echo "50 4 * * * codeccli updateall -s -f" >> /tmp/codec-cron
