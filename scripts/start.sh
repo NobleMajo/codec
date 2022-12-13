@@ -15,7 +15,7 @@ if [ -z "$CODEC_USER_DATA" ]; then
 fi
 
 if [ -z "$CODEC_NET" ]; then
-    CODEC_NET="codec_net"
+    CODEC_NET="ff_codec_net"
 fi
 
 if [ -z "$MAX_ALLOED_CODEC_PORTs" ]; then

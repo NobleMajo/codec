@@ -8,7 +8,7 @@ if [ -z "$CODEC_USER_DATA" ]; then
     CODEC_USER_DATA="/var/lib/codec"
 fi
 
-echo "[CODEC_CLI][ENABLE]: Save startup arguments..."
+echo "[CODEC_CLI][ENABLE]: Enable user '$1'..."
 docker rm -f codeccli-disable > /dev/null 2>&1
 docker run -it --rm \
     --name "codeccli-disable" \
