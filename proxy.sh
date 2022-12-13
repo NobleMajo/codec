@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z "$CODEC_NET" ]; then
-    CODEC_NET="ff_cunet"
+    CODEC_NET="codec_net"
 fi
 
 docker pull majo418/cprox
