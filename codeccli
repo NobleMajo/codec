@@ -78,8 +78,7 @@ fi
 
 if [[ "$CMD" = sto* ]]; then
     CMD="stopall"
-fi
-if [[ "$CMD" = st* ]]; then
+elif [[ "$CMD" = st* ]]; then
     CMD="start"
 fi
 
