@@ -23,18 +23,10 @@ docker run -itd --rm \
     -e VERBOSE="true" \
     majo418/cprox \
         "/app/dist/index.js" \
-        "*.luzi.live=REDIRECT:https://www.twitch.tv/lucifers_senpaii?subdomain={-3}" \
-        "streamshop.luzi.live=REDIRECT:https://streamlabs.com/lucifers_senpaii/merch" \
-        "shop.luzi.live=REDIRECT:https://shop.spreadshirt.de/luzis-shop/all?page=1" \
-        "luzi.live=REDIRECT:https://www.twitch.tv/lucifers_senpaii" \
-        "www.coreunit.net=REDIRECT:https://discord.gg/pwHNaHRa9W" \
-        "programming.coreunit.net=REDIRECT:https://discord.gg/M4trSSNRVQ" \
         "discord.coreunit.net=REDIRECT:https://discord.gg/pwHNaHRa9W" \
         "*.codec.coreunit.net=PROXY:http://codec_{-4}:8080" \
-        "sysdev.coreunit.net=REDIRECT:https://github.com/PhoenixRaph" \
         "majo.coreunit.net=REDIRECT:https://github.com/majo418" \
         "coreunit.net=REDIRECT:https://discord.gg/pwHNaHRa9W"
 
-
-sleep 3
-docker logs "codec2_proxy"
+echo "### Proxy is running..."
+echo "(Check proxy with 'docker logs codec2_proxy')"

@@ -12,6 +12,13 @@ if [ -z $1 ]; then
 fi
 CMD="$1"
 
+if [[ "$CMD" = ena* ]]; then
+    CMD="enable"
+fi
+if [[ "$CMD" = dis* ]]; then
+    CMD="disable"
+fi
+
 if [[ "$CMD" = in* ]]; then
     CMD="install"
 fi
