@@ -47,7 +47,7 @@ echo "[CODEC_CLI][STOPALL]: Stop user container..."
 for USER_NAME in ${USER_ARR[@]}; do
     echo "##### ##### ##### ##### ##### ##### #####"
     echo "                    Next user: $USER_NAME"
-    codeccli close $USER_NAME
+    $CURRENT_DIR/close.sh $USER_NAME
 done
 echo "##### ##### ##### ##### ##### ##### #####"
 
