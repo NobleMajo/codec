@@ -135,17 +135,17 @@ FLAG_NAME="--not-privileged"
 FLAG_SHORTNAME="-n"
 if [ "$1" != "$FLAG_NAME" ] && [ "$1" != "$FLAG_SHORTNAME" ] &&
     [ "$2" != "$FLAG_NAME" ] && [ "$2" != "$FLAG_SHORTNAME" ] &&
-    [ "$3" != "$FLAG_NAME" ] && [ "$3" != "$FLAG_SHORTNAME" ] && 
-    [ "$4" != "$FLAG_NAME" ] && [ "$5" != "$FLAG_NAME" ] && 
-    [ "$6" != "$FLAG_NAME" ] && [ "$7" != "$FLAG_NAME" ] && 
-    [ "$4" != "$FLAG_SHORTNAME" ] && [ "$5" != "$FLAG_SHORTNAME" ] && 
+    [ "$3" != "$FLAG_NAME" ] && [ "$3" != "$FLAG_SHORTNAME" ] &&
+    [ "$4" != "$FLAG_NAME" ] && [ "$5" != "$FLAG_NAME" ] &&
+    [ "$6" != "$FLAG_NAME" ] && [ "$7" != "$FLAG_NAME" ] &&
+    [ "$4" != "$FLAG_SHORTNAME" ] && [ "$5" != "$FLAG_SHORTNAME" ] &&
     [ "$6" != "$FLAG_SHORTNAME" ] && [ "$7" != "$FLAG_SHORTNAME" ]; then
-    EXTRA_DOCKER_START_ARGS+=" --privileged"
+    echo ""
 else
     echo "+[$FLAG_SHORTNAME/$FLAG_NAME]: Run as not privileged!"
 fi
 
-if [ "$EXTRA_DOCKER_START_ARGS" == " --privileged" ]; then
+if [ "$EXTRA_DOCKER_START_ARGS" == "" ]; then
     ALT_EXTRA_DOCKER_START_ARGS="$(
         docker run -it --rm \
             --name "codeccli-end-port-reader" \
@@ -156,8 +156,29 @@ if [ "$EXTRA_DOCKER_START_ARGS" == " --privileged" ]; then
         )"
     if [ "$ALT_EXTRA_DOCKER_START_ARGS" != "" ]; then
         EXTRA_DOCKER_START_ARGS="$ALT_EXTRA_DOCKER_START_ARGS"
+    elif
+        EXTRA_DOCKER_START_ARGS+=" --privileged"
     fi
 fi
+
+DOCKER_START_CMD="docker run -d
+$EXTRA_DOCKER_START_ARGS
+--name 'codec_$1'
+--net '$CODEC_NET'
+--restart unless-stopped
+-p '0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT/tcp'
+-p '0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT/udp'
+-e 'CODEC_PORTS=$START_PORT-$END_PORT'
+-v '$CODEC_USER_DATA/$1:/codec'
+codec2"
+
+echo "[CODEC_CLI][START]: Extra start args: '"
+echo "$EXTRA_DOCKER_START_ARGS"
+echo "'"
+
+echo "[CODEC_CLI][START]: Docker run command preview: '"
+echo "$DOCKER_START_CMD"
+echo "'"
 
 FLAG_NAME="--force"
 FLAG_SHORTNAME="-f"
@@ -194,17 +215,8 @@ $CURRENT_DIR/close.sh $1
 
 docker network create "$CODEC_NET" > /dev/null 2>&1
 
-echo "[CODEC_CLI][START]: Start container..."
-docker run -d \
-    $EXTRA_DOCKER_START_ARGS \
-    --name "codec_$1" \
-    --net "$CODEC_NET" \
-    --restart unless-stopped \
-    -p "0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT/tcp" \
-    -p "0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT/udp" \
-    -e "CODEC_PORTS=$START_PORT-$END_PORT" \
-    -v "$CODEC_USER_DATA/$1:/codec" \
-        codec2
+echo "[CODEC_CLI][START]: Run docker container..."
+$DOCKER_START_CMD
 
 echo "[CODEC_CLI][START]: Set port user info..."
 docker rm -f codeccli-info-helper > /dev/null 2>&1
