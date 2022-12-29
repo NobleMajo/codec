@@ -25,7 +25,6 @@ docker run -it --rm \
     ubuntu:22.04 \
         bash -c \
         "mkdir -p /app/hash \
-        && touch /app/hash/$1.hash \
         && echo -n '$HASH' > /app/hash/$1.hash"
 
 echo "[CODEC_CLI][DEFAULTPASS]: Default password hash set!"
