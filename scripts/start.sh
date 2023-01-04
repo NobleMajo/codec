@@ -45,8 +45,11 @@ if [ -z $START_PORT ]; then
             -v "$CODEC_USER_DATA/.codec/ports:/app" \
             ubuntu:22.04 \
                 bash -c \
-                "cat /app/$1.start.port"
-        )"
+                " \
+                    touch /app/$1.start.port \
+                    cat /app/$1.start.port \
+                "
+    )"
     if [ -z $START_PORT ]; then
         echo "[CODEC_CLI][START]: Start port not defined!"
         exit 1
