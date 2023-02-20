@@ -8,7 +8,11 @@ if [ -z "$CODEC_USER_DATA" ]; then
     CODEC_USER_DATA="/var/lib/codec"
 fi
 
+sudo mkdir -p $CURRENT_DIR/.codec/cron
+sudo rm -rf $CODEC_USER_DATA/.codec/cron/*
+sudo cp $CURRENT_DIR/../cron/* $CODEC_USER_DATA/.codec/cron/
+
 sudo crontab -l > /tmp/codec-cron
-sudo echo "50 4 * * * \$(echo \"----- ----- -----\"; date +\"%Y.%m.%d_%H:%M\"; echo \"----- ----- -----\"; sudo -u '$USER' -s bash -c 'codeccli updateall -s -f') >> $CODEC_USER_DATA/.codec/\$(date +\"%Y_%m_%d_%H_%M\").log" >> /tmp/codec-cron
+sudo echo "50 4 * * * $CODEC_USER_DATA/.codec/cron/task.sh $USER" >> /tmp/codec-cron
 sudo crontab /tmp/codec-cron
 sudo rm -rf /tmp/codec-cron

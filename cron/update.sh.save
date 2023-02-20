@@ -1,0 +1,6 @@
+
+echo "[CODEC_CLI][CRON-TASK][UPDATE-ALL]"
+date +"%Y.%m.%d_%H:%M"
+echo "----- ----- -----"
+
+sudo -u '$1' -s bash -c 'codeccli updateall -s -f'

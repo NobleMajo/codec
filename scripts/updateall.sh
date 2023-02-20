@@ -53,7 +53,7 @@ fi
 echo ""
 echo "[CODEC_CLI][UPDATEALL]: "
 echo "##### UPDATE ALL #####"
-echo "# Start following users?"
+echo "# Following users will be re/started:"
 for USER_NAME in ${USER_ARR[@]}; do
     echo "# - '$USER_NAME'"
 done
@@ -91,3 +91,8 @@ done
 echo "##### ##### ##### ##### ##### ##### #####"
 
 echo "[CODEC_CLI][UPDATEALL]: All containers started!"
+
+echo "[CODEC_CLI][UPDATEALL]: Clear unused docker resources..."
+docker system prune -f --volumes --all
+
+echo "[CODEC_CLI][UPDATEALL]: Finished!"

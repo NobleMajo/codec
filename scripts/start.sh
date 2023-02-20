@@ -46,7 +46,7 @@ if [ -z $START_PORT ]; then
             ubuntu:22.04 \
                 bash -c \
                 " \
-                    touch /app/$1.start.port \
+                    touch /app/$1.start.port && \
                     cat /app/$1.start.port \
                 "
     )"
