@@ -136,13 +136,12 @@ RUN apt-get update \
     /var/cache/apk/* \
     /tmp/*
 
-RUN echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf \
-    && sysctl -p \
-    \
-    && echo -n "PATH=\"/codec/.codec/bin:/usr/local/bin/node:$PATH\"" > /etc/environment \
+RUN echo -n "PATH=\"/codec/.codec/bin:/usr/local/bin/node:$PATH\"" > /etc/environment \
     && chmod +x /etc/environment \
     && echo "source /etc/codec/bash.sh" >> /root/.bashrc \
-    && usermod --shell /bin/bash root
+    && usermod --shell /bin/bash root \
+    && echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf \
+    && sysctl -p
 
 EXPOSE 8080/tcp
 
