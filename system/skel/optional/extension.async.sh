@@ -91,7 +91,6 @@ codei abusaidm.html-snippets
 codei tht13.html-preview-vscode
 
 ### ### CSS
-codei zignd.html-css-class-completion
 codei ecmel.vscode-html-css
 
 ### ### SCSS

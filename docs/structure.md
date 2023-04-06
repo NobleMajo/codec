@@ -1,5 +1,5 @@
-# new
-- [new](#new)
+# structure
+- [structure](#structure)
 - [about](#about)
 - [file system](#file-system)
 - [software](#software)
