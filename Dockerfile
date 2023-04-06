@@ -6,7 +6,7 @@ LABEL version="1.0" maintainer="Majo Richter <majo418@coreunit.net>"
 
 ARG NODE_VERSION=18
 ARG NPM_VERSION=9
-ARG VSCODE_VERSION=4.10.1
+ARG VSCODE_VERSION=4.11.0
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
