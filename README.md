@@ -69,7 +69,7 @@ CodeC is a containerized web-based Multi-User VS-Code like development environme
 
 The CodeC environment consists of several software components, all of which work together to create a complete environment for the users. 
 
-This `README.md` that you read right now is wirten in a CodeC environment:
+This `README.md` that you read right now is written in a CodeC environment:
 ![Makrdown](./docs/img/codec-markdown-preview.png)
 
 # base
