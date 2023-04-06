@@ -5,7 +5,8 @@
 ### ### THEMES
 #codei github.github-vscode-theme
 #codei futureglobe.redneon
-codei akamud.vscode-theme-onedark
+# codei akamud.vscode-theme-onedark
+codei thiagolciobittencourt.ubuntuvscode
 codei zhuangtongfa.material-theme
 #codei johnpapa.winteriscoming
 #codei monokai.theme-monokai-pro-vscode
@@ -21,6 +22,13 @@ codei pkief.material-icon-theme
 #codei ms-vscode-remote.remote-wsl
 #codei ms-vscode-remote.remote-ssh-edit
 #codei ms-vscode-remote.vscode-remote-extensionpack
+codei MS-vsliveshare.vsliveshare
+
+### ### AI
+#codei GitHub.copilot #(need to buy)
+#codei GitHub.copilot-nightly #(need to buy)
+#codei GitHub.copilot-labs #(need to buy, maybe also waitlist)
+#codei TabNine.tabnine-vscode #(free ai, also a payed version)
 
 ### ### GIT
 #codei eamodio.gitlens
@@ -104,3 +112,6 @@ codei ecmel.vscode-html-css
 
 ### ### C_SHARP
 #codei ms-dotnettools.csharp
+
+### CUSTOM
+codei bradlc.vscode-tailwindcss

@@ -46,8 +46,8 @@ RUN export L='us' \
     sudo bash adduser systemctl lbzip2 locales lsof \
     \
     && apt-get install -y --no-install-recommends \
-    curl wget tar zip git nano \
-    \
+    curl wget tar zip unzip git nano telnet vim git-lfs neofetch \
+    && git lfs install \
     && apt-get install -y --no-install-recommends \
     systemd systemd-cron screen rsyslog \
     && cd /lib/systemd/system/sysinit.target.wants/ \

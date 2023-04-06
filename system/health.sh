@@ -7,6 +7,7 @@ mkdir -p /codec/mounts
 mkdir -p /codec/archived
 mkdir -p /codec/workspace
 mkdir -p /codec/todo
+mkdir -p /codec/tests
 
 echo "[CODEC][HEALTH]: Copy codec skel..."
 cp -nr /etc/codec/skel/* /codec/.codec/

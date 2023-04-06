@@ -1,17 +1,15 @@
 #!/bin/bash
 
 # dev
-DEV_TOOLS="git git-lfs make $DEV_TOOLS"
-# com
-DEV_TOOLS="curl wget telnet $DEV_TOOLS"
-# editors
-DEV_TOOLS="vim nano openssh-client $DEV_TOOLS" 
-# compression
-DEV_TOOLS="tar zip unzip $DEV_TOOLS" 
-# other
-DEV_TOOLS="neofetch openssl $DEV_TOOLS" 
+DEV_TOOLS="make automake"
+# cli 
+DEV_TOOLS="tmux $DEV_TOOLS"
+# network
+DEV_TOOLS="nmap net-tools $DEV_TOOLS"
+# ssh
+DEV_TOOLS="openssh-client openssl $DEV_TOOLS" 
 # essentials
-DEV_TOOLS="build-essential $DEV_TOOLS" 
+DEV_TOOLS="build-essential $DEV_TOOLS"
 
-export CODEC_APT_PACKAGES="$DEV_TOOLS$CODEC_APT_PACKAGES"
-    
+export CODEC_APT_PACKAGES="$DEV_TOOLS"
+
