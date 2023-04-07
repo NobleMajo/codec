@@ -2,6 +2,7 @@
 - [CodeC 2](#codec-2)
   - [Apr 6, 2023](#apr-6-2023)
   - [Mar 23, 2023](#mar-23-2023)
+  - [Mar 22, 2023](#mar-22-2023)
   - [Mar 9, 2023](#mar-9-2023)
   - [Mar 1, 2023](#mar-1-2023)
   - [Feb 20, 2023](#feb-20-2023)
@@ -42,11 +43,13 @@ Changes of the version v2.0.0 (1. reversion) of CodeC.
 First version with big breaking changes, new folder structure, build in systemd and other breaking features. 
 
 ## Apr 6, 2023
-- Modify codec boot scripts and default modules
-
+- Fix typo in readme
+- Update code-server version
+- Docs update
 ## Mar 23, 2023
 - Update majo link on login screen
-
+## Mar 22, 2023
+- Modify codec boot scripts and default modules
 ## Mar 9, 2023
 - Update Code Server version
 

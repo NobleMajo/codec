@@ -49,6 +49,11 @@ echo "Linked: '/usr/lib/code-server/src/browser'"
 /etc/codec/readme.sh
 /etc/codec/changelogs.sh
 
+echo "[CODEC][HEALTH]: Linking..."
+rm -rf /root/ws
+ln -s /codec /root/ws
+echo "Link in `/root/ws` to '/codec' created!"
+
 echo "[CODEC][HEALTH]: Disable vscode telemetry..."
 /etc/codec/vscode_telemetry.js
 echo "[CODEC][HEALTH]: Telemetry disabled!"
