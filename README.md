@@ -28,7 +28,6 @@
   - [CLI](#cli)
     - [start](#start)
     - [pass](#pass)
-    - [pass](#pass-1)
     - [build](#build)
     - [list](#list)
     - [logs](#logs)
@@ -56,7 +55,15 @@
       - [Bash Mod Script](#bash-mod-script)
     - [Example Mod](#example-mod)
   - [Mounts](#mounts)
+- [folder structure](#folder-structure)
+  - [User FS](#user-fs)
+  - [System FS](#system-fs)
 - [Preview](#preview)
+- [Codec v1](#codec-v1)
+  - [v1 Software](#v1-software)
+  - [v1 folder structure](#v1-folder-structure)
+  - [v1 Problems](#v1-problems)
+  - [v2.0.0 changes](#v200-changes)
 - [contribution](#contribution)
 
 # about
@@ -194,12 +201,6 @@ You can access the code-server just with a configured proxy server.
 
 Login using the given password of the `codeccli` command or change it:
 ![Login Hover](./docs/img/login-hover.png)
-
-### pass
-Change the password of an existing users:
-```bash
-codeccli pass <NAME>
-```
 
 ### pass
 Change the password of an existing users:
@@ -457,18 +458,159 @@ Here is some examples that explain how the script types are used in different mo
   - `Async`: Enables all pre installed docker processes.
 
 ## Mounts
-`!!! This section not describes Docker volumes mounts !!!`
+`!!! This section not describes Docker volumes mounts !!!`  
 First, read about why we need CodeC mounts for [persistent data](#persistence).
 
 To prevent data loss, CodeC offers a feature called `Mounts`. CodeC Mounts are symbolic links to directories outside the persistent CodeC folder (`/codec`) that are mounted into the persistent folder.
 
 Mounts can be set in the `/codec/.codec/mounts.json` JSON file as a `key-value object`. The key is the name (*without slashes*) for mount-folder in the `/codec/mounts/` folder, and the value is the target that should be mounted into there. If the folder named by the key does not exist, the mount script at the CodeC container startup copies the existing folder into the mount folder location in `/codec/mounts/` to get the default/existing files not deleted.
 
+# folder structure
+
+## User FS
+Because most of the following files are in the persistent `/codec` folder, all user data in there will be persistent.
+
+- `/root/`  
+  - `ws/` -> /codec
+- `/usr/`
+  - `bin/` <- codec bins moved to here
+- `/codec/`             <- persistent folder
+  - `mounts/`
+    - `systemd/` <- /etc/systemd/system
+    - `ssh/` <- /root/.ssh
+    - `vscode/` <- /root/.local/share/
+  - `.codec/`
+    - `bin/` <- custom bins moved
+    - `modules/`
+    - `optional/`
+      - `env.bash.sh`
+      - `ssh.bash.sh`
+      - `git.async.sh`
+      - `npm.async.sh`
+      - `vscode.async.sh`
+      - `apt.boot.sh`
+      - `dockerd.async.sh`
+      - `btop.async.sh`
+      - `marketplace.boot.sh`
+      - `zapt.boot.sh`
+    - `mounts.json`code-server
+  - `main/`
+  - `todo/`
+  - `archieved/`
+
+| Folder/File                    | Description                                                                                                                          |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `/codec`                       | The only [persistent folder](#persistence) for the user                                                                              |
+| `/codec/.codec/`               | Folder for the user with CodeC infos, configs, mods, mounts and scripts                                                              |
+| `/codec/.codec/ports.info.txt` | Text file containing the ports the user can use to test/run apps on (more infos [here](#start))                                      |
+| `/codec/.codec/bin/`           | Contains custom executable files used by the CodeC system                                                                            |
+| `/codec/.codec/modules/`       | Directory for enabled [Mods](#mods)                                                                                                  |
+| `/codec/.codec/optional/`      | Directory for optional [Mods](#mods)                                                                                                 |
+| `/codec/.codec/mounts.json`    | JSON file for the user to [mount](#mounts) non-persistent files                                                                      |
+| `/codec/mounts/systemd/`       | [Mount point](#mounts) for custom systemd configuration files                                                                        |
+| `/codec/mounts/ssh/`           | [Mount point](#mounts) for the SSH server configuration files                                                                        |
+| `/codec/mounts/vscode/`        | [Mount point](#mounts) for the code-server configuration files                                                                       |
+| `/codec/workspace/`            | Directory for the main projects                                                                                                      |
+| `/codec/todo/`                 | Directory for to-do projects                                                                                                         |
+| `/codec/archived/`             | Directory for archived projects                                                                                                      |
+| `/root/`                       | CodeC user home folder                                                                                                               |
+| `/root/ws/`                    | Link to the `/codec` directory inside the users home folder (user can execute `cd; cd ws` to get into the `/codec` workspace folder) |
+
+## System FS
+The following files are intended for the CodeC container boot and health system rather than the user.  
+Changes here can lead to unforeseen problems.
+We recommend to use [Mods](#mods) (or [Mounts](#mounts)) for dev env customization.
+
+- `/etc/`
+  - `codec/`
+    - `boot.sh`
+    - `bash.sh`
+    - `health.sh`
+    - `skel`
+      - `.codec`
+        - `...skel...
+      - `mounts`
+        - `vscode`
+    - `ports.info.txt`
+
+| Folder/File            | Description                                                                                                         |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `/etc/codec`           | System CodeC folder with all needed boot, skeleton and initialization files                                         |
+| `/etc/codec/boot.sh`   | Bash script that runs on container start-up. This will trigger the [Env, Async and Boot Mod Scripts](#custom-mod).  |
+| `/etc/codec/bash.sh`   | Bash script that runs on bash shell start-up like `.bashrc`. This will trigger the [Bash Mod Scripts](#custom-mod). |
+| `/etc/codec/health.sh` | Bash script to check and repair desired CodeC state of folder and file structures                                   |
+| `/etc/codec/skel/`     | Skeleton directory used for the [user's CodeC folder](#user-fs) `/codec/.codec` below                               |
+
 # Preview
 ![AssemblyScript](./docs/img/codec-wasm-preview.png)
 ![Images](./docs/img/codec-image-preview.png)
 ![Makrdown](./docs/img/codec-markdown-preview.png)
 ![Login](./docs/img/login.png)
+
+# Codec v1
+'Codec' v1 was successful, but not very well thought-out software.  
+'Codec' stands for **Code-C**ontainer* and wasn't written as "CodeC" back then.  
+
+## v1 Software 
+
+The software used by Codec back then included `Ubuntu v20.04`, `Code Server v3` (*by Coder*), `dind` (*docker-in-docker docker-hub image*), `Git`, `Node v16`, and `NPM v8`, with an `unminimized ubuntu docker image`. Codec components included `Codec bins`, a own  `Codec Linux user`, and a `boot` and a `bash script`.
+
+## v1 folder structure 
+
+In codec version 1, the folder structure consisted of a home directory with a Codec folder. Inside the Codec folder, there was a hidden ".codec" directory that contained bin and skel folders, as well as a docker-entrypoint.sh script. 
+
+- `/home`
+  - `/codec`
+    - `/.codec`
+      - `/bin`
+      - `/skel`
+      - `/docker-entrypoint.sh`
+    - `/ws` <- Persistend directory
+      - `/.codec`
+        - `/bin`
+        - `/boot.sh`
+        - `/bash.sh`
+        - `/default.code-workspace`
+        - `/ports.txt`
+        - ...etc...
+      - `/main`
+      - `/todo`
+      - `/test`
+    - ...etc...
+
+The `~` folder was the users home folder at `/home/codec`.
+
+| Folder/File                          | Description                                                         |
+| ------------------------------------ | ------------------------------------------------------------------- |
+| `~/.codec/bin`                       | Contains executable files used by the codec system                  |
+| `~/.codec/skel`                      | Skeleton directory used for users codec folder `~/ws/.codec` below  |
+| `~/.codec/docker-entrypoint.sh`      | Entrypoint script for the codec container                           |
+| `~/ws`                               | Only persistent folder for the user                                 |
+| `~/ws/main`                          | Directory for the main projects                                     |
+| `~/ws/todo`                          | Directory for to-do projects                                        |
+| `~/ws/.codec/boot.sh`                | Bash script that runs on container start up                         |
+| `~/ws/.codec/bash.sh`                | Bash script that runs on bash shell start up like `.bashrc`         |
+| `~/ws/.codec/ports.txt`              | Text file containing the ports the user can use to test/run apps on |
+| `~/ws/.codec/default.code-workspace` | Default workspace file for the code-server                          |
+
+## v1 Problems
+With Codec 1 we gained experience and analyzed some pain points and difficulties that were not easy to patch out.  
+Therefore, CodeC 2.0.0 was developed, which was completely overhauled, solved many issues and brought many new features and possibilities with it.
+
+## v2.0.0 changes
+Software Changes:
+- `+` Added Systemd
+- `*` Updated to Ubuntu v22.04 LTS (until then v20.04)
+- `*` Updated to VSCode Server v4.* (until then v3.*)
+
+Component Changes:
+- `-` Removed Codec Linux user
+- `-` Removed the boot and bash-init script
+- `+` Added Codec mods system
+- `+` Added Codec systemd service
+- `+` Added health check boot script
+- `*` Updated custom CLI tools
+- `*` Updated Codec user CLI
 
 # contribution
  - 1. fork the project
@@ -480,6 +622,6 @@ Mounts can be set in the `/codec/.codec/mounts.json` JSON file as a `key-value o
 
 ---
 **cya ;3**  
-*by majo418*
+*by NobleMajo*
 
 
