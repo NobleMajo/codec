@@ -1,4 +1,5 @@
 .store
 
+node_modules
 !.keep
 !.gitkeep
