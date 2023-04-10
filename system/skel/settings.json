@@ -1,5 +1,10 @@
 {
     "git.terminalAuthentication": true,
+    "git.autoStash": true,
+    "git.repositoryScanIgnoredFolders": [
+        "node_modules",
+        ".codec"
+    ],
     "telemetry.enableTelemetry": false,
     "search.followSymlinks": true,
     "problems.showUnused": true,
@@ -24,7 +29,6 @@
     "editor.formatOnPaste": false,
     "editor.formatOnType": false,
     "editor.detectIndentation": true,
-    "editor.parameterHints": true,
     "editor.codeActionsOnSave": {
         "source.fixAll": true,
         "source.organizeImports": true
@@ -38,7 +42,7 @@
     "editor.semanticTokenColorCustomizations": {
         "enabled": false //PERFORMANCE=false
     },
-    "editor.fontSize": 17,
+    "editor.fontSize": 15,
     "editor.fontLigatures": true,
     "editor.fontFamily": "Consolas, Lucida Console, DejaVu Sans Mono, Liberation Mono, Courier, Consolas, Menlo, Monaco, monospace, Arial",
     "workbench.tree.indent": 8,
@@ -60,7 +64,6 @@
     "security.workspace.trust.untrustedFiles": "open",
     "javascript.updateImportsOnFileMove.enabled": "always",
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "liveServer.settings.host": "0.0.0.0",
     "tabnine.experimentalAutoImports": true,
-    "tabnine.useProxySupport": false
+    "tabnine.useProxySupport": false,
 }
