@@ -1,10 +1,18 @@
 #!/bin/bash
 
 echo "[CODEC][HEALTH]: Create folder..."
+
 mkdir -p /codec/.codec/mods
 mkdir -p /codec/.codec/enabled-mods
-mkdir -p /codec/mounts
 
+# codec module migration
+if [ -d "/codec/.codec/optional" ]
+then
+    cp /codec/.codec/optional/* /codec/.codec/mods
+fi
+rm -rf /codec/.codec/modules
+
+mkdir -p /codec/mounts
 mkdir -p /codec/archived
 mkdir -p /codec/workspace
 mkdir -p /codec/todo
