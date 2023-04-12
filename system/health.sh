@@ -1,7 +1,8 @@
 #!/bin/bash
 
 echo "[CODEC][HEALTH]: Create folder..."
-mkdir -p /codec/.codec/modules
+mkdir -p /codec/.codec/mods
+mkdir -p /codec/.codec/enabled-mods
 mkdir -p /codec/mounts
 
 mkdir -p /codec/archived
@@ -49,10 +50,20 @@ echo "Linked: '/usr/lib/code-server/src/browser'"
 /etc/codec/readme.sh
 /etc/codec/changelogs.sh
 
-echo "[CODEC][HEALTH]: Linking..."
+echo "[CODEC][HEALTH]: Linking home 'ws' dir..."
 rm -rf /root/ws
-ln -s /codec /root/ws
-echo "Link in `/root/ws` to '/codec' created!"
+ln -s /codec/workspace /root/ws
+echo "Link in `/codec/workspace` to '/root/ws' created!"
+
+echo "[CODEC][HEALTH]: Linking home 'workspace' dir..."
+rm -rf /root/workspace
+ln -s /codec/workspace /root/workspace
+echo "Link in `/root/workspace` to '/codec/workspace' created!"
+
+echo "[CODEC][HEALTH]: Linking home 'codec' dir..."
+rm -rf /root/codec
+ln -s /codec /root/codec
+echo "Link in `/root/codec` to '/codec' created!"
 
 echo "[CODEC][HEALTH]: Disable vscode telemetry..."
 /etc/codec/vscode_telemetry.js

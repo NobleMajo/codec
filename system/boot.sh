@@ -13,14 +13,14 @@ apt-get update
 # default vscode extensions
 /etc/codec/extensions.sh
 
-# init module system
-/etc/codec/modules.sh
+# init mod system
+/etc/codec/mods.sh
 
 # run vscode server service
 echo "[CODEC][VSCODE]: Start vscode service..."
 systemctl start vscode
 
-# init async modules
-/etc/codec/modules_async.sh
+# init async mods
+/etc/codec/mods_async.sh
 
 echo "[CODEC][VSCODE]: Done!"

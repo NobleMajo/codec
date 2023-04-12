@@ -287,7 +287,7 @@ The user can customize the instance with CodeC [Mods](#mods), CodeC [Mounts](#mo
 
 ### User CLI
 The `codec` command is the CodeC-User-CLI Tools that users can use in the CodeC instance in their terminal.
-They can use the tool to restart their own container, change passwords, and make other settings, such as enabling and disabling modules.
+They can use the tool to restart their own container, change passwords, and make other settings, such as enabling and disabling Mods.
 
 #### restart
 Restart the current user instance:
@@ -347,16 +347,16 @@ Mods can be used to make changes that range from minor modifications to full-sca
 They are intended to provide flexibility and allow users to customize their environment to their liking.  
 
 #### Mod Folders
-The CodeC Mods are located in the `/codec/.codec/optional` directory inside the user's codec container.
+The CodeC Mods are located in the `/codec/.codec/mods` directory inside the user's codec container.
 CodeC already provides a set of predefined Mods,
 where some of them are ready to be used and some of them are just examples that need to be adjusted in order to be used.
 
 ##### Mod Status
-Enabled Mods are in the `/codec/.codec/modules` folder inside the user's persistent codec folder.  
+Enabled Mods are in the `/codec/.codec/enabled-mods` folder inside the user's persistent codec folder.  
 
-If you use the `codeccli` to enable a Mod the Mod Bash scripts get symlinked from the `optional` folder into the `modules` folder.  
+If you use the `codeccli` to enable a Mod the Mod Bash scripts get symlinked from the `mods` folder into the `enabled-mods` folder.  
 
-If you disable the Mod all scripts/symlinks of the Mod in the `/codec/.codec/modules` folder get deleted.
+If you disable the Mod all scripts/symlinks of the Mod in the `/codec/.codec/enabled-mods` folder get deleted.
 
 You can find the mod commands in the [mod cli](#mod-cli) part.
 
@@ -382,7 +382,7 @@ Here is an table that explains the Mod script types:
 | BASH  | `semi`     | `no`                    | `yes`              | `<ModName>.bash.sh`  |
 
 #### Environment Mod Script
-Environment scripts in CodeC are bash scripts that are executed at the boot of the container after each other. These scripts are located in the `/codec/.codec/`optional directory and `<ModName>.env.sh` is the mandatory defined naming that must be used.  
+Environment scripts in CodeC are bash scripts that are executed at the boot of the container after each other. These scripts are located in the `/codec/.codec/mods` directory and `<ModName>.env.sh` is the mandatory defined naming that must be used.  
 The purpose of these scripts is to install apt and npm packages and to change the configuration of tools that are used in the following boot scripts.  
 The environment scripts delay the start of the CodeC web server until they finish executing.  
 In the environment script, you can define apt and npm packages that should be installed using the following syntax:
@@ -471,29 +471,20 @@ Mounts can be set in the `/codec/.codec/mounts.json` JSON file as a `key-value o
 Because most of the following files are in the persistent `/codec` folder, all user data in there will be persistent.
 
 - `/root/`  
-  - `ws/` -> /codec
+  - `ws/` <- /codec
 - `/usr/`
   - `bin/` <- codec bins moved to here
-- `/codec/`             <- persistent folder
+- `/codec/` <- persistent folder
   - `mounts/`
-    - `systemd/` <- /etc/systemd/system
-    - `ssh/` <- /root/.ssh
-    - `vscode/` <- /root/.local/share/
+    - `shared/` <- `a shared folder between all CodeC instances as share and exchange folder`
+    - `logs/` <- logs folder for the CodeC System and Mods,
+    - `ssh/` <- `/root/.ssh`,
+    - `vscode/` <- `/root/.local/share/code-server`
   - `.codec/`
-    - `bin/` <- custom bins moved
-    - `modules/`
-    - `optional/`
-      - `env.bash.sh`
-      - `ssh.bash.sh`
-      - `git.async.sh`
-      - `npm.async.sh`
-      - `vscode.async.sh`
-      - `apt.boot.sh`
-      - `dockerd.async.sh`
-      - `btop.async.sh`
-      - `marketplace.boot.sh`
-      - `zapt.boot.sh`
-    - `mounts.json`code-server
+    - `bin/` <- custom executable user scripts 
+    - `enabled-mods` <- links to `/mods`-files
+    - `mods/` <- folder with optional CodeC [Mods](#mods)
+    - `mounts.json` <- file with CodeC [Mount](#mounts) configuration
   - `main/`
   - `todo/`
   - `archieved/`
@@ -504,8 +495,8 @@ Because most of the following files are in the persistent `/codec` folder, all u
 | `/codec/.codec/`               | Folder for the user with CodeC infos, configs, mods, mounts and scripts                                                              |
 | `/codec/.codec/ports.info.txt` | Text file containing the ports the user can use to test/run apps on (more infos [here](#start))                                      |
 | `/codec/.codec/bin/`           | Contains custom executable files used by the CodeC system                                                                            |
-| `/codec/.codec/modules/`       | Directory for enabled [Mods](#mods)                                                                                                  |
-| `/codec/.codec/optional/`      | Directory for optional [Mods](#mods)                                                                                                 |
+| `/codec/.codec/enabled-mods/`  | Directory for enabled [Mods](#mods)                                                                                                  |
+| `/codec/.codec/mods/`          | Directory for optional [Mods](#mods)                                                                                                 |
 | `/codec/.codec/mounts.json`    | JSON file for the user to [mount](#mounts) non-persistent files                                                                      |
 | `/codec/mounts/systemd/`       | [Mount point](#mounts) for custom systemd configuration files                                                                        |
 | `/codec/mounts/ssh/`           | [Mount point](#mounts) for the SSH server configuration files                                                                        |

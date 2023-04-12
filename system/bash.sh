@@ -4,9 +4,9 @@ source /etc/environment
 
 codec -w
 
-MODULES_PATH="/codec/.codec/modules"
-BASH_MODULE_PATHS=("$(find $MODULES_PATH -name "*.bash.sh")")
+MODS_PATH="/codec/.codec/mods"
+BASH_MOD_PATHS=("$(find $MODS_PATH -name "*.bash.sh")")
 
-for BASH_MODULE_PATH in $BASH_MODULE_PATHS; do
-    source $BASH_MODULE_PATH
+for BASH_MOD_PATH in $BASH_MOD_PATHS; do
+    source $BASH_MOD_PATH
 done

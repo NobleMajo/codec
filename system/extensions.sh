@@ -9,4 +9,3 @@ codei benjaminbenais.copilot-theme
 codei vscode-icons-team.vscode-icons
 codei ritwickdey.LiveServer
 
-

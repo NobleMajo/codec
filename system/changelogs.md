@@ -49,7 +49,7 @@ First version with big breaking changes, new folder structure, build in systemd 
 ## Mar 23, 2023
 - Update majo link on login screen
 ## Mar 22, 2023
-- Modify codec boot scripts and default modules
+- Modify codec boot scripts and default mods
 ## Mar 9, 2023
 - Update Code Server version
 
@@ -89,7 +89,7 @@ First version with big breaking changes, new folder structure, build in systemd 
 - Use latest code-server version to build
 
 ## Oct 1, 2022
-- Provider CLI tools, KEL scripts, and fix module system
+- Provider CLI tools, KEL scripts, and fix mod system
 
 ## Sep 28, 2022
 - Fix login SVG and password label
@@ -103,7 +103,7 @@ First version with big breaking changes, new folder structure, build in systemd 
 - Change error message padding
 
 ## Sep 7, 2022
-- Repair example modules and repair module system
+- Repair example mods and repair mod system
 
 ## Sep 5, 2022
 - Fix container crash on set password
@@ -118,7 +118,7 @@ First version with big breaking changes, new folder structure, build in systemd 
 - Add: own login screen
 
 ## Sep 4, 2022
-- Change: add env to module system
+- Change: add env to mod system
 
 ## Sep 2, 2022
 - Change: improve custom cmds

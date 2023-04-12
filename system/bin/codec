@@ -43,10 +43,10 @@ if [[ "$1" == "-fd" || "$1" == "--free-disk" || "$1" == "free-disk" ]]; then
     rm -rf /codec/.codec/vscode/User/workspaceStorage/*
     rm -rf /codec/.codec/vscode/User/customBuiltinExtensionsCache.json
 
-    echo "///CODEC///: node_modules folder..."
-    find /codec/main -name "node_modules" -type d -prune -print | xargs du -chs
-    find /codec/old -name "node_modules" -type d -prune -print | xargs du -chs
-    find /codec/test -name "node_modules" -type d -prune -print | xargs du -chs
+    echo "///CODEC///: node_mods folder..."
+    find /codec/main -name "node_mods" -type d -prune -print | xargs du -chs
+    find /codec/old -name "node_mods" -type d -prune -print | xargs du -chs
+    find /codec/test -name "node_mods" -type d -prune -print | xargs du -chs
 
     echo "///CODEC///: Wipe docker..."
     codecdd start
@@ -103,37 +103,37 @@ if [[ "$1" == "-cc" || "$1" == "--clear-cache" || "$1" == "clear-cache" ]]; then
     exit 0
 fi
 
-MODULES_PATH="/codec/.codec/modules"
-OPTIONAL_PATH="/codec/.codec/optional"
+ENABLED_MODS_PATH="/codec/.codec/enabled-mods"
+OPTIONAL_MODS_PATH="/codec/.codec/mods"
 LOGS_PATH="/etc/codec/logs"
 
 if [[ "$1" == "-em" || "$1" == "--modon" || "$1" == "modon" ]]; then
-    MODULE_NAME=$2
+    MOD_NAME=$2
     if [ -z "$2" ]; then
-        echo "You need to define a module"
+        echo "You need to define a mod"
         exit 1
     fi
-    echo "///CODEC///: Enable module '$MODULE_NAME'..."
-    rm -rf $MODULES_PATH/$MODULE_NAME.*.sh
-    if [ -f $OPTIONAL_PATH/$MODULE_NAME.env.sh ]; then
+    echo "///CODEC///: Enable mod '$MOD_NAME'..."
+    rm -rf $ENABLED_MODS_PATH/$MOD_NAME.*.sh
+    if [ -f $OPTIONAL_MODS_PATH/$MOD_NAME.env.sh ]; then
         ln -s \
-            $OPTIONAL_PATH/$MODULE_NAME.env.sh \
-            $MODULES_PATH/$MODULE_NAME.env.sh
+            $OPTIONAL_MODS_PATH/$MOD_NAME.env.sh \
+            $ENABLED_MODS_PATH/$MOD_NAME.env.sh
     fi
-    if [ -f $OPTIONAL_PATH/$MODULE_NAME.boot.sh ]; then
+    if [ -f $OPTIONAL_MODS_PATH/$MOD_NAME.boot.sh ]; then
         ln -s \
-            $OPTIONAL_PATH/$MODULE_NAME.boot.sh \
-            $MODULES_PATH/$MODULE_NAME.boot.sh
+            $OPTIONAL_MODS_PATH/$MOD_NAME.boot.sh \
+            $ENABLED_MODS_PATH/$MOD_NAME.boot.sh
     fi
-    if [ -f $OPTIONAL_PATH/$MODULE_NAME.async.sh ]; then
+    if [ -f $OPTIONAL_MODS_PATH/$MOD_NAME.async.sh ]; then
         ln -s \
-            $OPTIONAL_PATH/$MODULE_NAME.async.sh \
-            $MODULES_PATH/$MODULE_NAME.async.sh
+            $OPTIONAL_MODS_PATH/$MOD_NAME.async.sh \
+            $ENABLED_MODS_PATH/$MOD_NAME.async.sh
     fi
-    if [ -f $OPTIONAL_PATH/$MODULE_NAME.bash.sh ]; then
+    if [ -f $OPTIONAL_MODS_PATH/$MOD_NAME.bash.sh ]; then
         ln -s \
-            $OPTIONAL_PATH/$MODULE_NAME.bash.sh \
-            $MODULES_PATH/$MODULE_NAME.bash.sh
+            $OPTIONAL_MODS_PATH/$MOD_NAME.bash.sh \
+            $ENABLED_MODS_PATH/$MOD_NAME.bash.sh
     fi
 
     echo "Apply the changes on next codec restart!"
@@ -142,13 +142,13 @@ if [[ "$1" == "-em" || "$1" == "--modon" || "$1" == "modon" ]]; then
 fi
 
 if [[ "$1" == "-dm" || "$1" == "--modoff" || "$1" == "modoff" ]]; then
-    MODULE_NAME=$2
+    MOD_NAME=$2
     if [ -z "$2" ]; then
-        echo "You need to define a module"
+        echo "You need to define a mod"
         exit 1
     fi
-    echo "///CODEC///: Disable module '$MODULE_NAME'..."
-    rm -rf $MODULES_PATH/$MODULE_NAME.*.sh
+    echo "///CODEC///: Disable mod '$MOD_NAME'..."
+    rm -rf $ENABLED_MODS_PATH/$MOD_NAME.*.sh
 
     echo "Apply the changes on next codec restart!"
     echo "Restart via: 'codec -r'"
@@ -300,8 +300,8 @@ if [[ "$1" == "-h" || "$1" == "help" ]]; then
     echo "  -r,  restart:      restart the codec container"
     echo "  -fd, free-disk:    free some disk space"
     echo "  -cc, clear-cache:  clear codec cache"
-    echo "  -em, modon <mod>:  Enable a codec module"
-    echo "  -dm, modoff <mod>: Disable a codec module"
+    echo "  -em, modon <mod>:  Enable a codec mod"
+    echo "  -dm, modoff <mod>: Disable a codec mod"
     echo "  -l,  log <n> <ln>: print a logfile (example: boot, dockerd)"
 else
     echo "Use 'codec -h' to get more informations about this command."

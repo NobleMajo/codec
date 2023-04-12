@@ -12,12 +12,14 @@
   - [Data](#data)
   - [Benefits](#benefits)
 - [Features](#features)
-  - [Modules](#modules)
+  - [Mods](#mods)
   - [Mounts](#mounts)
   - [Docker](#docker)
   - [Systemd](#systemd)
   - [Commands](#commands)
+    - [Examples](#examples)
   - [Custom commands](#custom-commands)
+      - [Command examples:](#command-examples)
 
 # About
 Codec is a `visual studio code` docker container designed for development from anywhere `from any web browser` with some additional development features.
@@ -56,8 +58,8 @@ If software and its data needs to be stored persistently, then follow the [Softw
 
 ## Software
 No software should be installed in the `/codec` folder.
-Software should be installed either through the `/codec/.codec/boot.sh` bash script or through a codec module.
-Codec modules are explained in [Modules](#Modules) below.
+Software should be installed either through the `/codec/.codec/boot.sh` bash script or through a codec Mod.
+Codec Mods are explained in [Mods](#mods) below.
 
 ## Data
 Any software data such as databases, configurations and custom-source-code should be stored somewhere in the `/codec` directory.
@@ -74,10 +76,10 @@ All data that is stored persistently is determined by the user and not by the so
 
 # Features
 
-## Modules
-Software should be installed either through the `/codec/.codec/boot.sh` bash script or through a module in the `/codec/.codec/modules` folder.
-There are already some modules in the `/codec/.codec/optional` folder as a template for your own modules.
-with the command `codec modon` you can switch modules on and with `codec modoff` you can switch them off.
+## Mods
+Software should be installed either through the `/codec/.codec/boot.sh` bash script or through a Mod in the `/codec/.codec/enabled-mods` folder.
+There are already some Mods in the `/codec/.codec/mods` folder as a template for your own Mods.
+with the command `codec modon` you can switch Mods on and with `codec modoff` you can switch them off.
 
 ## Mounts
 This `/codec/.codec/mounts.json` mounts configuration exists to persist folders that are distributed on the system.
