@@ -11,6 +11,7 @@ then
     cp /codec/.codec/optional/* /codec/.codec/mods
 fi
 rm -rf /codec/.codec/modules
+rm -rf /codec/.codec/optional
 
 mkdir -p /codec/mounts
 mkdir -p /codec/archived
