@@ -167,7 +167,7 @@ $EXTRA_DOCKER_START_ARGS \
 -p '0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT/tcp' \
 -p '0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT/udp' \
 -e 'CODEC_PORTS=$START_PORT-$END_PORT' \
--v '$CODEC_USER_DATA/shared_folder:/codec/mounts/shared' \
+-v '$CODEC_USER_DATA/.codec/shared_folder:/codec/mounts/shared' \
 -v '$CODEC_USER_DATA/$1:/codec' \
 codec2"
 

@@ -16,6 +16,9 @@ apt-get update
 # init mod system
 /etc/codec/mods.sh
 
+# reload sysctl
+sysctl -p
+
 # run vscode server service
 echo "[CODEC][VSCODE]: Start vscode service..."
 systemctl start vscode
