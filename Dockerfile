@@ -4,9 +4,9 @@ FROM ubuntu:22.04
 
 LABEL version="1.0" maintainer="Majo Richter <majo418@coreunit.net>"
 
-ARG NODE_VERSION=18
+ARG NODE_VERSION=20
 ARG NPM_VERSION=9
-ARG VSCODE_VERSION=4.13.0
+ARG VSCODE_VERSION=4.14.1
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
