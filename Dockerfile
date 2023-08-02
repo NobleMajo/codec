@@ -2,16 +2,19 @@ FROM docker:dind-rootless as dind
 
 FROM ubuntu:22.04
 
-LABEL version="1.0" maintainer="Majo Richter <majo418@coreunit.net>"
+LABEL version="1.0" maintainer="Majo Richter <majo@coreunit.net>"
 
 ARG NODE_VERSION=20
 ARG NPM_VERSION=9
-ARG VSCODE_VERSION=4.14.1
+ARG VSCODE_VERSION=4.16.1
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
     && apt-get update \
-    && apt-get install -yq --no-install-recommends apt-utils locales \
+    && echo 'tzdata tzdata/Areas select Etc' | debconf-set-selections \
+    && echo 'tzdata tzdata/Zones/Etc select UTC' | debconf-set-selections \
+    && apt-get install -yq --no-install-recommends \
+    apt-utils locales tzdata libtimedate-perl \
     && sed -i "s/# en_US.UTF-8/en_US.UTF-8/" /etc/locale.gen \
     && locale-gen \
     && apt-get full-upgrade -y \
