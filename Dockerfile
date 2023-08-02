@@ -1,6 +1,6 @@
 FROM docker:dind-rootless as dind
 
-FROM ubuntu:22.04
+FROM ubuntu:22.10
 
 LABEL version="1.0" maintainer="Majo Richter <majo@coreunit.net>"
 

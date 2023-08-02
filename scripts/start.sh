@@ -118,7 +118,7 @@ if [ "$1" == "$FLAG_NAME" ] ||  [ "$1" == "$FLAG_SHORTNAME" ]  ||
     [ "$4" == "$FLAG_SHORTNAME" ] || [ "$5" == "$FLAG_SHORTNAME" ] || 
     [ "$6" == "$FLAG_SHORTNAME" ] || [ "$7" == "$FLAG_SHORTNAME" ]; then
     echo "+[$FLAG_SHORTNAME/$FLAG_NAME]: Run with host docker socket!"
-    EXTRA_DOCKER_START_ARGS+=" -v /var/run/docker.sock:/run/docker.sock"
+    EXTRA_DOCKER_START_ARGS+=" -v /run/docker.sock:/run/docker.sock"
 fi
 
 FLAG_NAME="--read-only"
@@ -134,6 +134,21 @@ if [ "$1" == "$FLAG_NAME" ] ||  [ "$1" == "$FLAG_SHORTNAME" ]  ||
     EXTRA_DOCKER_START_ARGS+=" --read-only"
 fi
 
+FLAG_NAME="--not-privileged"
+FLAG_SHORTNAME="-n"
+if [ "$ALT_EXTRA_DOCKER_START_ARGS" != "" ]; then
+    EXTRA_DOCKER_START_ARGS="$ALT_EXTRA_DOCKER_START_ARGS"
+elif [ "$1" != "$FLAG_NAME" ] && [ "$1" != "$FLAG_SHORTNAME" ] &&
+    [ "$2" != "$FLAG_NAME" ] && [ "$2" != "$FLAG_SHORTNAME" ] &&
+    [ "$3" != "$FLAG_NAME" ] && [ "$3" != "$FLAG_SHORTNAME" ] &&
+    [ "$4" != "$FLAG_NAME" ] && [ "$5" != "$FLAG_NAME" ] &&
+    [ "$6" != "$FLAG_NAME" ] && [ "$7" != "$FLAG_NAME" ] &&
+    [ "$4" != "$FLAG_SHORTNAME" ] && [ "$5" != "$FLAG_SHORTNAME" ] &&
+    [ "$6" != "$FLAG_SHORTNAME" ] && [ "$7" != "$FLAG_SHORTNAME" ]; then
+    echo "+[$FLAG_SHORTNAME/$FLAG_NAME]: Run as privileged!"
+    EXTRA_DOCKER_START_ARGS+=" --privileged"
+fi
+
 if [ "$EXTRA_DOCKER_START_ARGS" == "" ]; then
     ALT_EXTRA_DOCKER_START_ARGS="$(
         docker run -it --rm \
@@ -143,6 +158,7 @@ if [ "$EXTRA_DOCKER_START_ARGS" == "" ]; then
                 bash -c \
                 "touch /app/$1.extra.args && cat /app/$1.extra.args"
         )"
+
     FLAG_NAME="--not-privileged"
     FLAG_SHORTNAME="-n"
     if [ "$ALT_EXTRA_DOCKER_START_ARGS" != "" ]; then
@@ -241,6 +257,8 @@ docker run -it --rm \
         && mkdir -p /app/args \
         && touch /app/args/$1.extra.args \
         && echo -n '$EXTRA_DOCKER_START_ARGS' > /app/args/$1.extra.args"
+
+echo "Use 'sudo rm -f $CODEC_USER_DATA/.codec/args/$1.extra.args' to reset the args!"
 
 if [ "$ALREADY_EXIST" == "false" ]; then
     echo "[CODEC_CLI][START]: Set new random generated password..."
