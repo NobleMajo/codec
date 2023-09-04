@@ -7,9 +7,7 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-if [ -z "$CODEC_USER_DATA" ]; then
-    CODEC_USER_DATA="/var/lib/codec"
-fi
+source $CURRENT_DIR/vars.sh
 
 if [ "$2" != "-f" ] && [ "$2" != "--force" ]; then
     echo "[CODEC_CLI][RESET]: Reset codec user data of '$1'?"

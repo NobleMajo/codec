@@ -2,9 +2,7 @@
 
 CURRENT_DIR=$(dirname $(realpath $0))
 
-if [ -z "$CODEC_INSTALL_PATH" ]; then 
-    CODEC_INSTALL_PATH="/usr/bin"
-fi
+source $CURRENT_DIR/vars.sh
 
 echo "[CODEC_CLI][UNINSTALL]: Need super user rights to uninstall codeccli..."
 sudo echo "[CODEC_CLI][UNINSTALL]: Super user access granted!"

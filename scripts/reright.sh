@@ -5,9 +5,7 @@ CURRENT_DIR=$(dirname $(realpath $0))
 $CURRENT_DIR/build.sh > /dev/null 2>&1 &
 BUILD_PID=$!
 
-if [ -z "$CODEC_USER_DATA" ]; then
-    CODEC_USER_DATA="/var/lib/codec"
-fi
+source $CURRENT_DIR/vars.sh
 
 echo "[CODEC_CLI][RERIGHT]: Reset user rights on .codec folder..."
 docker run -it --rm \

@@ -4,9 +4,7 @@ CURRENT_DIR=$(dirname $(realpath $0))
 
 USER=$1
 
-if [ -z "$CODEC_USER_DATA" ]; then
-    CODEC_USER_DATA="/var/lib/codec"
-fi
+source $CURRENT_DIR/vars.sh
 
 echo "[CODEC_CLI][ENABLE]: Enable user '$1'..."
 docker rm -f codeccli-disable > /dev/null 2>&1

@@ -6,6 +6,7 @@ LABEL version="1.0" maintainer="Majo Richter <majo@coreunit.net>"
 
 ARG NODE_VERSION=20
 ARG NPM_VERSION=9
+ARG N_NVM_VERSION=9
 ARG VSCODE_VERSION=4.16.1
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -112,7 +113,7 @@ RUN apt-get update \
 RUN apt-get update \
     && apt-get install -y --no-install-recommends  \
     nodejs npm \
-    && npm i -g n@latest \
+    && npm i -g n@$N_NVM_VERSION \
     && n $NODE_VERSION \
     && export PATH="/usr/local/bin/node:$PATH" \
     && npm i -g npm@$NPM_VERSION \

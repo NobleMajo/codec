@@ -2,9 +2,7 @@
 
 CURRENT_DIR=$(dirname $(realpath $0))
 
-if [ -z "$CODEC_USER_DATA" ]; then
-    CODEC_USER_DATA="/var/lib/codec"
-fi
+source $CURRENT_DIR/vars.sh
 
 $CURRENT_DIR/close.sh $1
 

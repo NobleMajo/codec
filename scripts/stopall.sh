@@ -2,9 +2,7 @@
 
 CURRENT_DIR=$(dirname $(realpath $0))
 
-if [ -z "$CODEC_USER_DATA" ]; then
-    CODEC_USER_DATA="/var/lib/codec"
-fi
+source $CURRENT_DIR/vars.sh
 
 echo "[CODEC_CLI][STOPALL]: Load codec container user list..."
 USER_LIST=$(

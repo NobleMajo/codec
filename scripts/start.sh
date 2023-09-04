@@ -10,13 +10,7 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-if [ -z "$CODEC_USER_DATA" ]; then
-    CODEC_USER_DATA="/var/lib/codec"
-fi
-
-if [ -z "$CODEC_NET" ]; then
-    CODEC_NET="ff_codec_net"
-fi
+source $CURRENT_DIR/vars.sh
 
 if [ -z "$MAX_ALLOED_CODEC_PORTs" ]; then
     MAX_ALLOED_CODEC_PORTS=30

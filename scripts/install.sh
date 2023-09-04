@@ -3,9 +3,7 @@
 CURRENT_DIR=$(dirname $(realpath $0))
 CODEC_CLI_PATH=$(realpath "$CURRENT_DIR/../codeccli")
 
-if [ -z "$CODEC_BIT_INSTALL_PATH" ]; then 
-    CODEC_BIN_INSTALL_PATH="/usr/bin"
-fi
+source $CURRENT_DIR/vars.sh
 
 echo "[CODEC_CLI][INSTALL]: Need super user rights to install codeccli..."
 sudo echo "[CODEC_CLI][INSTALL]: Super user access granted!"

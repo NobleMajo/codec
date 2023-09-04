@@ -4,9 +4,7 @@ CURRENT_DIR=$(dirname $(realpath $0))
 
 $CURRENT_DIR/uncron.sh
 
-if [ -z "$CODEC_USER_DATA" ]; then
-    CODEC_USER_DATA="/var/lib/codec"
-fi
+source $CURRENT_DIR/vars.sh
 
 sudo mkdir -p $CURRENT_DIR/.codec/cron
 sudo rm -rf $CODEC_USER_DATA/.codec/cron/*
