@@ -228,13 +228,15 @@ echo "[CODEC_CLI][START]: Run docker container..."
 bash -c "$DOCKER_START_CMD"
 
 echo "[CODEC_CLI][START]: Set port user info..."
+PORT_INFO_TEXT="Your codec ports: codec.coreunit.net:$START_PORT-$END_PORT"
+
 docker rm -f codeccli-info-helper > /dev/null 2>&1
 docker run -it --rm \
     --name "codeccli-info-helper" \
     -v "$CODEC_USER_DATA/$1:/codec" \
     ubuntu:22.04 \
         bash -c \
-        "echo '$START_PORT-$END_PORT' > /codec/.codec/ports.info.txt"
+        "chmod 777 /codec/.codec/ports.info.txt && echo '$PORT_INFO_TEXT' > /codec/.codec/ports.info.txt"
 
 echo "[CODEC_CLI][START]: Save startup arguments..."
 docker rm -f codeccli-port-helper > /dev/null 2>&1

@@ -8,6 +8,9 @@ source $CURRENT_DIR/vars.sh
 echo "[CODEC_CLI][INSTALL]: Need super user rights to install codeccli..."
 sudo echo "[CODEC_CLI][INSTALL]: Super user access granted!"
 
+echo "test: $CODEC_BIN_INSTALL_PATH/codeccli"
+echo "test2: $CODEC_CLI_PATH $CODEC_BIN_INSTALL_PATH/codeccli"
+
 echo "[CODEC_CLI][INSTALL]: Install codeccli..."
 sudo rm -rf $CODEC_BIN_INSTALL_PATH/codeccli
 sudo ln -s $CODEC_CLI_PATH $CODEC_BIN_INSTALL_PATH/codeccli
