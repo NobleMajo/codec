@@ -31,7 +31,7 @@ fi
 
 if [ -z $START_PORT ]; then
     docker rm -f codeccli-start-port-reader > /dev/null 2>&1
-
+    echo "test: $CODEC_USER_DATA"
     START_PORT="$(
         docker run -it --rm \
             --name "codeccli-start-port-reader" \
@@ -235,7 +235,7 @@ docker run -it --rm \
     -v "$CODEC_USER_DATA/$1:/codec" \
     ubuntu:22.04 \
         bash -c \
-        "chmod 777 /codec/.codec/ports.info.txt && echo '$PORT_INFO_TEXT' > /codec/.codec/ports.info.txt"
+        "chmod 777 /codec/.codec && echo '$PORT_INFO_TEXT' > /codec/.codec/ports.info.txt && chmod 744 /codec/.codec"
 
 echo "[CODEC_CLI][START]: Save startup arguments..."
 docker rm -f codeccli-port-helper > /dev/null 2>&1
