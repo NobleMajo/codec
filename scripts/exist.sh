@@ -1,13 +1,12 @@
 #!/bin/bash
 
-CURRENT_DIR=$(dirname $(realpath $0))
+export CURRENT_DIR=$(dirname $(realpath $0))
+source $CURRENT_DIR/vars.sh
 
 if [ -z "$1" ]; then
     echo "[CODEC_CLI][EXIST]: No codec user defined!"
     exit 1
 fi
-
-source $CURRENT_DIR/vars.sh
 
 CODEC_USERS="$(
 docker run -it --rm \

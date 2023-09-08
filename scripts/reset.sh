@@ -1,13 +1,12 @@
 #!/bin/bash
 
-CURRENT_DIR=$(dirname $(realpath $0))
+export CURRENT_DIR=$(dirname $(realpath $0))
+source $CURRENT_DIR/vars.sh
 
 if [ -z "$1" ]; then
     echo "[CODEC_CLI][RESET]: No codec user defined!"
     exit 1
 fi
-
-source $CURRENT_DIR/vars.sh
 
 if [ "$2" != "-f" ] && [ "$2" != "--force" ]; then
     echo "[CODEC_CLI][RESET]: Reset codec user data of '$1'?"

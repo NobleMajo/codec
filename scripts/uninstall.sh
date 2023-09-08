@@ -1,7 +1,6 @@
 #!/bin/bash
 
-CURRENT_DIR=$(dirname $(realpath $0))
-
+export CURRENT_DIR=$(dirname $(realpath $0))
 source $CURRENT_DIR/vars.sh
 
 echo "[CODEC_CLI][UNINSTALL]: Need super user rights to uninstall codeccli..."
@@ -18,6 +17,6 @@ if [ "$1" != "-f" ] && [ "$1" != "--force" ]; then
 fi
 
 echo "[CODEC_CLI][UNINSTALL]: Uninstall codeccli..."
-sudo rm -rf $CODEC_INSTALL_PATH/codeccli
+sudo rm -rf $CODEC_BIN_INSTALL_PATH/codeccli
 
 echo "[CODEC_CLI][UNINSTALL]: Done!"

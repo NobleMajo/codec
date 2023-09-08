@@ -1,10 +1,9 @@
 #!/bin/bash
 
-CURRENT_DIR=$(dirname $(realpath $0))
+export CURRENT_DIR=$(dirname $(realpath $0))
+source $CURRENT_DIR/vars.sh
 
 USER=$1
-
-source $CURRENT_DIR/vars.sh
 
 echo "[CODEC_CLI][ENABLE]: Enable user '$1'..."
 docker rm -f codeccli-disable > /dev/null 2>&1

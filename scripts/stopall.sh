@@ -1,7 +1,6 @@
 #!/bin/bash
 
-CURRENT_DIR=$(dirname $(realpath $0))
-
+export CURRENT_DIR=$(dirname $(realpath $0))
 source $CURRENT_DIR/vars.sh
 
 echo "[CODEC_CLI][STOPALL]: Load codec container user list..."

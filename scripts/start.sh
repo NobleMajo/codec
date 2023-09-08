@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export CURRENT_DIR=$(dirname $(realpath $0))
+source $CURRENT_DIR/vars.sh
+
 $CURRENT_DIR/build.sh > /dev/null 2>&1 &
 BUILD_PID=$!
 
@@ -7,8 +10,6 @@ if [ -z "$1" ]; then
     echo "[CODEC_CLI][START]: No codec user defined!"
     exit 1
 fi
-
-source $CURRENT_DIR/vars.sh
 
 if [ -z "$MAX_ALLOED_CODEC_PORTs" ]; then
     MAX_ALLOED_CODEC_PORTS=30

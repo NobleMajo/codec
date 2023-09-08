@@ -1,11 +1,10 @@
 #!/bin/bash
 
-CURRENT_DIR=$(dirname $(realpath $0))
+export CURRENT_DIR=$(dirname $(realpath $0))
+source $CURRENT_DIR/vars.sh
 
 $CURRENT_DIR/build.sh > /dev/null 2>&1 &
 BUILD_PID=$!
-
-source $CURRENT_DIR/vars.sh
 
 echo "[CODEC_CLI][RERIGHT]: Reset user rights on .codec folder..."
 docker run -it --rm \

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-CURRENT_DIR=$(dirname $(realpath $0))
+export CURRENT_DIR=$(dirname $(realpath $0))
+source $CURRENT_DIR/vars.sh
 
 if [ "$1" == "reset" ] || [ "$1" == "-r" ]; then
     echo "Reset user '$1_dev'..."

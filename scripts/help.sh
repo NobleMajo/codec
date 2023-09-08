@@ -1,6 +1,7 @@
 #!/bin/bash
 
-CURRENT_DIR=$(dirname $(realpath $0))
+export CURRENT_DIR=$(dirname $(realpath $0))
+source $CURRENT_DIR/vars.sh
 
 echo "CodeC - VS Code Container"
 echo "- A VS Code Docker Container Image"

@@ -1,8 +1,6 @@
 #!/bin/bash
 
-CURRENT_DIR=$(dirname $(realpath $0))
-CODEC_CLI_PATH=$(realpath "$CURRENT_DIR/../codeccli")
-
+export CURRENT_DIR=$(dirname $(realpath $0))
 source $CURRENT_DIR/vars.sh
 
 echo "[CODEC_CLI][INSTALL]: Need super user rights to install codeccli..."

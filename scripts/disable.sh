@@ -1,7 +1,6 @@
 #!/bin/bash
 
-CURRENT_DIR=$(dirname $(realpath $0))
-
+export CURRENT_DIR=$(dirname $(realpath $0))
 source $CURRENT_DIR/vars.sh
 
 $CURRENT_DIR/close.sh $1

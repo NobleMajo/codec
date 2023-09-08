@@ -1,10 +1,9 @@
 #!/bin/bash
 
-CURRENT_DIR=$(dirname $(realpath $0))
+export CURRENT_DIR=$(dirname $(realpath $0))
+source $CURRENT_DIR/vars.sh
 
 $CURRENT_DIR/uncron.sh
-
-source $CURRENT_DIR/vars.sh
 
 sudo mkdir -p $CURRENT_DIR/.codec/cron
 sudo rm -rf $CODEC_USER_DATA/.codec/cron/*

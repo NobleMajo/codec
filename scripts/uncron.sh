@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export CURRENT_DIR=$(dirname $(realpath $0))
+source $CURRENT_DIR/vars.sh
+
 echo "Need root access..."
 sudo echo "Root access granted!"
 
