@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z "$CODEC_USER_DATA" ]; then
-    export CODEC_USER_DATA="/mnt/sdb/codec-data"
+    export CODEC_USER_DATA=""
 fi
 
 if [ -z "$CODEC_NET" ]; then
@@ -11,3 +11,6 @@ fi
 if [ -z "$CODEC_BIN_INSTALL_PATH" ]; then
     export CODEC_BIN_INSTALL_PATH="/usr/bin"
 fi
+
+export CURRENT_DIR=$(dirname $(realpath $0))
+

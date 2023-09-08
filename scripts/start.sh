@@ -1,7 +1,5 @@
 #!/bin/bash
 
-CURRENT_DIR=$(dirname $(realpath $0))
-
 $CURRENT_DIR/build.sh > /dev/null 2>&1 &
 BUILD_PID=$!
 
