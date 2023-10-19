@@ -31,7 +31,6 @@ fi
 
 if [ -z $START_PORT ]; then
     docker rm -f codeccli-start-port-reader > /dev/null 2>&1
-    echo "test: $CODEC_USER_DATA"
     START_PORT="$(
         docker run -it --rm \
             --name "codeccli-start-port-reader" \
@@ -87,7 +86,7 @@ if (( PORT_COUNT < 1 )); then
     exit 1
 fi
 
-END_PORT=$(($START_PORT+$PORT_COUNT-1)) # 24 
+END_PORT=$(($START_PORT+$PORT_COUNT-1))
 
 if (( END_PORT > 65535 )); then
     echo "[CODEC_CLI][START]: The end port '$END_PORT' is not in the port range (1-65535)!"

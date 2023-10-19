@@ -37,14 +37,12 @@
         for (const releases of data) {
             if (
                 typeof releases["tag_name"] == "string" &&
-                releases["tag_name"] == releases["name"] &&
-                releases["target_commitish"]
-                    .endsWith(releases["name"])
+                releases["tag_name"].startsWith("v")
             ) {
-                let v = releases["tag_name"]
-                if (v.startsWith("v")) {
-                    v = v.substring(1)
-                }
+                v = releases["tag_name"]
+                v = v.trim()
+                v = v.substring(1)
+                v = v.trim()
                 process.stdout.write(v)
                 process.exit(0)
             }

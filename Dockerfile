@@ -1,6 +1,6 @@
 FROM docker:dind-rootless as dind
 
-FROM ubuntu:22.10
+FROM ubuntu:22.04
 
 LABEL version="1.0" maintainer="Majo Richter <majo@coreunit.net>"
 
@@ -53,7 +53,7 @@ RUN export L='us' \
     curl wget tar zip unzip git nano telnet vim git-lfs neofetch \
     && git lfs install \
     && apt-get install -y --no-install-recommends \
-    systemd systemd-cron screen rsyslog \
+    systemd systemd-cron screen rsyslog dnsutils \
     && cd /lib/systemd/system/sysinit.target.wants/ \
     && ls | grep -v systemd-tmpfiles-setup | xargs rm -f $1 \
     && rm -f \
@@ -144,7 +144,7 @@ RUN echo -n "PATH=\"/codec/.codec/bin:/usr/local/bin/node:$PATH\"" > /etc/enviro
     && chmod +x /etc/environment \
     && echo "source /etc/codec/bash.sh" >> /root/.bashrc \
     && usermod --shell /bin/bash root \
-    && echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf \
+    && echo fs.inotify.max_user_watches=262144 | tee -a /etc/sysctl.conf \
     && sysctl -p
 
 EXPOSE 8080/tcp
