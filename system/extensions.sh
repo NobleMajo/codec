@@ -5,7 +5,6 @@ export VSCODE_GALLERY=ms2
 /etc/codec/vscode_gallery.js
 
 echo "[CODEC][EXTENSION]: Install default extensions..." 
-codei benjaminbenais.copilot-theme
-codei vscode-icons-team.vscode-icons
-codei ritwickdey.LiveServer
 
+codei emmanuelbeziat.vscode-great-icons
+codei coltwillcox.synthwave-x-fluoromachine-contrast

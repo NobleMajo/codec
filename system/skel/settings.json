@@ -18,7 +18,6 @@
     "telemetry.enableErrorTelemetry": false,
     "files.hotExit": "off",
     "files.saveConflictResolution": "askUser",
-    "files.autoSave": "off",
     "files.autoSaveDelay": 12000,
     "editor.lineHeight": 18,
     "editor.wordWrap": "on",
@@ -30,8 +29,8 @@
     "editor.formatOnType": false,
     "editor.detectIndentation": true,
     "editor.codeActionsOnSave": {
-        "source.fixAll": true,
-        "source.organizeImports": true
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
     },
     "editor.snippetSuggestions": "bottom",
     "editor.quickSuggestions": {
@@ -42,17 +41,14 @@
     "editor.semanticTokenColorCustomizations": {
         "enabled": false //PERFORMANCE=false
     },
-    "editor.fontSize": 15,
     "editor.fontLigatures": true,
-    "editor.fontFamily": "Consolas, Lucida Console, DejaVu Sans Mono, Liberation Mono, Courier, Consolas, Menlo, Monaco, monospace, Arial",
+    "editor.fontFamily": "Menlo, Monaco, Consolas, 'Courier New', Consolas, Lucida Console, 'Droid Sans', sans-serif, Arial",
     "workbench.tree.indent": 8,
     "workbench.editor.enablePreviewFromCodeNavigation": true,
     "workbench.startupEditor": "none",
-    "workbench.sideBar.location": "left",
     "workbench.panel.defaultLocation": "right",
     "workbench.panel.opensMaximized": "never",
-    "workbench.colorTheme": "Copilot Theme",
-    "workbench.iconTheme": "vscode-icons",
+    "workbench.colorTheme": "Default Dark Modern",
     "terminal.integrated.allowMnemonics": true,
     "terminal.integrated.rendererType": "dom",
     "terminal.integrated.showExitAlert": true,
@@ -66,4 +62,44 @@
     "typescript.updateImportsOnFileMove.enabled": "always",
     "tabnine.experimentalAutoImports": true,
     "tabnine.useProxySupport": false,
+    "markdown.extension.toc.levels": "1..3",
+    "remote.autoForwardPorts": false,
+    "liveshare.anonymousGuestApproval": "accept",
+    "hediet.vscode-drawio.resizeImages": null,
+    "vscode_custom_css.imports": [
+        "file:///codec/mounts/vscode/extensions/coltwillcox.synthwave-x-fluoromachine-contrast-1.0.2/synthwave-x-fluoromachine.css",
+        "file:///codec/mounts/vscode/extensions/coltwillcox.synthwave-x-fluoromachine-contrast-1.0.2/epic-80s-transitions.css",
+        "file:///codec/mounts/vscode/extensions/coltwillcox.synthwave-x-fluoromachine-contrast-1.0.2/logo.css"
+    ],
+    "workbench.colorCustomizations": {
+        "minimap.background": "#00000000",
+        "tab.inactiveBackground": "#0c0e14"
+    },
+    "keyboard.dispatch": "keyCode",
+    "vsicons.dontShowNewVersionMessage": true,
+    "hediet.vscode-drawio.zoomFactor": 2,
+    "editor.mouseWheelZoom": true,
+    "keyboard.layout": "de",
+    "editor.fontSize": 14,
+    "sshfs.configs": [],
+    "sshfs.configpaths": [
+        "/codec/.codec/sshfs.jsonc"
+    ],
+    "workbench.activityBar.location": "top",
+    "window.titleBarStyle": "native",
+    "window.customTitleBarVisibility": "never",
+    "window.menuBarVisibility": "hidden",
+    "workbench.statusBar.visible": false,
+    "workbench.layoutControl.enabled": false,
+    "window.commandCenter": false,
+    "cSpell.userWords": [
+        "debconf",
+        "ipaddress",
+        "majo",
+        "Millis",
+        "noble",
+        "noblemajo",
+        "vrrp"
+    ],
+    "workbench.iconTheme": "vscode-great-icons",
 }

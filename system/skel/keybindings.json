@@ -220,11 +220,6 @@
         "when": "!isMac && editorTextFocus"
     },
     {
-        "key": "ctrl+k",
-        "command": "editor.action.nextSelectionMatchFindAction",
-        "when": "!isMac && editorTextFocus"
-    },
-    {
         "key": "ctrl+shift+k",
         "command": "editor.action.previousSelectionMatchFindAction",
         "when": "!isMac && editorTextFocus"
@@ -335,7 +330,7 @@
         "when": "!isMac"
     },
     {
-        "key": "cmd+d",
+        "key": "alt+d",
         "command": "editor.action.addSelectionToNextFindMatch",
         "when": "!isMac && editorFocus"
     },
@@ -674,5 +669,47 @@
         "key": "ctrl+d",
         "command": "editor.action.addSelectionToNextFindMatch",
         "when": "isMac && editorFocus"
-    }
+    },
+    // Browser in code-server
+    {
+        "key": "alt+b",
+        "command": "simpleBrowser.show",
+        "args": "https://google.com"
+    },
+    {
+        "key": "ctrl+alt+q",
+        "command": "workbench.action.quickOpenView"
+    },
+    {
+        "key": "ctrl+q",
+        "command": "-workbench.action.quickOpenView"
+    },
+    {
+        "key": "ctrl+alt+q",
+        "command": "workbench.action.quickOpenNavigateNextInViewPicker",
+        "when": "inQuickOpen && inViewsPicker"
+    },
+    {
+        "key": "ctrl+q",
+        "command": "-workbench.action.quickOpenNavigateNextInViewPicker",
+        "when": "inQuickOpen && inViewsPicker"
+    },
+    {
+        "key": "ctrl+alt+p",
+        "command": "workbench.action.quickOpen"
+    },
+    {
+        "key": "ctrl+p",
+        "command": "-workbench.action.quickOpen"
+    },
+    {
+        "key": "ctrl+alt+p",
+        "command": "workbench.action.quickOpenNavigateNextInFilePicker",
+        "when": "inFilesPicker && inQuickOpen"
+    },
+    {
+        "key": "ctrl+p",
+        "command": "-workbench.action.quickOpenNavigateNextInFilePicker",
+        "when": "inFilesPicker && inQuickOpen"
+    },
 ]

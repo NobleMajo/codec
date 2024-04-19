@@ -15,9 +15,7 @@ rm -rf /codec/.codec/optional
 
 mkdir -p /codec/mounts
 mkdir -p /codec/archived
-mkdir -p /codec/workspace
-mkdir -p /codec/todo
-mkdir -p /codec/tests
+mkdir -p /codec/ws
 
 echo "[CODEC][HEALTH]: Copy codec skel..."
 cp -nr /etc/codec/skel/* /codec/.codec/
@@ -61,13 +59,13 @@ echo "Linked: '/usr/lib/code-server/src/browser'"
 
 echo "[CODEC][HEALTH]: Linking home 'ws' dir..."
 rm -rf /root/ws
-ln -s /codec/workspace /root/ws
-echo "Link in `/codec/workspace` to '/root/ws' created!"
+ln -s /codec/ws /root/ws
+echo "Link in `/codec/ws` to '/root/ws' created!"
 
 echo "[CODEC][HEALTH]: Linking home 'workspace' dir..."
 rm -rf /root/workspace
-ln -s /codec/workspace /root/workspace
-echo "Link in `/root/workspace` to '/codec/workspace' created!"
+ln -s /codec/ws /root/workspace
+echo "Link in `/root/workspace` to '/codec/ws' created!"
 
 echo "[CODEC][HEALTH]: Linking home 'codec' dir..."
 rm -rf /root/codec

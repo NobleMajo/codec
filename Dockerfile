@@ -1,13 +1,14 @@
-FROM docker:dind-rootless as dind
+# old docker dind files
+# FROM docker:dind-rootless as dind
 
 FROM ubuntu:22.04
 
-LABEL version="1.0" maintainer="Majo Richter <majo@coreunit.net>"
+LABEL version="2.1" maintainer="Majo Richter <majo@coreunit.net>"
 
 ARG NODE_VERSION=20
-ARG NPM_VERSION=9
-ARG N_NVM_VERSION=9
-ARG VSCODE_VERSION=4.16.1
+ARG NPM_VERSION=10.2
+ARG N_NVM_VERSION=9.2
+ARG VSCODE_VERSION=4.22.1
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
@@ -93,11 +94,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     gnupg lxc apt-transport-https ca-certificates \
     openssh-client software-properties-common uidmap \
-    && curl -fsSL https://get.docker.com | sh -s -- \
-    && systemctl disable lxc-net.service \
-    && systemctl disable lxc-monitord.service \
-    && systemctl disable lxc.service \
-    && systemctl disable containerd.service \
+    && curl -sSL https://get.docker.com | sh -s -- \
     && systemctl disable docker.socket \
     && systemctl disable docker.service \
     && systemctl disable code-server@root \
@@ -149,7 +146,8 @@ RUN echo -n "PATH=\"/codec/.codec/bin:/usr/local/bin/node:$PATH\"" > /etc/enviro
 
 EXPOSE 8080/tcp
 
-COPY --from=dind /usr/local/bin/ /usr/local/bin/
+# old docker dind files
+# COPY --from=dind /usr/local/bin/ /usr/local/bin/
 COPY system /etc/codec
 
 RUN cp /etc/codec/bin/* /usr/local/bin/ \
@@ -161,6 +159,6 @@ RUN cp /etc/codec/bin/* /usr/local/bin/ \
     && systemctl enable codec.service \
     && export VSCODE_GALLERY=ms2 \
     && /etc/codec/vscode_gallery.js \
-    && codei vscode-icons-team.vscode-icons thiagolciobittencourt.ubuntuvscode
+    && codei emmanuelbeziat.vscode-great-icons
 
 CMD ["/lib/systemd/systemd"]

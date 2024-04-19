@@ -12,6 +12,9 @@ if [ -z $1 ]; then
 fi
 CMD="$1"
 
+if [[ "$CMD" = restartall* ]]; then
+    CMD="restartall"
+fi
 if [[ "$CMD" = ena* ]]; then
     CMD="enable"
 fi
@@ -79,7 +82,7 @@ if [[ "$CMD" = ra* ]]; then
     CMD="randompass"
 elif [[ "$CMD" = reseth* ]]; then
     CMD="resethash"
-elif [[ "$CMD" = re* ]]; then
+elif [[ "$CMD" = reset ]]; then
     CMD="reset"
 fi
 

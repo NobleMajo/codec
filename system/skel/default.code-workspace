@@ -1,28 +1,20 @@
 {
         "folders": [
                 {
-                        "name": "$ CodeC Config",
+                        "name": "CodeC",
                         "path": "/codec/.codec"
                 },
                 {
-                        "name": "$ User Mounts",
+                        "name": "Mounts",
                         "path": "/codec/mounts"
                 },
                 {
-                        "name": "$ Archived",
+                        "name": "Archived",
                         "path": "/codec/archived"
                 },
                 {
-                        "name": "$ Todo",
-                        "path": "/codec/todo"
-                },
-                {
-                        "name": "$ Tests",
-                        "path": "/codec/tests"
-                },
-                {
-                        "name": "$ Workspace",
-                        "path": "/codec/workspace"
+                        "name": "Workspace",
+                        "path": "/codec/ws"
                 },
         ],
         "settings": {}
