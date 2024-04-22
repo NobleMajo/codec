@@ -9,13 +9,13 @@
                         "path": "/codec/mounts"
                 },
                 {
-                        "name": "Archived",
-                        "path": "/codec/archived"
+                        "name": "Archive",
+                        "path": "/codec/archive"
                 },
                 {
                         "name": "Workspace",
                         "path": "/codec/ws"
-                },
+                }
         ],
         "settings": {}
 }
