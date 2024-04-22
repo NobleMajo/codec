@@ -3,31 +3,21 @@
 
 FROM ubuntu:22.04
 
-LABEL version="2.1" maintainer="Majo Richter <majo@coreunit.net>"
+LABEL version="2.1" maintainer="NobleMajo (Majo Richter) <majo@coreunit.net>"
 
-ARG NODE_VERSION=20
-ARG NPM_VERSION=10.2
-ARG N_NVM_VERSION=9.2
-ARG VSCODE_VERSION=4.22.1
+EXPOSE 8080/tcp
+
+ARG NVM_VERSION="0.39.7"
+ARG NVM_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.sh"
+ARG NODE_VERSION="20"
+ARG NPM_VERSION="10"
+ARG NODEMON_VERSION="3"
+ARG VSCODE_VERSION="4.22.1"
+ARG VSCODE_URL="https://code-server.dev/install.sh"
+
+ENV VSCODE_GALLERY="ms2"
+ENV NVM_DIR="/root/.nvm"
 ENV DEBIAN_FRONTEND=noninteractive
-
-RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
-    && apt-get update \
-    && echo 'tzdata tzdata/Areas select Etc' | debconf-set-selections \
-    && echo 'tzdata tzdata/Zones/Etc select UTC' | debconf-set-selections \
-    && apt-get install -yq --no-install-recommends \
-    apt-utils locales tzdata libtimedate-perl \
-    && sed -i "s/# en_US.UTF-8/en_US.UTF-8/" /etc/locale.gen \
-    && locale-gen \
-    && apt-get full-upgrade -y \
-    && apt-get autoremove -y \
-    && apt-get clean \
-    && apt-get autoclean \
-    && rm -rf \
-    /var/lib/apt/lists/* \
-    /var/cache/apk/* \
-    /tmp/*
-
 ENV LANG "en_US.UTF-8"
 ENV LANGUAGE "en"
 ENV LC_CTYPE "en_US.UTF-8"
@@ -43,18 +33,27 @@ ENV LC_TELEPHONE "en_US.UTF-8"
 ENV LC_MEASUREMENT "en_US.UTF-8"
 ENV LC_IDENTIFICATION "en_US.UTF-8"
 ENV LC_ALL "en_US.UTF-8"
+ENV L="us"
 
-RUN export L='us' \
+COPY system /etc/codec
+
+RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
     && apt-get update \
+    && echo 'tzdata tzdata/Areas select Etc' | debconf-set-selections \
+    && echo 'tzdata tzdata/Zones/Etc select UTC' | debconf-set-selections \
+    && apt-get install -yq --no-install-recommends \
+    apt-utils locales tzdata libtimedate-perl ca-certificates \
+    && sed -i "s/# en_US.UTF-8/en_US.UTF-8/" /etc/locale.gen \
+    && locale-gen \
+    && apt-get full-upgrade -y \
     \
     && apt-get install -y --no-install-recommends \
     sudo bash adduser systemctl lbzip2 locales lsof \
-    \
     && apt-get install -y --no-install-recommends \
-    curl wget tar zip unzip git nano telnet vim git-lfs neofetch \
+    curl wget tar git nano vim git-lfs \
+    && apt-get install -y --no-install-recommends \
+    systemd systemd-cron rsyslog dnsutils \
     && git lfs install \
-    && apt-get install -y --no-install-recommends \
-    systemd systemd-cron screen rsyslog dnsutils \
     && cd /lib/systemd/system/sysinit.target.wants/ \
     && ls | grep -v systemd-tmpfiles-setup | xargs rm -f $1 \
     && rm -f \
@@ -69,96 +68,49 @@ RUN export L='us' \
     /lib/systemd/system/systemd-update-utmp* \
     /lib/systemd/system/systemd*udev* \
     /lib/systemd/system/getty.target \
-    \
     && apt-get autoremove -y \
     && apt-get clean \
     && apt-get autoclean \
     && rm -rf \
-    /var/lib/apt/lists/* \
-    /var/cache/apk/* \
-    /tmp/*
+        /var/lib/apt/lists/* \
+        /var/cache/apk/* \
+        /tmp/*
 
-RUN addgroup \
-    --gid 10001 \
-    codec \
-    && adduser \
-    --system \
-    --shell /bin/bash \
-    --uid 10001 \
-    --gid 10001 \
-    --disabled-password \
-    --home /home/codec \
-    codec
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-    gnupg lxc apt-transport-https ca-certificates \
-    openssh-client software-properties-common uidmap \
-    && curl -sSL https://get.docker.com | sh -s -- \
-    && systemctl disable docker.socket \
-    && systemctl disable docker.service \
+RUN curl -o- $NVM_URL |bash \
+    && [ -s "$NVM_DIR/nvm.sh" ] \
+    && . "$NVM_DIR/nvm.sh" \
+    && . "$NVM_DIR/bash_completion" \
+    && npm i -g npm@$NPM_VERSION \
+    && npm i -g nodemon@$NODEMON_VERSION \
+    && chmod 775 /etc/environment \
+    && echo -n "PATH=\"/codec/.codec/bin:$PATH\"" > /etc/environment \
+    \
+    && curl -fsSL $VSCODE_URL | sh -s -- --version=$VSCODE_VERSION \
     && systemctl disable code-server@root \
     \
-    && apt-get autoremove -y \
-    && apt-get clean \
-    && apt-get autoclean \
-    && rm -rf \
-    /var/lib/apt/lists/* \
-    /var/cache/apk/* \
-    /tmp/*
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends  \
-    nodejs npm \
-    && npm i -g n@$N_NVM_VERSION \
-    && n $NODE_VERSION \
-    && export PATH="/usr/local/bin/node:$PATH" \
-    && npm i -g npm@$NPM_VERSION \
-    && npm i -g nodemon@latest \
-    && npm up -g \
-    && npm cache clean --force \
-    \
-    && apt-get autoremove -y \
-    && apt-get clean \
-    && apt-get autoclean \
-    && rm -rf \
-    /var/lib/apt/lists/* \
-    /var/cache/apk/* \
-    /tmp/*
-
-RUN apt-get update \
-    && curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=$VSCODE_VERSION \
-    \
-    && apt-get autoremove -y \
-    && apt-get clean \
-    && apt-get autoclean \
-    && rm -rf \
-    /var/lib/apt/lists/* \
-    /var/cache/apk/* \
-    /tmp/*
-
-RUN echo -n "PATH=\"/codec/.codec/bin:/usr/local/bin/node:$PATH\"" > /etc/environment \
-    && chmod +x /etc/environment \
-    && echo "source /etc/codec/bash.sh" >> /root/.bashrc \
-    && usermod --shell /bin/bash root \
-    && echo fs.inotify.max_user_watches=262144 | tee -a /etc/sysctl.conf \
-    && sysctl -p
-
-EXPOSE 8080/tcp
-
-# old docker dind files
-# COPY --from=dind /usr/local/bin/ /usr/local/bin/
-COPY system /etc/codec
-
-RUN cp /etc/codec/bin/* /usr/local/bin/ \
+    && cp /etc/codec/bin/* /usr/local/bin/ \
     && mkdir -p /etc/docker \
     && cp /etc/codec/deamon.json /etc/docker/daemon.json \
     && mkdir -p /usr/lib/systemd/system/ \
     && cp /etc/codec/codec.service /usr/lib/systemd/system/ \
     && cp /etc/codec/vscode.service /usr/lib/systemd/system/ \
     && systemctl enable codec.service \
-    && export VSCODE_GALLERY=ms2 \
-    && /etc/codec/vscode_gallery.js \
-    && codei emmanuelbeziat.vscode-great-icons
+    && . /etc/environment \
+    && VSCODE_GALLERY="$VSCODE_GALLERY" /etc/codec/vscode_gallery.js \
+    && codei emmanuelbeziat.vscode-great-icons \
+    \
+    && echo "source /etc/codec/bash.sh" >> /root/.bashrc \
+    && usermod --shell /bin/bash root \
+    && echo fs.inotify.max_user_watches=262144 | tee -a /etc/sysctl.conf \
+    && sysctl -p \
+    \
+    && npm cache clean --force \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && apt-get autoclean \
+    && rm -rf \
+        /var/lib/apt/lists/* \
+        /var/cache/apk/* \
+        /tmp/*
 
 CMD ["/lib/systemd/systemd"]

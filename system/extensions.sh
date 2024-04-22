@@ -7,4 +7,3 @@ export VSCODE_GALLERY=ms2
 echo "[CODEC][EXTENSION]: Install default extensions..." 
 
 codei emmanuelbeziat.vscode-great-icons
-codei coltwillcox.synthwave-x-fluoromachine-contrast
