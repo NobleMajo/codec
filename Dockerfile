@@ -1,9 +1,6 @@
-# old docker dind files
-# FROM docker:dind-rootless as dind
+FROM ubuntu:24.04
 
-FROM ubuntu:22.04
-
-LABEL version="2.1" maintainer="NobleMajo (Majo Richter) <majo@coreunit.net>"
+LABEL version="2.2" maintainer="NobleMajo (Majo Richter) <majo@coreunit.net>"
 
 EXPOSE 8080/tcp
 
@@ -12,7 +9,7 @@ ARG NVM_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.
 ARG NODE_VERSION="20"
 ARG NPM_VERSION="10"
 ARG NODEMON_VERSION="3"
-ARG VSCODE_VERSION="4.22.1"
+ARG VSCODE_VERSION="4.23.1"
 ARG VSCODE_URL="https://code-server.dev/install.sh"
 
 ENV VSCODE_GALLERY="ms2"
@@ -34,8 +31,6 @@ ENV LC_MEASUREMENT "en_US.UTF-8"
 ENV LC_IDENTIFICATION "en_US.UTF-8"
 ENV LC_ALL "en_US.UTF-8"
 ENV L="us"
-
-COPY system /etc/codec
 
 RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
     && apt-get update \
@@ -75,6 +70,8 @@ RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
         /var/lib/apt/lists/* \
         /var/cache/apk/* \
         /tmp/*
+
+COPY system /etc/codec
 
 RUN curl -o- $NVM_URL |bash \
     && [ -s "$NVM_DIR/nvm.sh" ] \
