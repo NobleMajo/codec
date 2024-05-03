@@ -14,7 +14,7 @@ rm -rf /codec/.codec/modules
 rm -rf /codec/.codec/optional
 
 mkdir -p /codec/mounts
-mkdir -p /codec/archived
+mkdir -p /codec/archive
 mkdir -p /codec/ws
 
 echo "[CODEC][HEALTH]: Copy codec skel..."
