@@ -1,4 +1,4 @@
-##!/bin/bash
+#!/usr/bin/env bash
 
 if screen -list | grep -q "$1"; then
     echo "true"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "[CODEC][CHANGELOGS]: Init..."
 touch /codec/.codec/changelogs.md

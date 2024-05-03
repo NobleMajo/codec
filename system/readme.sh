@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "[CODEC][README]: Init..."
 touch /codec/.codec/readme.md

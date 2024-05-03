@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -z "$1" ] || [ "$1" -lt 1 ] || [ "$1" -gt 65535 ]; then
     echo "Invalid port number"

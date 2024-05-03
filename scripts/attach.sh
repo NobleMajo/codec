@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -z "$1" ]; then
     echo "[CODEC_CLI][ATTACH]: No codec user defined!"

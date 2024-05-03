@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # if first argument is -rc or --restart, stop the main process
 if [[ "$1" == "-r" || "$1" == "--restart" || "$1" == "restart" ]]; then

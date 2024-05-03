@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 docker stats --format "table {{.Name}} | CPU {{.CPUPerc}} | MEM {{.MemUsage}}"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "[CODEC][CACHE]: Clear vscode cache files..."
 rm -rf /codec/mounts/vscode/User/caches

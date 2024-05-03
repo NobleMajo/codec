@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -z "$CODEC_NET" ]; then
     export CODEC_NET="ff_codec_net"
