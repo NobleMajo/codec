@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "[CODEC][HEALTH]: Create folder..."
 

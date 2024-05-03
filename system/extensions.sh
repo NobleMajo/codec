@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "[CODEC][EXTENSION]: Set vscode extension store..." 
 export VSCODE_GALLERY=ms2

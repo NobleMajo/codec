@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "[CODEC_CLI]: Crontask Update-All"
 echo "AT: $2"

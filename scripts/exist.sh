@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 export CURRENT_DIR=$(dirname $(realpath $0))
 source $CURRENT_DIR/vars.sh

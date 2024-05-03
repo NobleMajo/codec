@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "### External IP Address ###"
 echo -n "CURL: IPINFO.IO: "

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ "$1" == "-f" ]; then
     echo "Undo the last commit:"

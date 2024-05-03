@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 systemctl stop vscode@root
 

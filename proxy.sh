@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -z "$CODEC_NET" ]; then
     CODEC_NET="codec_net"
