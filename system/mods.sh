@@ -14,6 +14,7 @@ ENV_MOD_PATHS=("$(find $ENABLED_MODS_PATH -name "*.env.sh")")
 BOOT_MOD_PATHS=("$(find $ENABLED_MODS_PATH -name "*.boot.sh")")
 ASYNC_MOD_PATHS=("$(find $ENABLED_MODS_PATH -name "*.async.sh")")
 BASH_MOD_PATHS=("$(find $ENABLED_MODS_PATH -name "*.bash.sh")")
+QUIT_MOD_PATHS=("$(find $ENABLED_MODS_PATH -name "*.quit.sh")")
 
 MOD_COUNTER=0
 
@@ -33,6 +34,23 @@ for MOD_PATH in $BASH_MOD_PATHS; do
     chmod +x $MOD_PATH
     MOD_COUNTER=$(($MOD_COUNTER+1))
 done
+for MOD_PATH in $QUIT_MOD_PATHS; do
+    chmod +x $MOD_PATH
+    MOD_COUNTER=$(($MOD_COUNTER+1))
+done
+
+if [[ "$1" == "-q" || "$1" == "--quit" || "$1" == "quit" ]]; then
+    for QUIT_MOD_PATH in $QUIT_MOD_PATHS; do
+        QUIT_MOD_NAME=$(basename "$QUIT_MOD_PATH")
+        QUIT_MOD_LOGS_PATH=$LOGS_PATH/mod.$QUIT_MOD_NAME.quit.log
+        echo "[CODEC][MOD][QUIT]: Load '$QUIT_MOD_NAME' for quit"
+        touch $QUIT_MOD_LOGS_PATH
+        source $QUIT_MOD_PATH > $QUIT_MOD_LOGS_PATH
+        echo "[CODEC][MOD][QUIT]: '$QUIT_MOD_NAME' loaded!"
+    done
+
+    exit 0
+fi
 
 echo "[CODEC][MOD]: $MOD_COUNTER mods found!"
 

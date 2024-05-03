@@ -3,13 +3,13 @@
 # if first argument is -rc or --restart, stop the main process
 if [[ "$1" == "-r" || "$1" == "--restart" || "$1" == "restart" ]]; then
     echo "///CODEC///: Restarting codec container..."
-    (
-        rm -rf /tmp/*;
-        docker stop $(docker container ls -q);
-        docker system prune -f --volumes;
-        pkill screen;
-        screen -wipe;
-    ) >/dev/null 2>&1
+
+    rm -rf /tmp/*
+
+    /etc/codec/mods.sh --quit
+
+    rm -rf /tmp/*
+
     sleep 3
     shutdown -P 0
     exit 0
