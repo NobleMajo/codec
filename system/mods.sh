@@ -49,6 +49,8 @@ if [[ "$1" == "-q" || "$1" == "--quit" || "$1" == "quit" ]]; then
         echo "[CODEC][MOD][QUIT]: '$QUIT_MOD_NAME' loaded!"
     done
 
+    echo "[CODEC][MOD][QUIT]: All finished!"
+
     exit 0
 fi
 

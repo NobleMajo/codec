@@ -11,8 +11,10 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+CODEC_USER="$1"
+
 if [ -z "$MAX_ALLOED_CODEC_PORTs" ]; then
-    MAX_ALLOED_CODEC_PORTS=30
+    MAX_ALLOED_CODEC_PORTS=99
 fi
 
 if [ -z "$DEFAULT_CODEC_PORT_COUNT" ]; then
@@ -38,8 +40,8 @@ if [ -z $START_PORT ]; then
             ubuntu:22.04 \
                 bash -c \
                 " \
-                    touch /app/$1.start.port && \
-                    cat /app/$1.start.port \
+                    touch /app/$CODEC_USER.start.port && \
+                    cat /app/$CODEC_USER.start.port \
                 "
     )"
     if [ -z $START_PORT ]; then
@@ -59,7 +61,7 @@ if [ -z $PORT_COUNT ]; then
             -v "$CODEC_USER_DATA/.codec/ports:/app" \
             ubuntu:22.04 \
                 bash -c \
-                "touch /app/$1.count.port && cat /app/$1.count.port"
+                "touch /app/$CODEC_USER.count.port && cat /app/$CODEC_USER.count.port"
         )"
     if [ -z $PORT_COUNT ]; then
         PORT_COUNT="$DEFAULT_CODEC_PORT_COUNT"
@@ -97,91 +99,20 @@ if (( END_PORT < 1 )); then
     exit 1
 fi
 
-EXTRA_DOCKER_START_ARGS=""
-ALREADY_EXIST=$($CURRENT_DIR/exist.sh "$1" "CODECDIR")
+ALREADY_EXIST=$($CURRENT_DIR/exist.sh "$CODEC_USER" "CODECDIR")
 
-FLAG_NAME="--mount-sock"
-FLAG_SHORTNAME="-s"
-if [ "$1" == "$FLAG_NAME" ] ||  [ "$1" == "$FLAG_SHORTNAME" ]  || 
-    [ "$2" == "$FLAG_NAME" ] ||  [ "$2" == "$FLAG_SHORTNAME" ]  || 
-    [ "$3" == "$FLAG_NAME" ] ||  [ "$3" == "$FLAG_SHORTNAME" ]  || 
-    [ "$4" == "$FLAG_NAME" ] || [ "$5" == "$FLAG_NAME" ] || 
-    [ "$6" == "$FLAG_NAME" ] || [ "$7" == "$FLAG_NAME" ] ||
-    [ "$4" == "$FLAG_SHORTNAME" ] || [ "$5" == "$FLAG_SHORTNAME" ] || 
-    [ "$6" == "$FLAG_SHORTNAME" ] || [ "$7" == "$FLAG_SHORTNAME" ]; then
-    echo "+[$FLAG_SHORTNAME/$FLAG_NAME]: Run with host docker socket!"
-    EXTRA_DOCKER_START_ARGS+=" -v /run/docker.sock:/run/docker.sock"
-fi
-
-FLAG_NAME="--read-only"
-FLAG_SHORTNAME="-r"
-if [ "$1" == "$FLAG_NAME" ] ||  [ "$1" == "$FLAG_SHORTNAME" ]  || 
-    [ "$2" == "$FLAG_NAME" ] ||  [ "$2" == "$FLAG_SHORTNAME" ]  || 
-    [ "$3" == "$FLAG_NAME" ] ||  [ "$3" == "$FLAG_SHORTNAME" ]  || 
-    [ "$4" == "$FLAG_NAME" ] || [ "$5" == "$FLAG_NAME" ] || 
-    [ "$6" == "$FLAG_NAME" ] || [ "$7" == "$FLAG_NAME" ] ||
-    [ "$4" == "$FLAG_SHORTNAME" ] || [ "$5" == "$FLAG_SHORTNAME" ] || 
-    [ "$6" == "$FLAG_SHORTNAME" ] || [ "$7" == "$FLAG_SHORTNAME" ]; then
-    echo "+[$FLAG_SHORTNAME/$FLAG_NAME]: Run as read only!"
-    EXTRA_DOCKER_START_ARGS+=" --read-only"
-fi
-
-FLAG_NAME="--not-privileged"
-FLAG_SHORTNAME="-n"
-if [ "$ALT_EXTRA_DOCKER_START_ARGS" != "" ]; then
-    EXTRA_DOCKER_START_ARGS="$ALT_EXTRA_DOCKER_START_ARGS"
-elif [ "$1" != "$FLAG_NAME" ] && [ "$1" != "$FLAG_SHORTNAME" ] &&
-    [ "$2" != "$FLAG_NAME" ] && [ "$2" != "$FLAG_SHORTNAME" ] &&
-    [ "$3" != "$FLAG_NAME" ] && [ "$3" != "$FLAG_SHORTNAME" ] &&
-    [ "$4" != "$FLAG_NAME" ] && [ "$5" != "$FLAG_NAME" ] &&
-    [ "$6" != "$FLAG_NAME" ] && [ "$7" != "$FLAG_NAME" ] &&
-    [ "$4" != "$FLAG_SHORTNAME" ] && [ "$5" != "$FLAG_SHORTNAME" ] &&
-    [ "$6" != "$FLAG_SHORTNAME" ] && [ "$7" != "$FLAG_SHORTNAME" ]; then
-    echo "+[$FLAG_SHORTNAME/$FLAG_NAME]: Run as privileged!"
-    EXTRA_DOCKER_START_ARGS+=" --privileged"
-fi
-
-if [ "$EXTRA_DOCKER_START_ARGS" == "" ]; then
-    ALT_EXTRA_DOCKER_START_ARGS="$(
-        docker run -it --rm \
-            --name "codeccli-end-port-reader" \
-            -v "$CODEC_USER_DATA/.codec/args:/app" \
-            ubuntu:22.04 \
-                bash -c \
-                "touch /app/$1.extra.args && cat /app/$1.extra.args"
-        )"
-
-    FLAG_NAME="--not-privileged"
-    FLAG_SHORTNAME="-n"
-    if [ "$ALT_EXTRA_DOCKER_START_ARGS" != "" ]; then
-        EXTRA_DOCKER_START_ARGS="$ALT_EXTRA_DOCKER_START_ARGS"
-    elif [ "$1" != "$FLAG_NAME" ] && [ "$1" != "$FLAG_SHORTNAME" ] &&
-        [ "$2" != "$FLAG_NAME" ] && [ "$2" != "$FLAG_SHORTNAME" ] &&
-        [ "$3" != "$FLAG_NAME" ] && [ "$3" != "$FLAG_SHORTNAME" ] &&
-        [ "$4" != "$FLAG_NAME" ] && [ "$5" != "$FLAG_NAME" ] &&
-        [ "$6" != "$FLAG_NAME" ] && [ "$7" != "$FLAG_NAME" ] &&
-        [ "$4" != "$FLAG_SHORTNAME" ] && [ "$5" != "$FLAG_SHORTNAME" ] &&
-        [ "$6" != "$FLAG_SHORTNAME" ] && [ "$7" != "$FLAG_SHORTNAME" ]; then
-        echo "+[$FLAG_SHORTNAME/$FLAG_NAME]: Run as privileged!"
-        EXTRA_DOCKER_START_ARGS+=" --privileged"
-    fi
-fi
-
-DOCKER_START_CMD="docker run -d \
-$EXTRA_DOCKER_START_ARGS \
---name 'codec_$1' \
---net '$CODEC_NET' \
---restart unless-stopped \
--p '0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT/tcp' \
--p '0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT/udp' \
--e 'CODEC_PORTS=$START_PORT-$END_PORT' \
--v '$CODEC_USER_DATA/.codec/shared_folder:/codec/mounts/shared' \
--v '$CODEC_USER_DATA/$1:/codec' \
-codec2"
-
-echo "[CODEC_CLI][START]: Extra start args: '"
-echo "$EXTRA_DOCKER_START_ARGS"
-echo "'"
+DOCKER_START_CMD=" \
+    docker run -d \
+    --name 'codec_$CODEC_USER' \
+    --net '$CODEC_NET' \
+    --restart unless-stopped \
+    -p '0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT/tcp' \
+    -p '0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT/udp' \
+    -e 'CODEC_PORTS=$START_PORT-$END_PORT' \
+    -v '$CODEC_USER_DATA/.codec/shared_folder:/codec/mounts/shared' \
+    -v '$CODEC_USER_DATA/$CODEC_USER:/codec' \
+    codec2 \
+"
 
 echo "[CODEC_CLI][START]: Docker run command preview: '"
 echo "$DOCKER_START_CMD"
@@ -189,7 +120,7 @@ echo "'"
 
 FLAG_NAME="--force"
 FLAG_SHORTNAME="-f"
-if [ "$1" != "$FLAG_NAME" ] && [ "$1" != "$FLAG_SHORTNAME" ] &&
+if [ "$CODEC_USER" != "$FLAG_NAME" ] && [ "$CODEC_USER" != "$FLAG_SHORTNAME" ] &&
     [ "$2" != "$FLAG_NAME" ] && [ "$2" != "$FLAG_SHORTNAME" ] &&
     [ "$3" != "$FLAG_NAME" ] && [ "$3" != "$FLAG_SHORTNAME" ] &&
     [ "$4" != "$FLAG_NAME" ] && [ "$5" != "$FLAG_NAME" ] &&
@@ -200,10 +131,9 @@ if [ "$1" != "$FLAG_NAME" ] && [ "$1" != "$FLAG_SHORTNAME" ] &&
     echo "[CODEC_CLI][START]: "
     echo "####### CONTAINER DATA #######"
     echo "#    Ports: '$START_PORT-$END_PORT'"
-    echo "# Datapath: '$CODEC_USER_DATA/$1/'"
-    echo "#     Args: '$EXTRA_DOCKER_START_ARGS'"
+    echo "# Datapath: '$CODEC_USER_DATA/$CODEC_USER/'"
     echo "#    Exist: '$ALREADY_EXIST'"
-    echo "# Enter 'y' to start the '$1' codec user container."
+    echo "# Enter 'y' to start the '$CODEC_USER' codec user container."
     echo "# [CTRL] + [C] to abort!"
     read INPUT_VALUE
     if [ "$INPUT_VALUE" != "y" ]; then
@@ -218,12 +148,15 @@ while kill -0 $BUILD_PID >/dev/null 2>&1; do
 done
 echo "[CODEC_CLI][START]: Image ready!"
 
-$CURRENT_DIR/close.sh $1
+$CURRENT_DIR/close.sh $CODEC_USER
 
 docker network create "$CODEC_NET" > /dev/null 2>&1
 
 echo "[CODEC_CLI][START]: Run docker container..."
 bash -c "$DOCKER_START_CMD"
+
+#echo "[CODEC_CLI][START]: Run docker daemon..."
+#$CURRENT_DIR/dockerd.sh $CODEC_USER
 
 echo "[CODEC_CLI][START]: Set port user info..."
 PORT_INFO_TEXT="Your codec ports: codec.coreunit.net:$START_PORT-$END_PORT"
@@ -231,10 +164,15 @@ PORT_INFO_TEXT="Your codec ports: codec.coreunit.net:$START_PORT-$END_PORT"
 docker rm -f codeccli-info-helper > /dev/null 2>&1
 docker run -it --rm \
     --name "codeccli-info-helper" \
-    -v "$CODEC_USER_DATA/$1:/codec" \
+    -v "$CODEC_USER_DATA/$CODEC_USER:/codec" \
     ubuntu:22.04 \
         bash -c \
-        "chmod 777 /codec/.codec && echo '$PORT_INFO_TEXT' > /codec/.codec/ports.info.txt && chmod 744 /codec/.codec"
+        " \
+        mkdir -p /codec/.codec && \
+        chmod 777 /codec/.codec && \
+        echo '$PORT_INFO_TEXT' > /codec/.codec/ports.info.txt \
+        && chmod 744 /codec/.codec \
+        "
 
 echo "[CODEC_CLI][START]: Save startup arguments..."
 docker rm -f codeccli-port-helper > /dev/null 2>&1
@@ -243,22 +181,19 @@ docker run -it --rm \
     -v "$CODEC_USER_DATA/.codec:/app" \
     ubuntu:22.04 \
         bash -c \
-        "mkdir -p /app/ports \
-        && touch /app/ports/$1.start.port \
-        && echo -n '$START_PORT' > /app/ports/$1.start.port \
-        && touch /app/ports/$1.count.port \
-        && echo -n '$PORT_COUNT' > /app/ports/$1.count.port \
-        && mkdir -p /app/args \
-        && touch /app/args/$1.extra.args \
-        && echo -n '$EXTRA_DOCKER_START_ARGS' > /app/args/$1.extra.args"
-
-echo "Use 'sudo rm -f $CODEC_USER_DATA/.codec/args/$1.extra.args' to reset the args!"
+        " \
+        mkdir -p /app/ports \
+        && touch /app/ports/$CODEC_USER.start.port \
+        && echo -n '$START_PORT' > /app/ports/$CODEC_USER.start.port \
+        && touch /app/ports/$CODEC_USER.count.port \
+        && echo -n '$PORT_COUNT' > /app/ports/$CODEC_USER.count.port \
+        "
 
 if [ "$ALREADY_EXIST" == "false" ]; then
     echo "[CODEC_CLI][START]: Set new random generated password..."
-    NEW_DEFAULT_PASS="$($CURRENT_DIR/randompass.sh $1)"
-    $CURRENT_DIR/defaultpass.sh $1 "$NEW_DEFAULT_PASS"
-    $CURRENT_DIR/setpass.sh $1 "$NEW_DEFAULT_PASS"
+    NEW_DEFAULT_PASS="$($CURRENT_DIR/randompass.sh $CODEC_USER)"
+    $CURRENT_DIR/defaultpass.sh $CODEC_USER "$NEW_DEFAULT_PASS"
+    $CURRENT_DIR/setpass.sh $CODEC_USER "$NEW_DEFAULT_PASS"
 
     echo "Default password is: '$NEW_DEFAULT_PASS'"
 fi

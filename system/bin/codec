@@ -10,7 +10,9 @@ if [[ "$1" == "-r" || "$1" == "--restart" || "$1" == "restart" ]]; then
 
     rm -rf /tmp/*
 
-    sleep 3
+    echo "Shutdown..."
+
+    sleep 2
     shutdown -P 0
     exit 0
 fi
