@@ -103,15 +103,16 @@ ALREADY_EXIST=$($CURRENT_DIR/exist.sh "$CODEC_USER" "CODECDIR")
 
 DOCKER_START_CMD=" \
     docker run -d \
-    --name 'codec_$CODEC_USER' \
-    --net '$CODEC_NET' \
-    --restart unless-stopped \
-    -p '0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT/tcp' \
-    -p '0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT/udp' \
-    -e 'CODEC_PORTS=$START_PORT-$END_PORT' \
-    -v '$CODEC_USER_DATA/.codec/shared_folder:/codec/mounts/shared' \
-    -v '$CODEC_USER_DATA/$CODEC_USER:/codec' \
-    codec2 \
+        --privileged \
+        --name 'codec_$CODEC_USER' \
+        --net '$CODEC_NET' \
+        --restart unless-stopped \
+        -p '0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT/tcp' \
+        -p '0.0.0.0:$START_PORT-$END_PORT:$START_PORT-$END_PORT/udp' \
+        -e 'CODEC_PORTS=$START_PORT-$END_PORT' \
+        -v '$CODEC_USER_DATA/.codec/shared_folder:/codec/mounts/shared' \
+        -v '$CODEC_USER_DATA/$CODEC_USER:/codec' \
+        codec2 \
 "
 
 echo "[CODEC_CLI][START]: Docker run command preview: '"

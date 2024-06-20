@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:22.04
 
 LABEL version="2.3" maintainer="NobleMajo (Majo Richter) <majo@coreunit.net>"
 
@@ -9,7 +9,7 @@ ARG NVM_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.
 ARG NODE_VERSION="20"
 ARG NPM_VERSION="10"
 ARG NODEMON_VERSION="3"
-ARG VSCODE_VERSION="4.89.1"
+ARG VSCODE_VERSION="4.23.1"
 ARG VSCODE_URL="https://code-server.dev/install.sh"
 
 ENV VSCODE_GALLERY="ms2"
@@ -95,6 +95,8 @@ RUN curl -o- $NVM_URL |bash \
     && . /etc/environment \
     && VSCODE_GALLERY="$VSCODE_GALLERY" /etc/codec/vscode_gallery.js \
     && codei emmanuelbeziat.vscode-great-icons \
+    \
+    && /etc/codec/health.sh \
     \
     && echo "source /etc/codec/bash.sh" >> /root/.bashrc \
     && usermod --shell /bin/bash root \
