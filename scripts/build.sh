@@ -25,7 +25,7 @@ if [ "$1" == "$FLAG_NAME" ] ||  [ "$1" == "$FLAG_SHORTNAME" ]  ||
         .
 
     echo "[CODEC_CLI][BUILD]: Scratch image ready!"
-    echo 0
+    exit 0
 fi
 
 

@@ -1,20 +1,20 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
-LABEL version="2.3" maintainer="NobleMajo (Majo Richter) <majo@coreunit.net>"
+LABEL version="2.5" maintainer="NobleMajo (Majo Richter) <majo@coreunit.net>"
 
 EXPOSE 8080/tcp
 
-ARG NVM_VERSION="0.39.7"
-ARG NVM_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.sh"
-ARG NODE_VERSION="20"
-ARG NPM_VERSION="10"
-ARG NODEMON_VERSION="3"
-ARG VSCODE_VERSION="4.23.1"
-ARG VSCODE_URL="https://code-server.dev/install.sh"
+ENV NVM_VERSION "0.40.0"
+ENV NVM_URL "https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.sh"
+ENV NODE_VERSION "20"
+ENV NPM_VERSION "10"
+ENV NODEMON_VERSION "3"
+ENV VSCODE_VERSION "4.91.1"
+ENV VSCODE_URL "https://code-server.dev/install.sh"
 
-ENV VSCODE_GALLERY="ms2"
-ENV NVM_DIR="/root/.nvm"
-ENV DEBIAN_FRONTEND=noninteractive
+ENV VSCODE_GALLERY "ms2"
+ENV NVM_DIR "/root/.nvm"
+ENV DEBIAN_FRONTEND noninteractive
 ENV LANG "en_US.UTF-8"
 ENV LANGUAGE "en"
 ENV LC_CTYPE "en_US.UTF-8"
@@ -30,7 +30,7 @@ ENV LC_TELEPHONE "en_US.UTF-8"
 ENV LC_MEASUREMENT "en_US.UTF-8"
 ENV LC_IDENTIFICATION "en_US.UTF-8"
 ENV LC_ALL "en_US.UTF-8"
-ENV L="us"
+ENV L "us"
 
 RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
     && apt-get update \
