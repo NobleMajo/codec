@@ -1,5 +1,5 @@
 
-# codec ( [depricated](#depricated) )
+# codec ( [depreciated](#depreciated) )
 ![MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![](https://img.shields.io/badge/dynamic/json?color=green&label=watchers&query=watchers&suffix=x&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fnoblemajo%2Fcodec)
 ![](https://img.shields.io/badge/dynamic/json?color=yellow&label=stars&query=stargazers_count&suffix=x&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fnoblemajo%2Fcodec)
@@ -11,7 +11,7 @@
 - [codec](#codec)
 - [table of contents](#table-of-contents)
 - [about](#about)
-- [depricated](#depricated)
+- [depreciated](#depreciated)
 - [base](#base)
 - [Installation](#installation)
   - [Requirements](#requirements)
@@ -59,7 +59,7 @@ The CodeC environment consists of several software components, all of which work
 This `README.md` that you read right now is written in a CodeC environment:
 ![Makrdown](./docs/img/codec-markdown-preview.png)
 
-# depricated
+# depreciated
 New features for this software will not be developed and support will be discontinued.
 Today, the developer of this software would choose a completely different conceptual approach for the software.
 
