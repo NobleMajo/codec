@@ -18,27 +18,12 @@
   - [Clone](#clone)
   - [Provider CLI](#provider-cli)
   - [Proxy setup](#proxy-setup)
-    - [Secure](#secure)
-    - [Unsecure](#unsecure)
-    - [Proxy Configuration](#proxy-configuration)
   - [Startup](#startup)
 - [Components](#components)
   - [CLI](#cli)
-    - [start](#start)
-    - [pass](#pass)
-    - [build](#build)
-    - [list](#list)
-    - [logs](#logs)
-    - [close](#close)
-    - [reset](#reset)
-    - [delete](#delete)
   - [Proxy](#proxy)
   - [Image](#image)
-    - [Persistence](#persistence)
-    - [Instance](#instance)
-    - [User CLI](#user-cli)
   - [Mods](#mods)
-    - [Example Mod](#example-mod)
   - [Mounts](#mounts)
 - [folder structure](#folder-structure)
   - [User FS](#user-fs)
@@ -587,16 +572,16 @@ Component Changes:
 - `*` Updated custom CLI tools
 - `*` Updated Codec user CLI
 
-# contribution
- - 1. fork the project
- - 2. implement your idea
- - 3. create a pull/merge request
-```ts
-// please create seperated forks for different kind of featues/ideas/structure changes/implementations
-```
+# Contributing
+Contributions to this project are welcome!  
+Interested users can refer to the guidelines provided in the [CONTRIBUTING.md](CONTRIBUTING.md) file to contribute to the project and help improve its functionality and features.
 
----
-**cya ;3**  
-*by NobleMajo*
+# License
+This project is licensed under the [MIT license](LICENSE), providing users with flexibility and freedom to use and modify the software according to their needs.
+
+# Disclaimer
+This project is provided without warranties.  
+Users are advised to review the accompanying license for more information on the terms of use and limitations of liability.
+
 
 
