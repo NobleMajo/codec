@@ -4,33 +4,62 @@ const path = "/usr/lib/code-server/lib/vscode/product.json"
 const object = require(path)
 const fs = require("fs")
 
-if (typeof process.env["VSCODE_GALLERY"] != "string") {
-    process.env["VSCODE_GALLERY"] = "ms"
+let gallery = process.env["VSCODE_GALLERY"]
+
+if (
+    typeof gallery != "string" ||
+    gallery.length == 0
+) {
+    gallery = "ms"
 }
 
-if (process.env["VSCODE_GALLERY"].startsWith("open")) {
+function setOpenVSXGallery(object) {
     object["extensionsGallery"] = {
         "serviceUrl": "https://open-vsx.org/vscode/gallery",
         "itemUrl": "https://open-vsx.org/vscode/item"
     }
-} else if (process.env["VSCODE_GALLERY"].startsWith("ms2")) {
+
+    object["linkProtectionTrustedDomains"] = [
+        "https://open-vsx.org"
+    ]
+}
+
+function setMicrosoftGallery(object) {
     object["extensionsGallery"] = {
+        "nlsBaseUrl": "https://www.vscode-unpkg.net/_lp/",
         "serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery",
         "itemUrl": "https://marketplace.visualstudio.com/items",
-        "cacheUrl": "https://vscode.blob.core.windows.net/gallery/index",
-
-        "nlsBaseUrl": "https://www.vscode-unpkg.net/_lp/",
         "publisherUrl": "https://marketplace.visualstudio.com/publishers",
         "resourceUrlTemplate": "https://{publisher}.vscode-unpkg.net/{publisher}/{name}/{version}/{path}",
-        "controlUrl": "https://az764295.vo.msecnd.net/extensions/marketplace.json",
-        "recommendationsUrl": "https://az764295.vo.msecnd.net/extensions/workspaceRecommendations.json.gz"
+        "controlUrl": "https://az764295.vo.msecnd.net/extensions/marketplace.json"
     }
-} else {
-    object["extensionsGallery"] = {
-        "serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery",
-        "itemUrl": "https://marketplace.visualstudio.com/items",
-        "cacheUrl": "https://vscode.blob.core.windows.net/gallery/index"
-    }
+
+    object["linkProtectionTrustedDomains"] = [
+        "https://*.visualstudio.com", "https://*.microsoft.com",
+        "https://aka.ms",
+        "https://*.gallerycdn.vsassets.io",
+        "https://*.github.com",
+        "https://login.microsoftonline.com",
+        "https://*.vscode.dev",
+        "https://*.github.dev",
+        "https://gh.io",
+        "https://portal.azure.com",
+        "https://raw.githubusercontent.com",
+        "https://private-user-images.githubusercontent.com",
+        "https://avatars.githubusercontent.com"
+    ]
+}
+
+if (
+    gallery.startsWith("ov") ||
+    gallery.startsWith("open")
+) {
+    setOpenVSXGallery(object)
+} else if (
+    gallery.startsWith("ms") ||
+    gallery.startsWith("microsoft")
+) {
+    setMicrosoftGallery(object)
 }
 
 fs.writeFileSync(

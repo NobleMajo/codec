@@ -4,6 +4,8 @@ source /etc/environment
 
 codec -w
 
+alias ws="cd /codec/ws"
+
 MODS_PATH="/codec/.codec/enabled-mods"
 BASH_MOD_PATHS=("$(find $MODS_PATH -name "*.bash.sh")")
 

@@ -4,13 +4,7 @@ export CURRENT_DIR=$(dirname $(realpath $0))
 source $CURRENT_DIR/vars.sh
 
 echo "[CODEC_CLI][UPDATEALL]: Load codec container user list..."
-USER_LIST=$(
-    docker run -it --rm \
-        -v "$CODEC_USER_DATA:/app" \
-        -w /app \
-        ubuntu:22.04 \
-            ls -AQ
-)
+USER_LIST=$(ls -AQ $CODEC_USER_DATA)
 
 USER_LIST=${USER_LIST::-1}
 USER_ARR=()

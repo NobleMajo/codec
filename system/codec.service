@@ -5,6 +5,8 @@ Description=Codec Service
 Type=simple
 PIDFile=/etc/codec/codec.pid
 ExecStart=/bin/bash -c /etc/codec/boot.sh
+StandardOutput=/codec/mounts/logs/codec_service.log
+StandardError=/codec/mounts/logs/codec_service_err.log
 
 [Install]
 WantedBy=multi-user.target

@@ -14,7 +14,7 @@ apt-get update
 /etc/codec/extensions.sh
 
 # init mod system
-/etc/codec/mods.sh
+source /etc/codec/mods.sh
 
 # reload sysctl
 sysctl -p

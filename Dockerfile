@@ -1,18 +1,18 @@
 FROM ubuntu:24.04
 
-LABEL version="2.5" maintainer="NobleMajo (Majo Richter) <majo@coreunit.net>"
+LABEL version="2.9" maintainer="NobleMajo (Majo Richter) <majo@coreunit.net>"
 
 EXPOSE 8080/tcp
 
-ENV NVM_VERSION "0.40.0"
+ENV NVM_VERSION "0.40.1"
 ENV NVM_URL "https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.sh"
-ENV NODE_VERSION "20"
+ENV NODE_VERSION "22"
 ENV NPM_VERSION "10"
 ENV NODEMON_VERSION "3"
-ENV VSCODE_VERSION "4.91.1"
+ENV VSCODE_VERSION "4.97.2"
 ENV VSCODE_URL "https://code-server.dev/install.sh"
 
-ENV VSCODE_GALLERY "ms2"
+ENV VSCODE_GALLERY "os"
 ENV NVM_DIR "/root/.nvm"
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG "en_US.UTF-8"
@@ -37,7 +37,7 @@ RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
     && echo 'tzdata tzdata/Areas select Etc' | debconf-set-selections \
     && echo 'tzdata tzdata/Zones/Etc select UTC' | debconf-set-selections \
     && apt-get install -yq --no-install-recommends \
-    apt-utils locales tzdata libtimedate-perl ca-certificates \
+    apt-utils dbus locales tzdata libtimedate-perl ca-certificates \
     && sed -i "s/# en_US.UTF-8/en_US.UTF-8/" /etc/locale.gen \
     && locale-gen \
     && apt-get full-upgrade -y \
@@ -47,7 +47,7 @@ RUN sed -i "s/# deb-src/deb-src/g" /etc/apt/sources.list \
     && apt-get install -y --no-install-recommends \
     curl wget tar git nano vim git-lfs \
     && apt-get install -y --no-install-recommends \
-    systemd systemd-cron rsyslog dnsutils \
+    screen systemd systemd-cron rsyslog dnsutils \
     && git lfs install \
     && cd /lib/systemd/system/sysinit.target.wants/ \
     && ls | grep -v systemd-tmpfiles-setup | xargs rm -f $1 \

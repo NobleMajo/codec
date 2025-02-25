@@ -1,7 +1,5 @@
 {
     "logs/codec": "/etc/codec/logs",
     "ssh": "/root/.ssh",
-    "vscode": "/root/.local/share/code-server",
-    "docker-user": "/root/.docker/",
-    "docker": "/etc/docker"
+    "vscode": "/root/.local/share/code-server"
 }

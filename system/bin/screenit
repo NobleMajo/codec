@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ -z $1 ]; then
+    echo "The first parameter is missing. The first argument must be the screen and log name and the second argument must be the command to run."
+    exit 1
+fi
+
+if [ -z $2 ]; then
+    echo "The Second parameter is missing. The first argument must be the screen and log name and the second argument must be the command to run."
+    exit 1
+fi
+
+echo "Start screen '$1'..."
+
+screen \
+    -dmS $1 \
+    -L -Logfile /codec/mounts/logs/codec/screen.$1.custom.mod.log \
+    bash -c \
+    "$2"
+
+echo "Screen '$1' started!"
